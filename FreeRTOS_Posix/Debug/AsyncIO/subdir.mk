@@ -7,19 +7,19 @@ C_SRCS += \
 ../AsyncIO/AsyncIO.c \
 ../AsyncIO/AsyncIOSerial.c \
 ../AsyncIO/AsyncIOSocket.c \
-../AsyncIO/PosixMessageQueueIPC.c 
+#../AsyncIO/PosixMessageQueueIPC.c 
 
 OBJS += \
 ./AsyncIO/AsyncIO.o \
 ./AsyncIO/AsyncIOSerial.o \
 ./AsyncIO/AsyncIOSocket.o \
-./AsyncIO/PosixMessageQueueIPC.o 
+#./AsyncIO/PosixMessageQueueIPC.o 
 
 C_DEPS += \
 ./AsyncIO/AsyncIO.d \
 ./AsyncIO/AsyncIOSerial.d \
 ./AsyncIO/AsyncIOSocket.d \
-./AsyncIO/PosixMessageQueueIPC.d 
+#./AsyncIO/PosixMessageQueueIPC.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes

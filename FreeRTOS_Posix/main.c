@@ -205,8 +205,8 @@ struct sockaddr_in xReceiveAddress;
 
 	/* Set-up the IPC Message queue. */
 	xIPCQueue = xQueueCreate( 2, sizeof( xMessageObject ) );
-	xMessageQueuePipeHandle = xPosixIPCOpen( "/Local_Loopback", vMessageQueueReceive, xIPCQueue );
-	vPosixIPCEmpty( xMessageQueuePipeHandle );
+	//xMessageQueuePipeHandle = xPosixIPCOpen( "/Local_Loopback", vMessageQueueReceive, xIPCQueue );
+	//vPosixIPCEmpty( xMessageQueuePipeHandle );
 
 	/* Set-up the Serial Console Echo task */
 	if ( pdTRUE == lAsyncIOSerialOpen( "/dev/ttyS0", &iSerialReceive ) )
@@ -352,8 +352,8 @@ xMessageObject xTxMsg, xRxMsg = { { 0 } };
 
 	for ( ;; )
 	{
-		if ( pdTRUE == lPosixIPCSendMessage( xMessageQueuePipeHandle, xTxMsg ) )
-		{
+		//if ( pdTRUE == lPosixIPCSendMessage( xMessageQueuePipeHandle, xTxMsg ) )
+		//{
 			if ( pdTRUE != xQueueReceive( (xQueueHandle)pvParameters, &xRxMsg, 5000 / portTICK_RATE_MS ) )
 			{
 				printf( "MQ Task: Queue Receive Failed.\n" );
@@ -362,7 +362,7 @@ xMessageObject xTxMsg, xRxMsg = { { 0 } };
 			{
 				printf( "MQ Task: %s\n", xRxMsg.cMesssageBytes );
 			}
-		}
+		//}
 		vTaskDelay( 5000 );
 	}
 }
