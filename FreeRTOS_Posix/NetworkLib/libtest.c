@@ -25,6 +25,11 @@
 #include "libtest.h"
 
 
+#include <math.h>
+#include <openssl/bio.h>
+
+
+
 /*-----------------------------------------------------------*/
 
 
@@ -32,7 +37,11 @@ void sayHelloTo (const char * const someone)
 {
 	vTaskSuspendAll();
 	{
-		printf("Hello, %s !\r\n", someone);
+        const char *k = (unsigned char*)'k';
+        BIO_new_mem_buf((unsigned char*) k, strlen(k));
+
+
+		printf("Hello, %s ! The result is %f.\r\n", someone, floor(3.2));
 		fflush(stdout);
 	}
 	xTaskResumeAll();
