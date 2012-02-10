@@ -1,27 +1,27 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
-../NetworkLib/libtest.c 
-#../NetworkLib/xmalloc.c \
-#../NetworkLib/oauth_http.c \
-#../NetworkLib/oauth.c \
-#../NetworkLib/hash.c \
-#../NetworkLib/sha1.c
+../NetworkLib/libtest.c \
+../NetworkLib/xmalloc.c \
+../NetworkLib/oauth_http.c \
+../NetworkLib/oauth.c \
+../NetworkLib/hash.c \
+../NetworkLib/sha1.c
 
 OBJS += \
-./NetworkLib/libtest.o
-#./NetworkLib/xmalloc.o \
-#./NetworkLib/oauth_http.o \
-#./NetworkLib/oauth.o \
-#./NetworkLib/hash.o \
-#./NetworkLib/sha1.o
+./NetworkLib/libtest.o \
+./NetworkLib/xmalloc.o \
+./NetworkLib/oauth_http.o \
+./NetworkLib/oauth.o \
+./NetworkLib/hash.o \
+./NetworkLib/sha1.o
 
 C_DEPS += \
-./NetworkLib/libtest.d 
-#./NetworkLib/xmalloc.d \
-#./NetworkLib/oauth_http.d \
-#./NetworkLib/oauth.d \
-#./NetworkLib/hash.d \
-#./NetworkLib/sha1.d
+./NetworkLib/libtest.d \
+./NetworkLib/xmalloc.d \
+./NetworkLib/oauth_http.d \
+./NetworkLib/oauth.d \
+./NetworkLib/hash.d \
+./NetworkLib/sha1.d
 
 
 # Each subdirectory must supply rules for building sources it contributes
