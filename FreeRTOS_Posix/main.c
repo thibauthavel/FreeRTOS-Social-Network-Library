@@ -43,8 +43,6 @@
 #include "AsyncIO/PosixMessageQueueIPC.h"
 #include "AsyncIO/AsyncIOSerial.h"
 
-#include "NetworkLib/libtest.h"
-
 /* Priority definitions for the tasks in the demo application. */
 #define mainLED_TASK_PRIORITY		( tskIDLE_PRIORITY + 1 )
 #define mainCREATOR_TASK_PRIORITY	( tskIDLE_PRIORITY + 3 )

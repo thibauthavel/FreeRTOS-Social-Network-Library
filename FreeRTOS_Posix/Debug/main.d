@@ -16,7 +16,7 @@ main.d: ../main.c ../FreeRTOS_Kernel/include/FreeRTOS.h \
  ../Common_Demo/include/countsem.h ../Common_Demo/include/recmutex.h \
  ../Common_Demo/include/network.h ../AsyncIO/AsyncIO.h \
  ../AsyncIO/AsyncIOSocket.h ../AsyncIO/PosixMessageQueueIPC.h \
- ../AsyncIO/AsyncIOSerial.h ../NetworkLib/libtest.h
+ ../AsyncIO/AsyncIOSerial.h
 
 ../FreeRTOS_Kernel/include/FreeRTOS.h:
 
@@ -83,5 +83,3 @@ main.d: ../main.c ../FreeRTOS_Kernel/include/FreeRTOS.h \
 ../AsyncIO/PosixMessageQueueIPC.h:
 
 ../AsyncIO/AsyncIOSerial.h:
-
-../NetworkLib/libtest.h:

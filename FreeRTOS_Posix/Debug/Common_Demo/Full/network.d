@@ -5,8 +5,8 @@ Common_Demo/Full/network.d: ../Common_Demo/Full/network.c \
  ../FreeRTOS_Kernel/portable/GCC/Posix/portmacro.h \
  ../FreeRTOS_Kernel/include/mpu_wrappers.h \
  ../FreeRTOS_Kernel/include/task.h ../FreeRTOS_Kernel/include/list.h \
- ../Common_Demo/include/print.h ../NetworkLib/libtest.h \
- ../Common_Demo/include/network.h
+ ../Common_Demo/include/print.h ../Common_Demo/include/network.h \
+ ../NetworkLib/oauth.h
 
 ../FreeRTOS_Kernel/include/FreeRTOS.h:
 
@@ -26,6 +26,6 @@ Common_Demo/Full/network.d: ../Common_Demo/Full/network.c \
 
 ../Common_Demo/include/print.h:
 
-../NetworkLib/libtest.h:
-
 ../Common_Demo/include/network.h:
+
+../NetworkLib/oauth.h:
