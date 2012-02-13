@@ -26,9 +26,8 @@
  * THE SOFTWARE.
  * 
  */
-#if HAVE_CONFIG_H
-# include <config.h>
-#endif
+
+#include "config.h"
 
 #define WIPE_MEMORY ///< overwrite sensitve data before free()ing it.
 

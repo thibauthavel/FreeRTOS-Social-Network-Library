@@ -57,6 +57,12 @@ static void mainTask(void *pvParameters);
 /* Check tasks running */
 static volatile unsigned short taskCheck[netNUMBER_OF_TASKS] = { (unsigned short)0 };
 
+/* Twitter account */
+char *consumer_key       = "VB5FifD1HLhmLmsj8tZA";                               // Consumer key
+char *consumer_secret    = "OdE18zFiva5TsC3rPQmq9BlYXhfBPFWJq2bY6Ib40";          // Consumer secret
+char *oauth_token        = "488884688-gBSVVjk722PjHgPx5mBPY1wTsL0Bmlv8QAazwgMy"; // Token key
+char *oauth_token_secret = "6jLaHA3wLRiUGAidt9q4doIx3IXX8U1D6ntyUuVMN1g";  
+
 
 /*-----------------------------------------------------------*/
 
@@ -86,66 +92,7 @@ static void mainTask (void *pvParameters)
 	{
 	    if(doItOnce)
 	    {
-            char *url       = "https://api.twitter.com/oauth/access_token";         // The url to sign
-            char *c_key     = "VB5FifD1HLhmLmsj8tZA";                               // Consumer key
-            char *c_secret  = "OdE18zFiva5TsC3rPQmq9BlYXhfBPFWJq2bY6Ib40";          // Consumer secret
-            char *t_key     = "488884688-gBSVVjk722PjHgPx5mBPY1wTsL0Bmlv8QAazwgMy"; // Token key
-            char *t_secret  = "6jLaHA3wLRiUGAidt9q4doIx3IXX8U1D6ntyUuVMN1g";        // Token secret
-            int  mode       = 0;                                                    // Mode: 0=GET 1=POST
-
-            /* GET */
-            if(mode == 0)
-            {
-                char *geturl = NULL;
-                geturl = oauth_sign_url2(url, NULL, OA_HMAC, NULL, c_key, c_secret, t_key, t_secret);
-                
-                if(geturl)
-                {
-                    printf("%s\n", geturl);
-                    free(geturl);
-                }
-            }
-            /* POST */
-            else
-            {
-                char *postargs = NULL, *post = NULL;
-                post = oauth_sign_url2(url, &postargs, OA_HMAC, NULL, c_key, c_secret, t_key, t_secret);
-                
-                if (!post || !postargs)
-                {
-	                return (1);
-                }
-                
-                if (mode==2)
-                { // print postargs only
-                    if (postargs)
-                        printf("%s\n", postargs);
-                }
-                else if (mode==3)
-                { // print url and postargs
-                    if (post && postargs)
-                        printf("%s\n%s\n", post, postargs);
-                }
-                else if (post && postargs)
-                {
-                    char *reply = oauth_http_post(post,postargs);
-                    
-                    if(reply)
-                    {
-              	        //write(STDOUT, reply, strlen(reply))
-                        printf("%s\n", reply);
-              	        free(reply);
-                    }
-                }
-                
-                if(post)
-                    free(post);
-                    
-                if(postargs)
-                    free(postargs);
-            }
-	        
-	        
+            twitterizer(); 
 	        doItOnce--;
 	    }
 	    

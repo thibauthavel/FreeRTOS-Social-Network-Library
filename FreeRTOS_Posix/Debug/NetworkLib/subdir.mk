@@ -1,6 +1,6 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
-../NetworkLib/libtest.c \
+../NetworkLib/libtwitter.c \
 ../NetworkLib/xmalloc.c \
 ../NetworkLib/oauth_http.c \
 ../NetworkLib/oauth.c \
@@ -8,7 +8,7 @@ C_SRCS += \
 ../NetworkLib/sha1.c
 
 OBJS += \
-./NetworkLib/libtest.o \
+./NetworkLib/libtwitter.o \
 ./NetworkLib/xmalloc.o \
 ./NetworkLib/oauth_http.o \
 ./NetworkLib/oauth.o \
@@ -16,7 +16,7 @@ OBJS += \
 ./NetworkLib/sha1.o
 
 C_DEPS += \
-./NetworkLib/libtest.d \
+./NetworkLib/libtwitter.d \
 ./NetworkLib/xmalloc.d \
 ./NetworkLib/oauth_http.d \
 ./NetworkLib/oauth.d \
