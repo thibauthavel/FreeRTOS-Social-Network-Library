@@ -71,7 +71,12 @@ void twitterizer (void)
 		printf("\n\nStep 3 --------------------------------\n\n");
 		twitter_direct_token_url(oauth_token, &direct_token_url);
 		printf("direct_token_url : %s \n", direct_token_url);
+
+        // Step 4 : Verifier
+        printf("\n\nStep 4 --------------------------------\n\n");
+        twitter_verifier(direct_token_url, oauth_token, &verifier);
 		
+        printf("End of test\n");
 		fflush(stdout);
 	}
 	xTaskResumeAll();
@@ -133,38 +138,344 @@ void twitter_direct_token_url (const char * oauth_token, char ** direct_token_ur
 }
 
 
-
 /*
  *  IN  : oauth_token
  *  OUT : verifier
  */
 void twitter_verifier (const char * direct_token_url, const char * oauth_token, char ** verifier)
 {
-    direct_token_result = oauth_http_get(direct_token_url, NULL);
-    
-    //<< reset variable values
-    needle_keychar1 = 34;	//<< 34 corresponds to the English characters "
-    needle_keychar1_times = 4;	//<< the fourth 
-    needle_keychar2 = 34;
-    needle_keychar2_times = 5;	//<< the fifth
+    char * direct_token_script;
+    char * direct_token_authenticity;
+    char * direct_token_url2;
+    char * direct_token_script2;
 
-    //<< get authenticity_token value
-    twit_func_get_authenticity_token(direct_token_web_script, needle_keychar1, needle_keychar1_times, needle_keychar2, needle_keychar2_times, &authenticity_token_value);
+    unsigned needle_keychar1 = 34;      // corresponds to the English characters "
+    unsigned needle_keychar2 = 34;
+    unsigned needle_keychar1_times = 4; 
+    unsigned needle_keychar2_times = 5;
+
+    direct_token_script = oauth_http_get(direct_token_url, NULL);
+    twitter_direct_token_authenticity(direct_token_script, needle_keychar1, needle_keychar1_times, needle_keychar2, needle_keychar2_times, &direct_token_authenticity);
+
+    printf("direct_token_authenticity=%s\n", direct_token_authenticity);
+}
+
+
+/*
+ *  IN  : script
+ *  IN  : keychar1
+ *  IN  : keychar1_times
+ *  IN  : keychar2
+ *  IN  : keychar2_times
+ *  OUT : authenticity
+ */
+void twitter_direct_token_authenticity (const char * script, unsigned keychar1, unsigned keychar1_times, unsigned keychar2, unsigned keychar2_times, char ** authenticity)
+{
+    int needle_keychar1_pos;
+    int needle_keychar2_pos;
+    char * needle_keyword;
+    char * hay_stack;
+    char * authenticity_value;
+
+    needle_keyword = xstrdup("authenticity_token");
+    hay_stack = strstr(script, needle_keyword);
+    needle_keychar1_pos = xstrchr2(hay_stack, keychar1, keychar1_times);
+    needle_keychar2_pos = xstrchr2(hay_stack, keychar2, keychar2_times);
+    xsubstr(hay_stack, needle_keychar1_pos + 1, needle_keychar2_pos, &authenticity_value);
+
+    *authenticity = authenticity_value;
 }
 
 
 
+// -------------------------------------------------------------------------------
 
 
 
+// Extend define string function
+/*
+static void *xmalloc_fatal(size_t size) 
+{	
+	if (size==0) 
+	{		
+		return NULL;
+	}
+	
+	fprintf(stderr, "Out of memory.");
+	
+	exit(1);
+}
 
 
+void *xmalloc (size_t size) 
+{
+	void *ptr = malloc (size);
+	
+	if (ptr == NULL) 
+	{
+		return xmalloc_fatal(size);
+	}
+	
+	return ptr;
+}
 
 
+void *xcalloc (size_t nmemb, size_t size) 
+{
+	void *ptr = calloc (nmemb, size);
+	
+	if (ptr == NULL) 
+	{
+		return xmalloc_fatal(nmemb*size);
+	}
+	
+	return ptr;
+}
 
 
+void *xrealloc (void *ptr, size_t size) 
+{
+	void *p = realloc (ptr, size);
+	
+	if (p == NULL) 
+	{
+		return xmalloc_fatal(size);
+	}
+	
+	return p;
+}
+
+char *xstrdup (const char *s) 
+{
+	void *ptr = xmalloc(strlen(s) + 1);	
+
+	strcpy (ptr, s);
+	
+	return (char*) ptr;
+}
+*/
 
 
+char *xstrcat (const char *s1, const char *s2) 
+{
+	int ptr_len = 0;
+	char *ptr = xstrdup(s1);
+
+	ptr_len = strlen(ptr) + strlen(s2);
+
+	ptr = xrealloc(ptr, (ptr_len + 1) * sizeof(char));
+	
+	strcat(ptr, s2);
+
+	return ptr;
+}	
+
+char *xstrtrim(const char *str_src)
+{
+	char *str = xstrdup(str_src);
+	char *str2 = NULL;
+	int str_src_len = strlen(str);
+
+	str2 = xrealloc(str2, str_src_len+1);
+	memset(str2, 0, str_src_len+1);
+
+	int i, j = 0;
+
+	for (i = 0; i < str_src_len; i++)		
+	{
+		if (str[i] == ' ' || str[i] == '\t' || str[i] == '\n')
+		{
+			continue;
+		}
+		else
+		{			
+			str2[j] = str[i];
+			j++;
+		}
+	}	
+
+	str2[j] = 0;
 
 
+	return str2;
+}
+
+int xstrchr(const char*str_1, int c)
+{
+	int chr_position = -1;
+
+	int len_str_1 = 0;
+	int len_substr = 0;
+	char *substr = NULL;
+	
+	len_str_1 = strlen(str_1);
+
+	substr = strchr(str_1, c);
+
+	if ( substr )
+	{
+		len_substr = strlen(substr);
+		
+		if (len_str_1 >= len_substr)
+		{
+			chr_position = len_str_1 - len_substr;
+		}
+		else
+		{
+			chr_position = -2;
+		}
+	}
+
+
+	return chr_position;
+}
+
+int xstrchr2(const char *in_str, unsigned in_chr, unsigned in_chr_times)
+{
+	int in_strchr_len;
+	int rtn_strchr_len;
+	int rtn_code = 0;
+	int chr_in_str_pos = 0;
+	unsigned i;
+	
+	char *in_strchr = NULL;
+	char *rtn_strchr = NULL;
+	
+	in_strchr = xstrdup(in_str);
+
+
+	if (0 == in_chr_times)
+	{
+		in_chr_times = 1;
+	}
+	
+	for (i=0; i<in_chr_times; i++)
+	{		
+		rtn_strchr = strchr(in_strchr, in_chr);
+		
+		in_strchr_len = strlen(in_strchr);
+		rtn_strchr_len = strlen(rtn_strchr);
+		
+		chr_in_str_pos += in_strchr_len - rtn_strchr_len;
+		
+		if (i > 0)	
+		{
+			chr_in_str_pos += 1;
+		}
+		
+		xsubstr(rtn_strchr, 1, 0, &in_strchr);
+	}
+	
+	rtn_code = chr_in_str_pos;
+	
+	return rtn_code;
+}
+
+int xstrtok(const char *in_str_token, const char *in_str_delimit, char **out_str_token1, char **out_str_token0)
+{
+	int rtn_code = 0;
+
+	char *str_token0 = xstrdup(in_str_token);
+	char *str_token1 = NULL;
+
+	int str_token0_len = 0;
+	int str_token1_len = 0;
+	int substr_len = 0;
+
+	str_token0_len = strlen(str_token0);
+	
+	if (str_token0_len > 0)
+	{
+		str_token1 = strstr(str_token0, in_str_delimit);
+
+		if ( str_token1 )
+		{
+			rtn_code = 1;
+
+			str_token1_len = strlen(str_token1);			
+
+			substr_len = str_token0_len - str_token1_len;
+
+			xsubstr(str_token0, 0, substr_len, &str_token1);
+
+			xsubstr(str_token0, substr_len + strlen(in_str_delimit), 0, &str_token0);
+		}
+		else
+		{
+			rtn_code = 2;
+		}		
+	}
+
+	*out_str_token1 = str_token1;
+	*out_str_token0 = str_token0;
+
+	return rtn_code;
+}
+
+int xsubstr(const char *in_str, unsigned in_start, unsigned in_end, char **out_substr)
+{
+	int substr_len = 0;
+	int rtn_code = 0;
+	char *substr = NULL;
+	int continue_flag = 0;
+
+	
+	if (0 == in_end)
+	{
+		substr_len = strlen(in_str) - in_start;
+		continue_flag = 1;
+	}
+	else if (in_start <= in_end)
+	{
+		substr_len = in_end - in_start;
+		continue_flag = 1;
+	}
+	else
+	{
+		continue_flag = 1;
+		rtn_code = -1;
+	}
+
+
+	if (1 == continue_flag)
+	{
+		substr = xrealloc (substr, substr_len+1);	
+		memset(substr, 0, substr_len+1);
+
+		strncpy(substr, in_str+in_start, substr_len);
+	}
+	
+	substr[substr_len] = 0;
+	*out_substr = substr;	
+	
+	return rtn_code;
+}
+
+
+int xsubstr2(const char *in_source_str, const char *in_needle_keyword1, const char *in_needle_keyword2, char **out_substr)
+{
+	int rtn_code = 0;
+	int hay_stack1_len = 0;
+	int hay_stack2_len = 0;
+	int substr_len = 0;
+
+	char *hay_stack1 = NULL;
+	char *hay_stack2 = NULL;
+
+	char *substr = NULL;
+
+
+	hay_stack1 = strstr(in_source_str, in_needle_keyword1);
+	hay_stack2 = strstr(hay_stack1, in_needle_keyword2);
+
+	hay_stack1_len = strlen(hay_stack1);
+	hay_stack2_len = strlen(hay_stack2);
+	substr_len = hay_stack1_len - hay_stack2_len + strlen(in_needle_keyword2);
+
+	xsubstr(hay_stack1, 0, substr_len, &substr);
+
+	*out_substr = substr;
+
+	return rtn_code;
+}
 
