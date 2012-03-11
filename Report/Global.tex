@@ -1,0 +1,172 @@
+\documentclass[12pt,a4paper,utf8x]{report}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%         MODULES           %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage[english]{babel}
+\usepackage{ucs}
+\usepackage[utf8x]{inputenc}
+\usepackage{url}				% URL
+\usepackage{geometry}			% Marges
+\usepackage{graphicx}			% Images
+\usepackage{listings}			% Code source
+\usepackage{lscape}				% Mode paysage
+\usepackage{multicol}			% Colonnes
+\usepackage{makeidx}			% Indexation
+\usepackage{setspace}			% Interlignage
+\usepackage[dvipsnames]{xcolor}
+\usepackage{caption}
+\usepackage{appendix} 
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%         SETTINGS          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\makeindex
+\definecolor{codegray}{rgb}{0.9,0.9,0.9}
+\geometry{a4paper, top=2.5cm, bottom=3.5cm, left=1.5cm, right=1.5cm, marginparwidth=1.2cm}		% Marges
+\parskip=5pt 																					% Espaces paragraphes
+\sloppy																							% Marge à droite
+\setlength{\parindent}{15mm}																	% Indentation
+\interfootnotelinepenalty=150
+\widowpenalty=150
+\clubpenalty=150 
+\lstset
+{
+	language=C,
+	tabsize=3,
+	frame=lines,
+	keywordstyle=\color{blue},
+	commentstyle=\color{OliveGreen},
+	stringstyle=\color{red},
+	numbers=left,
+	numberstyle=\tiny,numbersep=5pt,breaklines=true,showstringspaces=false,basicstyle=\footnotesize,emph={label},
+	backgroundcolor=\color{codegray},
+}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%          MACROS           %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcounter{iannexe}
+\newcommand{\othertitle}[1]
+{
+	\vspace*{1.5cm}
+	\hspace*{-1.5cm}{\huge \textbf{#1}}
+	\vspace{1.5cm}
+}
+
+\newcommand{\itemlink}[2]
+{
+	\item \textbf{#1} - \textit{#2}
+	\vspace{0.5cm}
+}
+
+\newcommand{\annexe}
+{
+	\addtocounter{iannexe}{1}
+	\parbox[c]{1em}{\includegraphics[scale=0.75]{images/annexe.pdf}}\hspace{0.4cm}\textbf{Annnexe \theiannexe} -
+}
+
+% Enlever le nom chapitre
+\makeatletter
+\def\@makechapterhead#1{%
+  \vspace*{50\p@}%
+  {\parindent \z@ \raggedright \normalfont
+    \interlinepenalty\@M
+    \ifnum \c@secnumdepth >\m@ne
+        \Huge\bfseries \thechapter\quad
+    \fi
+    \Huge \bfseries #1\par\nobreak
+    \vskip 40\p@
+  }}
+
+\def\@makeschapterhead#1{%
+  \vspace*{50\p@}%
+  {\parindent \z@ \raggedright
+    \normalfont
+    \interlinepenalty\@M
+    \Huge \bfseries  #1\par\nobreak
+    \vskip 40\p@
+  }}
+  
+\def\@part[#1]#2{%
+    \ifnum \c@secnumdepth >\m@ne
+      \refstepcounter{part}%
+      \addcontentsline{toc}{part}{\thepart\hspace{1em}#1}%
+    \else
+      \addcontentsline{toc}{part}{#1}%
+    \fi
+    \vspace*{50\p@}%
+    {\huge\bfseries #2}%
+    \nobreak
+    \vskip 3ex
+    \@afterheading}  
+  
+\makeatother
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%           BODY            %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% Couverture
+\title
+{
+	\normalsize
+	{
+		Teesside University\\
+		School of Computing\\
+		2011 - 2012\\
+	}
+	\vspace{45mm}
+	\textbf{Final Year Project}\\
+	\normalsize{BSc Computer Science}\\
+	\vspace{10mm}
+	\huge{Social network library development}\\
+}
+
+\author
+{
+	Thibaut Havel\\
+	\normalsize{L1247434}\\
+	\vspace{45mm}
+}
+
+\date
+{
+	\normalsize
+	{
+		Supervisor : Jo\~{a}o F. Ferreira
+	}
+}
+
+%% Pages
+
+\begin{document}
+\maketitle
+\begin{onehalfspace}
+\input{Abstract}
+\input{Acknowledgements}
+\tableofcontents
+\part{Development of the library}
+\input{Introduction}
+\input{Methodology}
+\input{Research}
+\input{Design}
+\input{Implementation}
+\input{Testing}
+\input{Evaluation}
+\input{Conclusion}
+\input{References}
+\end{onehalfspace}
+\printindex
+\end{document}
