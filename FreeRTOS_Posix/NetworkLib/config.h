@@ -111,6 +111,7 @@
 /* Define the number of seconds for the HTTP request to timeout; if not
    defined no timeout (or libcurl default) is used. */
 /* #undef OAUTH_CURL_TIMEOUT */
+#define OAUTH_CURL_TIMEOUT 30
 
 /* Name of package */
 #define PACKAGE "liboauth"
