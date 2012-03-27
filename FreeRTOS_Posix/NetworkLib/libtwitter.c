@@ -2,13 +2,18 @@
  *    FreeRTOS Social Network Library
  *    https://github.com/thibauthavel/FreeRTOS-Social-Network-Library
  *    
- *    Author: Thibaut HAVEL
- *    Date:   13/02/2012
+ *    Author:       Thibaut HAVEL
+ *    Date:         13/02/2012
+ *
+ *    Last update : 27/03/2012
  *
  */
 
 
-/*-----------------------------------------------------------*/
+
+/*
+ * INCLUDES AND DEFINES
+ *-----------------------------------------------------------*/
 
 
 /* System headers */
@@ -26,26 +31,27 @@
 #include "libtwitter.h"
 
 
+/*-----------------------------------------------------------*/
+
 
 #define TWITTER_REQUEST_TOKEN_URL   "https://api.twitter.com/oauth/request_token"
 #define TWITTER_DIRECT_TOKEN_URL    "https://api.twitter.com/oauth/authorize"
 #define TWITTER_ACCESS_TOKEN_URL    "https://api.twitter.com/oauth/access_token"
 
-
-/*-----------------------------------------------------------*/
-
-
 #define USER_SCREEN_NAME    "thibaut_havel"
 #define USER_EMAIL          "********"
 #define USER_ID             "********"
-#define USER_PASSWORD       "********"	
+#define USER_PASSWORD       "********"
 #define CONSUMER_KEY        "VB5FifD1HLhmLmsj8tZA"
 #define CONSUMER_SECRET     "OdE18zFiva5TsC3rPQmq9BlYXhfBPFWJq2bY6Ib40"
 #define OAUTH_TOKEN         "488884688-gBSVVjk722PjHgPx5mBPY1wTsL0Bmlv8QAazwgMy"
 #define OAUTH_TOKEN_SECRET  "6jLaHA3wLRiUGAidt9q4doIx3IXX8U1D6ntyUuVMN1g"
 
 
-/*-----------------------------------------------------------*/
+
+/*
+ * TOOL FUNCTIONS
+ *-----------------------------------------------------------*/
 
 
 char * xstrcat (const char *s1, const char *s2) 
@@ -184,7 +190,10 @@ char * xstrtrim (const char *str_src)
 }
 
 
-/*-----------------------------------------------------------*/
+
+/*
+ * MAIN FUNCTION
+ *-----------------------------------------------------------*/
 
 
 void twitterizer (void)
@@ -195,8 +204,13 @@ void twitterizer (void)
         char * oauth_token;
         char * oauth_token_secret;
         char * callback;
-        char * verifier;
         char * direct_token_url;
+        char * verifier;
+        char * access_token_url;
+        char * access_token;
+        char * access_token_secret;
+        char * access_token_user_name;
+        char * access_token_user_id;
 
         // Step 1 : Get the request token URL
         printf("\n\nStep 1 --------------------------------\n\n");
@@ -219,12 +233,31 @@ void twitterizer (void)
         printf("\n\nStep 4 --------------------------------\n\n");
         twitter_verifier(direct_token_url, oauth_token, &verifier);
         printf("verifier : %s \n", verifier);
+
+        // Step 5 : Get the access token URL
+        printf("\n\nStep 5 --------------------------------\n\n");
+        twitter_access_token_url(CONSUMER_KEY, CONSUMER_SECRET, oauth_token, oauth_token_secret, verifier, &access_token_url);
+        printf("access_token_url : %s \n", access_token_url);
         
-        printf("End of test\n");
+        // Step 6 : Use the access token URL to get a token
+        printf("\n\nStep 6 --------------------------------\n\n");
+        twitter_access_token(access_token_url, &access_token, &access_token_secret, &access_token_user_name, &access_token_user_id);
+        printf("access_token : %s \n", access_token);
+        printf("access_token_secret : %s \n", access_token_secret);
+        printf("access_token_user_name : %s \n", access_token_user_name);
+        printf("access_token_user_id : %s \n", access_token_user_id);
+        
+        printf("\n\nEnd of test ---------------------------\n\n");
         fflush(stdout);
     }
     xTaskResumeAll();
 }
+
+
+
+/*
+ * AUTHENTICATION FUNCTIONS
+ *-----------------------------------------------------------*/
 
 
 /*
@@ -249,8 +282,6 @@ void twitter_request_token (const char * request_token_url, char ** oauth_token,
 {
     char *  request_token_param;
     char *  request_token_result;
-    char ** request_token_result_value;
-    int     request_token_result_count;
     
     // Using OAuth to get the result
     request_token_result = oauth_http_get(request_token_url, request_token_param);
@@ -275,9 +306,13 @@ void twitter_request_token (const char * request_token_url, char ** oauth_token,
  */
 void twitter_direct_token_url (const char * oauth_token, char ** direct_token_url)
 {
-    strcpy(*direct_token_url, TWITTER_DIRECT_TOKEN_URL);
-    strcat(*direct_token_url, "?oauth_token=");
-    strcat(*direct_token_url, oauth_token);
+    char * url_tmp;
+
+    url_tmp = xstrdup(TWITTER_DIRECT_TOKEN_URL);
+    url_tmp = xstrcat(url_tmp, "?oauth_token=");
+    url_tmp = xstrcat(url_tmp, oauth_token);
+    
+    *direct_token_url = url_tmp;
 }
 
 
@@ -402,6 +437,7 @@ void twitter_direct_token_authenticity (const char * script, unsigned keychar1, 
     *authenticity = authenticity_value;
 }
 
+
 /*
  *  IN  : script
  *  IN  : keychar1
@@ -425,4 +461,58 @@ void twitter_direct_token_pin (const char * script, unsigned keychar1, unsigned 
     xsubstr(hay_stack, needle_keychar1_pos + 1, needle_keychar2_pos, &pin_value);
     
     *pin = pin_value;
+}
+
+
+/*
+ *  IN  : consumer_key
+ *  IN  : consumer_secret
+ *  IN  : oauth_token
+ *  IN  : oauth_token_secret
+ *  IN  : verifier
+ *  OUT : url
+ */
+void twitter_access_token_url (const char * consumer_key, const char * consumer_secret, const char * oauth_token, const char * oauth_token_secret, const char * verifier, char ** access_token_url)
+{
+    char * url_tmp;
+    
+    url_tmp = oauth_sign_url2(TWITTER_ACCESS_TOKEN_URL, NULL, OA_HMAC, NULL, consumer_key, consumer_secret, oauth_token, oauth_token_secret);
+    url_tmp = xstrcat(url_tmp, "&oauth_verifier=");
+    url_tmp = xstrcat(url_tmp, verifier);
+    
+    *access_token_url = url_tmp;
+}
+
+
+/*
+ *  IN  : access_token_url
+ *  OUT : access_token
+ *  OUT : access_token_secret
+ *  OUT : access_token_user_name
+ *  OUT : access_token_user_id
+ */
+twitter_access_token(const char * access_token_url, char ** access_token, char ** access_token_secret, char ** access_token_user_name, char ** access_token_user_id)
+{
+    char * access_token_result;
+
+    // Using OAuth to get the result
+    access_token_result = oauth_http_get(access_token_url, NULL);
+    
+    // Split results into variables
+    *access_token           = strtok(access_token_result, "&");
+    *access_token_secret    = strtok(NULL, "&");
+    *access_token_user_name = strtok(NULL, "&");
+    *access_token_user_id   = strtok(NULL, "&");
+    
+    strtok(*access_token, "=");
+    *access_token = strtok(NULL, "=");
+    
+    strtok(*access_token_secret, "=");
+    *access_token_secret = strtok(NULL, "=");
+    
+    strtok(*access_token_user_name, "=");
+    *access_token_user_name = strtok(NULL, "=");
+    
+    strtok(*access_token_user_id, "=");
+    *access_token_user_id = strtok(NULL, "=");
 }
