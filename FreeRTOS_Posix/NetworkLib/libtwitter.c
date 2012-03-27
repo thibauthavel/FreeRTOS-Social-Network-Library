@@ -34,10 +34,6 @@
 /*-----------------------------------------------------------*/
 
 
-#define TWITTER_REQUEST_TOKEN_URL   "https://api.twitter.com/oauth/request_token"
-#define TWITTER_DIRECT_TOKEN_URL    "https://api.twitter.com/oauth/authorize"
-#define TWITTER_ACCESS_TOKEN_URL    "https://api.twitter.com/oauth/access_token"
-
 #define USER_SCREEN_NAME    "thibaut_havel"
 #define USER_EMAIL          "********"
 #define USER_ID             "********"
@@ -46,6 +42,12 @@
 #define CONSUMER_SECRET     "OdE18zFiva5TsC3rPQmq9BlYXhfBPFWJq2bY6Ib40"
 #define OAUTH_TOKEN         "488884688-gBSVVjk722PjHgPx5mBPY1wTsL0Bmlv8QAazwgMy"
 #define OAUTH_TOKEN_SECRET  "6jLaHA3wLRiUGAidt9q4doIx3IXX8U1D6ntyUuVMN1g"
+
+#define TWITTER_REQUEST_TOKEN_URL  "https://api.twitter.com/oauth/request_token"
+#define TWITTER_DIRECT_TOKEN_URL   "https://api.twitter.com/oauth/authorize"
+#define TWITTER_ACCESS_TOKEN_URL   "https://api.twitter.com/oauth/access_token"
+
+#define TWITTER_TIMELINE_USER_URL  "http://twitter.com/statuses/user_timeline.xml"
 
 
 
@@ -211,6 +213,11 @@ void twitterizer (void)
         char * access_token_secret;
         char * access_token_user_name;
         char * access_token_user_id;
+        
+        char * timeline_user;
+
+
+        printf("\n\nBegin authentication ******************\n\n");
 
         // Step 1 : Get the request token URL
         printf("\n\nStep 1 --------------------------------\n\n");
@@ -247,7 +254,17 @@ void twitterizer (void)
         printf("access_token_user_name : %s \n", access_token_user_name);
         printf("access_token_user_id : %s \n", access_token_user_id);
         
-        printf("\n\nEnd of test ---------------------------\n\n");
+        printf("\n\nEnd authentication ********************\n\n");
+        printf("\n\nBegin behaviours **********************\n\n");
+        
+        // Step 1 : Get the user timeline
+        printf("\n\nStep 1 --------------------------------\n\n");
+        twitter_timeline_user(CONSUMER_KEY, CONSUMER_SECRET, access_token, access_token_secret, access_token_user_name, &timeline_user);
+        printf("timeline_user : %s \n", timeline_user);
+        
+        printf("\n\nEnd behaviours ************************\n\n");
+        printf("\n\n+++++++++++++++++++++++++++++++++++++++\n\n");
+        
         fflush(stdout);
     }
     xTaskResumeAll();
@@ -491,7 +508,7 @@ void twitter_access_token_url (const char * consumer_key, const char * consumer_
  *  OUT : access_token_user_name
  *  OUT : access_token_user_id
  */
-twitter_access_token(const char * access_token_url, char ** access_token, char ** access_token_secret, char ** access_token_user_name, char ** access_token_user_id)
+void twitter_access_token(const char * access_token_url, char ** access_token, char ** access_token_secret, char ** access_token_user_name, char ** access_token_user_id)
 {
     char * access_token_result;
 
@@ -515,4 +532,66 @@ twitter_access_token(const char * access_token_url, char ** access_token, char *
     
     strtok(*access_token_user_id, "=");
     *access_token_user_id = strtok(NULL, "=");
+}
+
+
+
+/*
+ * USER BEHAVIOURS FUNCTIONS
+ *-----------------------------------------------------------*/
+ 
+
+/*
+ *  IN  : url_init
+ *  IN  : url_init_type
+ *  IN  : consumer_key
+ *  IN  : consumer_secret
+ *  IN  : access_token
+ *  IN  : access_token_secret
+ *  IN  : access_token_user_name
+ *  OUT : url
+ */
+void twitter_timeline_user_url(const char * url_init, const char * url_init_type, const char * consumer_key, const char * consumer_secret, const char * access_token, const char * access_token_secret, const char * access_token_user_name, char ** url)
+{
+    char * timeline_user_url;
+
+    if (url_init_type == 1)
+    {
+        timeline_user_url = xstrdup(url_init);
+        timeline_user_url = xstrcat(timeline_user_url, "/");
+        timeline_user_url = xstrcat(timeline_user_url, access_token_user_name);
+    }
+    else
+    {
+        timeline_user_url = xstrdup(url_init);
+    }
+
+    timeline_user_url = oauth_sign_url2(timeline_user_url, NULL, OA_HMAC, NULL, consumer_key, consumer_secret, access_token, access_token_secret);
+
+    *url = timeline_user_url;
+}
+
+
+/*
+ *  IN  : consumer_key
+ *  IN  : consumer_secret
+ *  IN  : access_token
+ *  IN  : access_token_secret
+ *  IN  : access_token_user_name
+ *  OUT : timeline_user_result
+ */
+void twitter_timeline_user (const char * consumer_key, const char * consumer_secret, const char * access_token, const char * access_token_secret, const char * access_token_user_name, char ** timeline_user_result)
+{
+    char * timeline_user_url;
+    char * timeline_user_url_init;
+    int    timeline_user_url_init_type;  // 0 = xml  ,  1 = url
+    char * timeline_user_result_tmp;
+
+    timeline_user_url_init = xstrdup(TWITTER_TIMELINE_USER_URL);
+    timeline_user_url_init_type = 0;
+
+    twitter_timeline_user_url(timeline_user_url_init, timeline_user_url_init_type, consumer_key, consumer_secret, access_token, access_token_secret, access_token_user_name, &timeline_user_url);
+    timeline_user_result_tmp = oauth_http_get(timeline_user_url, NULL);
+    
+    *timeline_user_result = timeline_user_result_tmp;
 }
