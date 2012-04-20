@@ -1,0 +1,297 @@
+Running as PID: 2961
+Timer Resolution for Run TimeStats is 100 ticks per second.
+Twitter task started.
+
+
+Begin authentication ******************
+
+
+
+Step 1 --------------------------------
+
+request_token_url : https://api.twitter.com/oauth/request_token?oauth_consumer_key=VB5FifD1HLhmLmsj8tZA&oauth_nonce=b7D1myYQGy_yF_5RFrLs0&oauth_signature_method=HMAC-SHA1&oauth_timestamp=1334924651&oauth_version=1.0&oauth_signature=rGoA99tkEd%2B7%2F2RpSvZOzm%2FqVWI%3D 
+
+
+Step 2 --------------------------------
+
+oauth_token        : ebvnwX6MslItt3uPwzXxN6TcNdbzy3Q9byZN0cr0Dwc 
+oauth_token_secret : tEcLdyfssLstUOWgvm9of3sBrjakqIGTaGrbWr0A8cs 
+callback           : true 
+
+
+Step 3 --------------------------------
+
+direct_token_url : https://api.twitter.com/oauth/authorize?oauth_token=ebvnwX6MslItt3uPwzXxN6TcNdbzy3Q9byZN0cr0Dwc 
+
+
+Step 4 --------------------------------
+
+verifier : 8237737 
+
+
+Step 5 --------------------------------
+
+access_token_url : https://api.twitter.com/oauth/access_token?oauth_consumer_key=VB5FifD1HLhmLmsj8tZA&oauth_nonce=SjPbBMHCr1_6bYscRXglBl&oauth_signature_method=HMAC-SHA1&oauth_timestamp=1334924653&oauth_token=ebvnwX6MslItt3uPwzXxN6TcNdbzy3Q9byZN0cr0Dwc&oauth_version=1.0&oauth_signature=McI%2B7hkw86XPGIk15pV8%2F6l98JQ%3D&oauth_verifier=8237737 
+
+
+Step 6 --------------------------------
+
+access_token : 488884688-gBSVVjk722PjHgPx5mBPY1wTsL0Bmlv8QAazwgMy 
+access_token_secret : 6jLaHA3wLRiUGAidt9q4doIx3IXX8U1D6ntyUuVMN1g 
+access_token_user_name : 488884688 
+access_token_user_id : thibaut_havel 
+
+
+End authentication ********************
+
+
+
+Begin behaviours **********************
+
+
+
+Step 1 --------------------------------
+
+xml_content=<?xml version="1.0" encoding="UTF-8"?>
+<statuses type="array">
+<status>
+  <created_at>Tue Apr 03 16:23:32 +0000 2012</created_at>
+  <id>187213757825564672</id>
+  <text>Multi-tweets test.</text>
+  <source>web</source>
+  <truncated>false</truncated>
+  <favorited>false</favorited>
+  <in_reply_to_status_id></in_reply_to_status_id>
+  <in_reply_to_user_id></in_reply_to_user_id>
+  <in_reply_to_screen_name></in_reply_to_screen_name>
+  <retweet_count>0</retweet_count>
+  <retweeted>false</retweeted>
+  <user>
+    <id>488884688</id>
+    <name>Thibaut Havel</name>
+    <screen_name>thibaut_havel</screen_name>
+    <location></location>
+    <description></description>
+    <profile_image_url>http://a0.twimg.com/profile_images/1818384580/033_normal.jpg</profile_image_url>
+    <profile_image_url_https>https://si0.twimg.com/profile_images/1818384580/033_normal.jpg</profile_image_url_https>
+    <url></url>
+    <protected>false</protected>
+    <followers_count>1</followers_count>
+    <profile_background_color>C0DEED</profile_background_color>
+    <profile_text_color>333333</profile_text_color>
+    <profile_link_color>0084B4</profile_link_color>
+    <profile_sidebar_fill_color>DDEEF6</profile_sidebar_fill_color>
+    <profile_sidebar_border_color>C0DEED</profile_sidebar_border_color>
+    <friends_count>5</friends_count>
+    <created_at>Fri Feb 10 23:22:45 +0000 2012</created_at>
+    <favourites_count>0</favourites_count>
+    <utc_offset>0</utc_offset>
+    <time_zone>London</time_zone>
+    <profile_background_image_url>http://a0.twimg.com/images/themes/theme1/bg.png</profile_background_image_url>
+    <profile_background_image_url_https>https://si0.twimg.com/images/themes/theme1/bg.png</profile_background_image_url_https>
+    <profile_background_tile>false</profile_background_tile>
+    <profile_use_background_image>true</profile_use_background_image>
+    <notifications>false</notifications>
+    <geo_enabled>false</geo_enabled>
+    <verified>false</verified>
+    <following>false</following>
+    <statuses_count>2</statuses_count>
+    <lang>fr</lang>
+    <contributors_enabled>false</contributors_enabled>
+    <follow_request_sent>false</follow_request_sent>
+    <listed_count>0</listed_count>
+    <show_all_inline_media>false</show_all_inline_media>
+    <default_profile>true</default_profile>
+    <default_profile_image>false</default_profile_image>
+    <is_translator>false</is_translator>
+  </user>
+  <geo/>
+  <coordinates/>
+  <place/>
+  <contributors/>
+</status>
+<status>
+  <created_at>Tue Mar 27 17:43:38 +0000 2012</created_at>
+  <id>184697200146780160</id>
+  <text>A 'Hello world' to test my library.</text>
+  <source>&lt;a href=&quot;http://twitter.com/#!/download/iphone&quot; rel=&quot;nofollow&quot;&gt;Twitter for iPhone&lt;/a&gt;</source>
+  <truncated>false</truncated>
+  <favorited>false</favorited>
+  <in_reply_to_status_id></in_reply_to_status_id>
+  <in_reply_to_user_id></in_reply_to_user_id>
+  <in_reply_to_screen_name></in_reply_to_screen_name>
+  <retweet_count>0</retweet_count>
+  <retweeted>false</retweeted>
+  <user>
+    <id>488884688</id>
+    <name>Thibaut Havel</name>
+    <screen_name>thibaut_havel</screen_name>
+    <location></location>
+    <description></description>
+    <profile_image_url>http://a0.twimg.com/profile_images/1818384580/033_normal.jpg</profile_image_url>
+    <profile_image_url_https>https://si0.twimg.com/profile_images/1818384580/033_normal.jpg</profile_image_url_https>
+    <url></url>
+    <protected>false</protected>
+    <followers_count>1</followers_count>
+    <profile_background_color>C0DEED</profile_background_color>
+    <profile_text_color>333333</profile_text_color>
+    <profile_link_color>0084B4</profile_link_color>
+    <profile_sidebar_fill_color>DDEEF6</profile_sidebar_fill_color>
+    <profile_sidebar_border_color>C0DEED</profile_sidebar_border_color>
+    <friends_count>5</friends_count>
+    <created_at>Fri Feb 10 23:22:45 +0000 2012</created_at>
+    <favourites_count>0</favourites_count>
+    <utc_offset>0</utc_offset>
+    <time_zone>London</time_zone>
+    <profile_background_image_url>http://a0.twimg.com/images/themes/theme1/bg.png</profile_background_image_url>
+    <profile_background_image_url_https>https://si0.twimg.com/images/themes/theme1/bg.png</profile_background_image_url_https>
+    <profile_background_tile>false</profile_background_tile>
+    <profile_use_background_image>true</profile_use_background_image>
+    <notifications>false</notifications>
+    <geo_enabled>false</geo_enabled>
+    <verified>false</verified>
+    <following>false</following>
+    <statuses_count>2</statuses_count>
+    <lang>fr</lang>
+    <contributors_enabled>false</contributors_enabled>
+    <follow_request_sent>false</follow_request_sent>
+    <listed_count>0</listed_count>
+    <show_all_inline_media>false</show_all_inline_media>
+    <default_profile>true</default_profile>
+    <default_profile_image>false</default_profile_image>
+    <is_translator>false</is_translator>
+  </user>
+  <geo/>
+  <coordinates/>
+  <place/>
+  <contributors/>
+</status>
+</statuses>
+
+element(1)=Multi-tweets test.
+xml_content=Multi-tweets test.</text>
+  <source>web</source>
+  <truncated>false</truncated>
+  <favorited>false</favorited>
+  <in_reply_to_status_id></in_reply_to_status_id>
+  <in_reply_to_user_id></in_reply_to_user_id>
+  <in_reply_to_screen_name></in_reply_to_screen_name>
+  <retweet_count>0</retweet_count>
+  <retweeted>false</retweeted>
+  <user>
+    <id>488884688</id>
+    <name>Thibaut Havel</name>
+    <screen_name>thibaut_havel</screen_name>
+    <location></location>
+    <description></description>
+    <profile_image_url>http://a0.twimg.com/profile_images/1818384580/033_normal.jpg</profile_image_url>
+    <profile_image_url_https>https://si0.twimg.com/profile_images/1818384580/033_normal.jpg</profile_image_url_https>
+    <url></url>
+    <protected>false</protected>
+    <followers_count>1</followers_count>
+    <profile_background_color>C0DEED</profile_background_color>
+    <profile_text_color>333333</profile_text_color>
+    <profile_link_color>0084B4</profile_link_color>
+    <profile_sidebar_fill_color>DDEEF6</profile_sidebar_fill_color>
+    <profile_sidebar_border_color>C0DEED</profile_sidebar_border_color>
+    <friends_count>5</friends_count>
+    <created_at>Fri Feb 10 23:22:45 +0000 2012</created_at>
+    <favourites_count>0</favourites_count>
+    <utc_offset>0</utc_offset>
+    <time_zone>London</time_zone>
+    <profile_background_image_url>http://a0.twimg.com/images/themes/theme1/bg.png</profile_background_image_url>
+    <profile_background_image_url_https>https://si0.twimg.com/images/themes/theme1/bg.png</profile_background_image_url_https>
+    <profile_background_tile>false</profile_background_tile>
+    <profile_use_background_image>true</profile_use_background_image>
+    <notifications>false</notifications>
+    <geo_enabled>false</geo_enabled>
+    <verified>false</verified>
+    <following>false</following>
+    <statuses_count>2</statuses_count>
+    <lang>fr</lang>
+    <contributors_enabled>false</contributors_enabled>
+    <follow_request_sent>false</follow_request_sent>
+    <listed_count>0</listed_count>
+    <show_all_inline_media>false</show_all_inline_media>
+    <default_profile>true</default_profile>
+    <default_profile_image>false</default_profile_image>
+    <is_translator>false</is_translator>
+  </user>
+  <geo/>
+  <coordinates/>
+  <place/>
+  <contributors/>
+</status>
+<status>
+  <created_at>Tue Mar 27 17:43:38 +0000 2012</created_at>
+  <id>184697200146780160</id>
+  <text>A 'Hello world' to test my library.</text>
+  <source>&lt;a href=&quot;http://twitter.com/#!/download/iphone&quot; rel=&quot;nofollow&quot;&gt;Twitter for iPhone&lt;/a&gt;</source>
+  <truncated>false</truncated>
+  <favorited>false</favorited>
+  <in_reply_to_status_id></in_reply_to_status_id>
+  <in_reply_to_user_id></in_reply_to_user_id>
+  <in_reply_to_screen_name></in_reply_to_screen_name>
+  <retweet_count>0</retweet_count>
+  <retweeted>false</retweeted>
+  <user>
+    <id>488884688</id>
+    <name>Thibaut Havel</name>
+    <screen_name>thibaut_havel</screen_name>
+    <location></location>
+    <description></description>
+    <profile_image_url>http://a0.twimg.com/profile_images/1818384580/033_normal.jpg</profile_image_url>
+    <profile_image_url_https>https://si0.twimg.com/profile_images/1818384580/033_normal.jpg</profile_image_url_https>
+    <url></url>
+    <protected>false</protected>
+    <followers_count>1</followers_count>
+    <profile_background_color>C0DEED</profile_background_color>
+    <profile_text_color>333333</profile_text_color>
+    <profile_link_color>0084B4</profile_link_color>
+    <profile_sidebar_fill_color>DDEEF6</profile_sidebar_fill_color>
+    <profile_sidebar_border_color>C0DEED</profile_sidebar_border_color>
+    <friends_count>5</friends_count>
+    <created_at>Fri Feb 10 23:22:45 +0000 2012</created_at>
+    <favourites_count>0</favourites_count>
+    <utc_offset>0</utc_offset>
+    <time_zone>London</time_zone>
+    <profile_background_image_url>http://a0.twimg.com/images/themes/theme1/bg.png</profile_background_image_url>
+    <profile_background_image_url_https>https://si0.twimg.com/images/themes/theme1/bg.png</profile_background_image_url_https>
+    <profile_background_tile>false</profile_background_tile>
+    <profile_use_background_image>true</profile_use_background_image>
+    <notifications>false</notifications>
+    <geo_enabled>false</geo_enabled>
+    <verified>false</verified>
+    <following>false</following>
+    <statuses_count>2</statuses_count>
+    <lang>fr</lang>
+    <contributors_enabled>false</contributors_enabled>
+    <follow_request_sent>false</follow_request_sent>
+    <listed_count>0</listed_count>
+    <show_all_inline_media>false</show_all_inline_media>
+    <default_profile>true</default_profile>
+    <default_profile_image>false</default_profile_image>
+    <is_translator>false</is_translator>
+  </user>
+  <geo/>
+  <coordinates/>
+  <place/>
+  <contributors/>
+</status>
+</statuses>
+element(2)=
+
+
+End behaviours ************************
+
+
+
++++++++++++++++++++++++++++++++++++++++
+
+Blocking queues count unchanged!
+Maths task count unchanged!
+Polling queue count unchanged!
+Semaphore take count unchanged!
+Error in multi events tasks!
+Error in block time test tasks!
+Error in queue peek test task!

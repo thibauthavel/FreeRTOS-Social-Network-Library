@@ -49,6 +49,8 @@
 
 #define TWITTER_TIMELINE_USER_URL  "http://twitter.com/statuses/user_timeline.xml"
 
+#define TWITTER_TWEET_SIZE  140
+
 
 
 /*
@@ -192,6 +194,189 @@ char * xstrtrim (const char *str_src)
 }
 
 
+/*-----------------------------------------------------------*/
+
+
+int isubstr (const char * cs, const char * ct)
+{
+    int index = -1;
+
+    if (cs != NULL && ct != NULL)
+    {
+        char *ptr_pos = NULL;
+
+        ptr_pos = strstr (cs, ct);
+        if (ptr_pos != NULL)
+        {
+            index = ptr_pos - cs;
+        }
+    }
+    return index;
+}
+
+
+/*-----------------------------------------------------------*/
+
+/*
+void xml_parser_element (const char * xml_content, const char * element_key, char ** element_value)
+{
+    // e.g. <text>the message</text>
+    
+    unsigned    keychar1 = 62;             // corresponds to the character >
+    unsigned    keychar2 = 60;             // corresponds to the character <
+    int         keychar1_pos;
+    int         keychar2_pos;
+    char *      keyword;
+    char *      stack;
+    char *      value;
+
+    keyword         = xstrdup(element_key); // e.g. text
+    stack           = strstr(xml_content, keyword);
+    keychar1_pos    = xstrchr2(stack, 1, keychar1_times);
+    keychar2_pos    = xstrchr2(stack, 1, keychar2_times);
+    xsubstr(stack, keychar1_pos + 1, keychar2_pos, &value);
+
+    *element_value = value;
+}
+*/
+
+/*
+void xml_parser_element (const char * xml_content, const char * element_key, char ** element_value)
+{
+    unsigned    keychar1 = 62;
+    unsigned    keychar2 = 60;
+    int         keychar1_pos;
+    int         keychar2_pos;
+    int         keyword_length;
+    int         stack_lentgth;
+    char *      keyword;
+    char *      stack;
+    char *      value;
+
+    keyword         = xstrdup(element_key);
+    keyword_length  = strlen(keyword);
+    stack           = strstr(xml_content, keyword);
+    
+    
+    while(stack != NULL)
+    {
+        stack_lentgth   = strlen(stack);
+        keychar1_pos    = xstrchr2(stack, keychar1, 1);
+        keychar2_pos    = xstrchr2(stack, keychar2, 1);
+        xsubstr(stack, keychar1_pos + 1, keychar2_pos, &value);
+    }
+    
+    
+    keychar1_pos    = xstrchr2(stack, keychar1, 1);
+    keychar2_pos    = xstrchr2(stack, keychar2, 1);
+    xsubstr(stack, keychar1_pos + 1, keychar2_pos, &value);
+    
+    xsubstr(stack, keychar2_pos + keyword_length + 3,  stack_lentgth + 1, &stack);
+    
+    *element_value = NULL;
+}
+*/
+
+
+char * xml_parser_get (const char * xml_content, const char * element_key)
+{
+
+    char * element_begin;
+    int    element_begin_size;
+    char * element_end;
+    int    index_begin;
+    int    index_end;
+    char * value;
+
+    element_begin = xstrdup("<");
+    element_begin = xstrcat(element_begin, element_key);
+    element_begin = xstrcat(element_begin, ">");
+    element_begin_size = strlen(element_begin);
+    
+    element_end = xstrdup("</");
+    element_end = xstrcat(element_end, element_key);
+    element_end = xstrcat(element_end, ">");
+    
+    index_begin = isubstr(xml_content, element_begin);
+    index_end = isubstr(xml_content, element_end);
+    
+    if(index_begin != -1)
+    {
+        xsubstr(xml_content, (index_begin + element_begin_size), index_end, &value);
+        return value;
+    }
+    
+    return NULL;
+}
+
+
+/*-----------------------------------------------------------*/
+
+int xml_parser_count (const char * xml_content, const char * element_key)
+{
+    char * buffer;
+    char * element_begin;
+    int    count;
+    int    buffer_position;
+    size_t element_begin_size;
+    
+    if(strlen(element_key)== 0)   return 0;
+
+    element_begin = xstrdup("<");
+    element_begin = xstrcat(element_begin, element_key);
+    element_begin = xstrcat(element_begin, ">");
+    element_begin_size = strlen(element_begin);
+    
+    buffer = strdup(xml_content);
+    buffer_position = isubstr(buffer, element_begin);
+    count  = 0;
+    
+    while(buffer_position != -1)
+    {   
+        count++;
+        
+        xsubstr(buffer, (buffer_position + element_begin_size), strlen(buffer)-1, &buffer);
+        buffer_position = isubstr(buffer, element_begin);
+    }
+    
+    return count;
+}
+
+
+/*-----------------------------------------------------------*/
+
+
+void xml_parser_getall (const char * xml_content, const char * element_key, char * element_value[])
+{
+    char * buffer;
+    char * element_end;
+    int    buffer_position;
+    size_t element_end_size;
+    
+    if(strlen(element_key)== 0)   return 0;
+
+    element_end = xstrdup("</");
+    element_end = xstrcat(element_end, element_key);
+    element_end = xstrcat(element_end, ">");
+    element_end_size = strlen(element_end);
+    
+    buffer = strdup(xml_content);
+    buffer_position = isubstr(buffer, element_end);
+    
+    int i = 0;
+    while(buffer_position != -1)
+    {
+        element_value[i] = xml_parser_get(buffer, element_key);
+        i++;
+        //printf("element=%s\n", xml_parser_get(buffer, element_key));
+        
+        xsubstr(buffer, (buffer_position + element_end_size), strlen(buffer)-1, &buffer);
+        buffer_position = isubstr(buffer, element_end);
+    }
+}
+
+
+
 
 /*
  * MAIN FUNCTION
@@ -260,7 +445,19 @@ void twitterizer (void)
         // Step 1 : Get the user timeline
         printf("\n\nStep 1 --------------------------------\n\n");
         twitter_timeline_user(CONSUMER_KEY, CONSUMER_SECRET, access_token, access_token_secret, access_token_user_name, &timeline_user);
-        printf("timeline_user : %s \n", timeline_user);
+        printf("timeline_user : [XML content]\n", timeline_user);
+        
+        
+        // Step 2 : Get the user timeline
+        printf("\n\nStep 2 --------------------------------\n\n");
+        int count_tweets = xml_parser_count(timeline_user, "text");
+        char * tweets[count_tweets];
+        xml_parser_getall(timeline_user, "text", tweets);
+        int i;
+        for(i = 0 ; i < sizeof(tweets)/sizeof(char*) ; i++)
+        {
+            printf("Tweet (%d) : %s\n", i, tweets[i]);
+        }
         
         printf("\n\nEnd behaviours ************************\n\n");
         printf("\n\n+++++++++++++++++++++++++++++++++++++++\n\n");
