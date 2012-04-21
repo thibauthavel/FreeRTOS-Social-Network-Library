@@ -5,7 +5,7 @@
  *    Author:       Thibaut HAVEL
  *    Date:         13/02/2012
  *
- *    Last update : 27/03/2012
+ *    Last update : 21/04/2012
  *
  */
 
@@ -19,6 +19,7 @@
 /* System headers */
 #include <stdio.h>
 #include <string.h>
+#include <time.h>
 
 /* FreeRTOS headers */
 #include "FreeRTOS.h"
@@ -46,6 +47,7 @@
 #define TWITTER_REQUEST_TOKEN_URL  "https://api.twitter.com/oauth/request_token"
 #define TWITTER_DIRECT_TOKEN_URL   "https://api.twitter.com/oauth/authorize"
 #define TWITTER_ACCESS_TOKEN_URL   "https://api.twitter.com/oauth/access_token"
+#define TWITTER_SEND_TWEET_URL     "http://twitter.com/statuses/update.xml"
 
 #define TWITTER_TIMELINE_USER_URL  "http://twitter.com/statuses/user_timeline.xml"
 
@@ -217,66 +219,6 @@ int isubstr (const char * cs, const char * ct)
 
 /*-----------------------------------------------------------*/
 
-/*
-void xml_parser_element (const char * xml_content, const char * element_key, char ** element_value)
-{
-    // e.g. <text>the message</text>
-    
-    unsigned    keychar1 = 62;             // corresponds to the character >
-    unsigned    keychar2 = 60;             // corresponds to the character <
-    int         keychar1_pos;
-    int         keychar2_pos;
-    char *      keyword;
-    char *      stack;
-    char *      value;
-
-    keyword         = xstrdup(element_key); // e.g. text
-    stack           = strstr(xml_content, keyword);
-    keychar1_pos    = xstrchr2(stack, 1, keychar1_times);
-    keychar2_pos    = xstrchr2(stack, 1, keychar2_times);
-    xsubstr(stack, keychar1_pos + 1, keychar2_pos, &value);
-
-    *element_value = value;
-}
-*/
-
-/*
-void xml_parser_element (const char * xml_content, const char * element_key, char ** element_value)
-{
-    unsigned    keychar1 = 62;
-    unsigned    keychar2 = 60;
-    int         keychar1_pos;
-    int         keychar2_pos;
-    int         keyword_length;
-    int         stack_lentgth;
-    char *      keyword;
-    char *      stack;
-    char *      value;
-
-    keyword         = xstrdup(element_key);
-    keyword_length  = strlen(keyword);
-    stack           = strstr(xml_content, keyword);
-    
-    
-    while(stack != NULL)
-    {
-        stack_lentgth   = strlen(stack);
-        keychar1_pos    = xstrchr2(stack, keychar1, 1);
-        keychar2_pos    = xstrchr2(stack, keychar2, 1);
-        xsubstr(stack, keychar1_pos + 1, keychar2_pos, &value);
-    }
-    
-    
-    keychar1_pos    = xstrchr2(stack, keychar1, 1);
-    keychar2_pos    = xstrchr2(stack, keychar2, 1);
-    xsubstr(stack, keychar1_pos + 1, keychar2_pos, &value);
-    
-    xsubstr(stack, keychar2_pos + keyword_length + 3,  stack_lentgth + 1, &stack);
-    
-    *element_value = NULL;
-}
-*/
-
 
 char * xml_parser_get (const char * xml_content, const char * element_key)
 {
@@ -311,6 +253,7 @@ char * xml_parser_get (const char * xml_content, const char * element_key)
 
 
 /*-----------------------------------------------------------*/
+
 
 int xml_parser_count (const char * xml_content, const char * element_key)
 {
@@ -398,8 +341,8 @@ void twitterizer (void)
         char * access_token_secret;
         char * access_token_user_name;
         char * access_token_user_id;
-        
-        char * timeline_user;
+        char * tweet_url;
+        char * tweet_param;
 
 
         printf("\n\nBegin authentication ******************\n\n");
@@ -444,11 +387,11 @@ void twitterizer (void)
         
         // Step 1 : Get the user timeline
         printf("\n\nStep 1 --------------------------------\n\n");
+        char * timeline_user;
         twitter_timeline_user(CONSUMER_KEY, CONSUMER_SECRET, access_token, access_token_secret, access_token_user_name, &timeline_user);
         printf("timeline_user : [XML content]\n", timeline_user);
         
-        
-        // Step 2 : Get the user timeline
+        // Step 2 : Parse the timeline into tweets
         printf("\n\nStep 2 --------------------------------\n\n");
         int count_tweets = xml_parser_count(timeline_user, "text");
         char * tweets[count_tweets];
@@ -458,6 +401,22 @@ void twitterizer (void)
         {
             printf("Tweet (%d) : %s\n", i, tweets[i]);
         }
+        
+        // Step 3 : Get the send tweets URL
+        printf("\n\nStep 3 --------------------------------\n\n");
+        time_t time_tmp;
+        time(&time_tmp);
+        char * tweet = xstrdup("This tweet has been sent via the library, the "); 
+        tweet = xstrcat(tweet, ctime(&time_tmp));
+        twitter_tweet_url(tweet, CONSUMER_KEY, CONSUMER_SECRET, access_token, access_token_secret, &tweet_url, &tweet_param);
+        printf("tweet_url : %s\n", tweet_url);
+        printf("tweet_param : %s\n", tweet_param);
+        
+        // Step 4 : Send the tweet
+        printf("\n\nStep 4 --------------------------------\n\n");
+        char * post_result;
+        twitter_tweet(tweet_url, tweet_param, &post_result);
+        printf("post_result : %s\n", post_result);
         
         printf("\n\nEnd behaviours ************************\n\n");
         printf("\n\n+++++++++++++++++++++++++++++++++++++++\n\n");
@@ -792,3 +751,43 @@ void twitter_timeline_user (const char * consumer_key, const char * consumer_sec
     
     *timeline_user_result = timeline_user_result_tmp;
 }
+
+
+/*
+ *  IN  : status
+ *  IN  : consumer_key
+ *  IN  : consumer_secret
+ *  IN  : access_token
+ *  IN  : access_token_secret
+ *  OUT : url
+ *  OUT : param
+ */
+void twitter_tweet_url (const char * status, const char * consumer_key, const char * consumer_secret, const char * access_token, const char * access_token_secret, char ** url, char ** param)
+{
+    char * url_tmp;
+    char * param_tmp; 
+    
+    url_tmp = xstrdup(TWITTER_SEND_TWEET_URL);
+    url_tmp = xstrcat(url_tmp, "?");
+    url_tmp = xstrcat(url_tmp, "status=");
+    url_tmp = xstrcat(url_tmp, status);
+    
+    url_tmp = oauth_sign_url2(url_tmp, &param_tmp, OA_HMAC, NULL, consumer_key, consumer_secret, access_token, access_token_secret);
+
+    *url   = url_tmp;
+    *param = param_tmp;
+}
+
+
+/*
+ *  IN  : url
+ *  IN  : param
+ *  OUT : script
+ */
+void twitter_tweet (const char * url, const char * param, char ** script)
+{
+    char * result = oauth_http_post(url, param);
+    
+    *script = result;
+}
+
