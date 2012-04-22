@@ -1,0 +1,487 @@
+Teesside University
+School of Computing
+2011 - 2012
+
+Final Year Project
+BSc Computer Science
+
+Social network library development
+Thibaut Havel
+L1247434
+
+Supervisor : Jo˜o F. Ferreira
+a
+
+Abstract
+The main aim of this project is to develop a low-level library that is able to grab and store
+data from a social network. This library works in an embedded device and stored data had to be
+used to provide a simple service. To demonstrate the eﬀectiveness of the ﬁnal library, I created a
+demo service that interacts with a known social network (for example, Twitter).
+
+1
+
+Acknowledgements
+I would like to thank my supervisor Jo˜o Ferreira for his support all over the development
+a
+of my project.
+
+2
+
+Contents
+I
+
+Abstract
+
+II
+
+1
+
+Acknowledgements
+
+III
+
+2
+
+Development of the library
+
+5
+
+1 Introduction
+
+6
+
+2 Methodology
+
+7
+
+2.1
+
+The initial project scheduling . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+7
+
+2.2
+
+The eﬀective approaches . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+7
+
+2.3
+
+The support tools . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+8
+
+3 Research
+3.1
+
+9
+9
+
+3.1.1
+
+Overview . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+9
+
+3.1.2
+
+Real-Time System . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+9
+
+3.1.3
+
+Libraries . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+9
+
+3.1.4
+3.2
+
+Operating System: FreeRTOS . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+POSIX simulator . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+9
+
+Twitter authentication: OAuth protocol . . . . . . . . . . . . . . . . . . . . . . . . .
+
+9
+
+3.2.1
+
+Overview . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+9
+
+3.2.2
+
+Existing library in C . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+10
+
+3.2.3
+
+Register an application on Twitter . . . . . . . . . . . . . . . . . . . . . . . .
+
+10
+
+3.2.4
+
+Required libraries . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+10
+
+3
+
+4 Design
+
+11
+
+4.1
+
+Goal of the library . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+11
+
+4.2
+
+Requisites . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+11
+
+4.3
+
+Representation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+11
+
+5 Implementation
+5.1
+
+12
+12
+
+5.1.1
+
+Requisites . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+12
+
+5.1.2
+5.2
+
+The library . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+Simpliﬁcation layer . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+12
+
+A demo application . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+12
+
+6 Testing of the library
+
+13
+
+7 Evaluation of the ptoject
+
+14
+
+7.1
+
+Goal . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+14
+
+7.2
+
+Schedule . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+14
+
+7.3
+
+Improvements . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+14
+
+8 Conclusion
+
+15
+
+IV
+
+16
+
+References
+
+4
+
+Development of the library
+
+5
+
+1
+
+Introduction
+
+Our society tends to use more and more social networks (for instance, Twitter or Facebook).
+At the same time, we are increasingly dependent on the use of embedded devices on a day-to-day
+basis (for instance, home automation). The goal of this project is to develop a platform that allows
+an eﬀective and eﬃcient communication between embedded devices and social networks.
+The main aim is to develop a low-level library that is able to grab and store data from a
+social network. This library works in an embedded device and stored data has been used to provide
+a simple service. To demonstrate the eﬀectiveness of the ﬁnal library, I created a demo service that
+interacts with a known social network: Twitter.
+One of my personal objectives was to improve my knowledge in low-level development and
+become familiar with the C language. Also I was looking forward to improving my software development skill while working with a very speciﬁc hardware.
+Firstly, this report will present the way I started my initial research and how I designed
+the library according to my functional choices. Secondly, it will present how I’ve implemented these
+functionalities, and what I did to test my library. Finally, this report will end by an evaluation of
+the ﬁnal product regarding the design choices, the way I’ve implemented them, and his reliability.
+
+6
+
+2
+
+Methodology
+
+2.1
+
+The initial project scheduling
+In my project speciﬁcation, I set my schedule as following:
+
+• January: Research (2 weeks), design (2 weeks).
+• Febuary: Design (1 week), Implementation (3 weeks).
+• March: Implementation (3 weeks), Testing (1 week).
+• April: Evaluation and report compilation (2 weeks).
+My supervisor Jo˜o and I met every week or every two weeks to discuss about planning and
+a
+progresses of my project.
+
+2.2
+
+The eﬀective approaches
+
+My initial approach was to become familiar with the embedded device technology. I had to
+ﬁnd an adapted, a small and a simple operating system to work with, thereby I chose FreeRTOS1
+supported from my supervisor.
+My supervisor had already used this system and he had developed applications before. He
+provided me one of his own device running with FreeRTOS. So, thanks to Jo˜o and his knowledges
+a
+about this operating system, I had a platform in addition to a massive support from him and the
+online community to develop my library. As I didn’t have any knowledge about FreeRTOS, I read
+several articles which deals with how it works, and how tasks are scheduled in an real-time way.
+As a consequence of this chose and because one the goals of this project is to gain knowledge
+about low-level development, the library has been build using the C language.
+1
+
+FreeRTOS is a light-weight Real-Time Operating System.
+
+7
+
+Then, I deﬁned every functionalities of the ﬁnal applications. Basically, the library’s features
+are simple: it should allow a user to receive and send text statues of a social network. For instance
+a message on the wall in Facebook or a tweet in Twitter. Facebook and Twitter are both well
+known social networks and after some research about them, I choose to build my library suitable for
+Twitter because of the solid support for OAuth which is a secured protocol to access data. Once
+again, this choice was supported by Jo˜o.
+a
+At this point, I had to deﬁned how to receive and to send tweets, so I’ve started by looking
+for any existing solutions. In the next chapter, I will discuss why I chose to build my own library
+from scratch only using OAuth.
+After this key decision, I’ve learned how OAuth works and how to register an application on
+Twitter it in order to access to the data.
+As I was now aware about what the tools I will use and the way to use them, I designed the
+library according to the features I wanted to implement.
+The next step of the development was to implement the abstract structure of the library. At
+this stage, I faced lot of issues concerning the use of OAuth, the C language and its requirements.
+Thanks to my previous years of studies, I learnt the basics of this language but I read a lot of articles,
+books and tutorials along the implementation.
+Once I ﬁnished the draft version of the library, I tested every functionalities receiving and
+sending tweets over my own account and I improved the reliability according to the results of these
+tests.
+
+2.3
+
+The support tools
+
+To help myself into the research and the development of the library, I used some additional
+appropriate tools:
+• A diary: to keep every relevant informations but also as a memory trail of the development
+chronology.
+• Github2 : to back up the source code and share my progress with my supervisor.
+• FreeRTOS POSIX3 simulator: to develop and to test my library without any embedded device.
+
+2
+3
+
+Github is an online project hosting.
+Standards to maintaining compatibility between UNIX operating systems.
+
+8
+
+3
+
+Research
+
+3.1
+
+Operating System: FreeRTOS
+
+3.1.1
+
+Overview
+
+(Quick overview of the system: Free, open source, GP Licence, light-weight)
+
+3.1.2
+
+Real-Time System
+
+(Kernel mechanism: priorities and scheduling)
+
+3.1.3
+
+Libraries
+
+(Existing libraries: non-free libraries for speciﬁc hardware, light system library)
+
+3.1.4
+
+POSIX simulator
+
+(Compilation of a library and a task)
+
+3.2
+3.2.1
+
+Twitter authentication: OAuth protocol
+Overview
+
+(Common authentication mechanism: token, secret key system, include graphic representations)
+
+9
+
+3.2.2
+
+Existing library in C
+
+(Downloaded and tested library: samples hard to understand, idea: create a simple-to-use library
+layer)
+
+3.2.3
+
+Register an application on Twitter
+
+(Way and proprieties of the registered application)
+
+3.2.4
+
+Required libraries
+
+(libcurl: overview and it’s seem hard to adapt to FreeRTOS, idea: create a very simple HTTP request
+library)
+(OpenSSL: overview and it’s seem hard to adapt to FreeRTOS, idea)
+
+10
+
+4
+
+Design
+
+4.1
+
+Goal of the library
+
+(Layer which simplify the authentication, using the adapted libraries of OAuth, libcurl and OpenSSL)
+
+4.2
+
+Requisites
+
+(libcurl or any other HTTP library and OpenSSL, both used by OAuth)
+
+4.3
+
+Representation
+
+(UML-like representation of the way it will work)
+
+11
+
+5
+
+Implementation
+
+5.1
+
+The library
+
+5.1.1
+
+Requisites
+
+(What did I do to solve the OpenSSL and Libcurl problem)
+
+5.1.2
+
+Simpliﬁcation layer
+
+(What the programmer need to know before coding: private and public key)
+(How le library use OAuth to do the authentication)
+
+5.2
+
+A demo application
+
+(Graphic representation of the use of my library layer)
+
+12
+
+6
+
+Testing of the library
+
+13
+
+7
+
+Evaluation of the ptoject
+
+7.1
+
+Goal
+
+(Is my goal achieved, why/why not?)
+(Is my work could be use by someone else, why/why not?)
+
+7.2
+
+Schedule
+
+(Did I follow my schedule, why/why not?)
+
+7.3
+
+Improvements
+
+(What is it possible to do to improve my library?)
+
+14
+
+8
+
+Conclusion
+
+15
+
+References
+• LastName, FN. (year), ”Title” - http://www.link.com/document.pdf
+
+16
+
+
