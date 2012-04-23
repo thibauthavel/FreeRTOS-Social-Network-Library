@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.4.21)  22 APR 2012 17:37
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.4.21)  23 APR 2012 13:17
 entering extended mode
  %&-line parsing enabled.
 **Global.tex
@@ -396,17 +396,17 @@ Chapter 8.
 [15
 
 
-]) (./References.tex)
+]) (./Global.bbl)
 No file Global.ind.
 [16
 
 
 ] (./Global.aux) ) 
 Here is how much of TeX's memory you used:
- 5115 strings out of 495061
- 74157 string characters out of 1182621
+ 5121 strings out of 495061
+ 74207 string characters out of 1182621
  182453 words of memory out of 3000000
- 8208 multiletter control sequences out of 15000+50000
+ 8214 multiletter control sequences out of 15000+50000
  9761 words of font info for 34 fonts, out of 3000000 for 9000
  28 hyphenation exceptions out of 8191
  36i,8n,49p,628b,275s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -418,7 +418,7 @@ ts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texmf-texlive/fonts/type1/publ
 ic/amsfonts/cm/cmr8.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/c
 m/cmsy10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmti12.pf
 b>
-Output written on Global.pdf (17 pages, 121288 bytes).
+Output written on Global.pdf (17 pages, 120118 bytes).
 PDF statistics:
  89 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)

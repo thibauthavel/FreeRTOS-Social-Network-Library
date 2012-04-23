@@ -1,0 +1,10 @@
+\begin{thebibliography}{1}
+
+\bibitem{keyword}
+F.~Surname, ``Title,'' 2000.
+
+\bibitem{texbook}
+D.~E. Knuth, {\em The \TeX book}.
+\newblock Addison-Wesley, 1990.
+
+\end{thebibliography}

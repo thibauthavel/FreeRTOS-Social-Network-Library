@@ -212,12 +212,6 @@ Improvements . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
 15
 
-IV
-
-16
-
-References
-
 4
 
 Development of the library
@@ -479,8 +473,9 @@ Conclusion
 
 15
 
-References
-• LastName, FN. (year), ”Title” - http://www.link.com/document.pdf
+Bibliography
+[1] F. Surname, “Title,” 2000.
+[2] D. E. Knuth, The TEXbook. Addison-Wesley, 1990.
 
 16
 

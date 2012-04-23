@@ -1,20 +1,36 @@
-\chapter{Design}
-
-% Should include functional design
-
-\section{Goal of the library}
-
-(Layer which simplify the authentication, using the adapted libraries of OAuth, libcurl and OpenSSL)
+\chapter{Design of the library}
 
 
-\section{Requisites}
+%---------------------------------------------------------------
+\section{Functional design}
 
-(libcurl or any other HTTP library and OpenSSL, both used by OAuth)
+\subsection{Interactions with Twitter}
+
+- Send, receive and store tweets from Twitter.
 
 
-\section{Representation}
+\subsection{Easy layer to user}
 
-(UML-like representation of the way it will work)
+- Don't need to know how works neither OAuth, nor OpenSSL, nor Libcurl, nor the XML parser.
+- Whole authentication in only one function.
+- Send using authentication entity in only one function.
+- Receive and parse XML results using authentication entity, in only one function.
+
+
+%---------------------------------------------------------------
+\section{Implementation design}
+
+\subsection{Required libraries}
+
+- OAuth which use OpenSSL and Libcurl are required.
+- OAuth and OpenSSL could be both included in the final library package.
+- The use of Libcurl could be replace by sockets.
+
+
+\subsection{Diagram of the library}
+
+- UML-like representation of the way it will work
+
 
 
 \clearpage

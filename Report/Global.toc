@@ -33,4 +33,3 @@
 \contentsline {section}{\numberline {7.2}Schedule}{14}
 \contentsline {section}{\numberline {7.3}Improvements}{14}
 \contentsline {chapter}{\numberline {8}Conclusion}{15}
-\contentsline {part}{IV\hspace {1em}References}{16}
