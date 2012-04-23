@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.4.21)  23 APR 2012 13:17
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.4.21)  23 APR 2012 22:05
 entering extended mode
  %&-line parsing enabled.
 **Global.tex
@@ -376,29 +376,29 @@ Chapter 4.
 [11
 
 
-]) (./Implementation.tex
+] [12]) (./Implementation.tex
 Chapter 5.
-[12
+[13
 
 
 ]) (./Testing.tex
 Chapter 6.
-[13
+[14
 
 
 ]) (./Evaluation.tex
 Chapter 7.
-[14
+[15
 
 
 ]) (./Conclusion.tex
 Chapter 8.
-[15
+[16
 
 
 ]) (./Global.bbl)
 No file Global.ind.
-[16
+[17
 
 
 ] (./Global.aux) ) 
@@ -418,9 +418,9 @@ ts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texmf-texlive/fonts/type1/publ
 ic/amsfonts/cm/cmr8.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/c
 m/cmsy10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmti12.pf
 b>
-Output written on Global.pdf (17 pages, 120118 bytes).
+Output written on Global.pdf (18 pages, 124054 bytes).
 PDF statistics:
- 89 PDF objects out of 1000 (max. 8388607)
+ 92 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

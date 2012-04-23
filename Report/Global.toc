@@ -18,18 +18,22 @@
 \contentsline {subsection}{\numberline {3.2.2}Existing library in C}{10}
 \contentsline {subsection}{\numberline {3.2.3}Register an application on Twitter}{10}
 \contentsline {subsection}{\numberline {3.2.4}Required libraries}{10}
-\contentsline {chapter}{\numberline {4}Design}{11}
-\contentsline {section}{\numberline {4.1}Goal of the library}{11}
-\contentsline {section}{\numberline {4.2}Requisites}{11}
-\contentsline {section}{\numberline {4.3}Representation}{11}
-\contentsline {chapter}{\numberline {5}Implementation}{12}
-\contentsline {section}{\numberline {5.1}The library}{12}
-\contentsline {subsection}{\numberline {5.1.1}Requisites}{12}
-\contentsline {subsection}{\numberline {5.1.2}Simplification layer}{12}
-\contentsline {section}{\numberline {5.2}A demo application}{12}
-\contentsline {chapter}{\numberline {6}Testing of the library}{13}
-\contentsline {chapter}{\numberline {7}Evaluation of the ptoject}{14}
-\contentsline {section}{\numberline {7.1}Goal}{14}
-\contentsline {section}{\numberline {7.2}Schedule}{14}
-\contentsline {section}{\numberline {7.3}Improvements}{14}
-\contentsline {chapter}{\numberline {8}Conclusion}{15}
+\contentsline {chapter}{\numberline {4}Design of the library}{11}
+\contentsline {section}{\numberline {4.1}Functional design}{11}
+\contentsline {subsection}{\numberline {4.1.1}Interactions with Twitter}{11}
+\contentsline {subsection}{\numberline {4.1.2}Easy layer to user}{11}
+\contentsline {section}{\numberline {4.2}Implementation design}{12}
+\contentsline {subsection}{\numberline {4.2.1}Required libraries}{12}
+\contentsline {subsection}{\numberline {4.2.2}Functions implementations}{12}
+\contentsline {subsection}{\numberline {4.2.3}Diagram of the library}{12}
+\contentsline {chapter}{\numberline {5}Implementation}{13}
+\contentsline {section}{\numberline {5.1}The library}{13}
+\contentsline {subsection}{\numberline {5.1.1}Requisites}{13}
+\contentsline {subsection}{\numberline {5.1.2}Simplification layer}{13}
+\contentsline {section}{\numberline {5.2}A demo application}{13}
+\contentsline {chapter}{\numberline {6}Testing of the library}{14}
+\contentsline {chapter}{\numberline {7}Evaluation of the ptoject}{15}
+\contentsline {section}{\numberline {7.1}Goal}{15}
+\contentsline {section}{\numberline {7.2}Schedule}{15}
+\contentsline {section}{\numberline {7.3}Improvements}{15}
+\contentsline {chapter}{\numberline {8}Conclusion}{16}

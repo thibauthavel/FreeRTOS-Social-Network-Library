@@ -6,7 +6,16 @@
 
 \subsection{Interactions with Twitter}
 
-- Send, receive and store tweets from Twitter.
+\hspace{15mm}Basically, the final library should allow a developer to do:
+\begin{itemize}
+\item To authenticate its application to Twitter. 
+\item To send tweets on Twitter.
+\item To receive tweets from Twitter.
+\end{itemize}
+
+And these features have to work whatever the operating system and the hardware architecture.
+
+I chose to do not implement any storing proprieties because it is not flexible enough to let the developer chose the way he wants to store tweets.
 
 
 \subsection{Easy layer to user}
@@ -15,6 +24,18 @@
 - Whole authentication in only one function.
 - Send using authentication entity in only one function.
 - Receive and parse XML results using authentication entity, in only one function.
+
+This library has to be a user-friendly layer. The developer does not have to know how OAuth works to build its own application to access to Twitter. He just have to give the basic informations about the registered application (the public and secret key provided by Twitter) and informations about its Twitter account (the login and password).
+
+The first main functionality is the authentication process which gathers all OAuth operations and returns an authentication entity (for instance, typed as a C structure) which could be use by the developer in a further step to send and to receive tweets. This entity contains every required informations needed to allow OAuth to connect to Twitter. 
+
+The send functionality is one of the two behaviours which could use the authentication entity in order to send a tweet on a Twitter profile.
+
+Finally, the receive functionality use the authentication entity as well in order to receive tweets from a Twitter account's \textbf{timeline}\footnote{The timeline is the part of a Twitter profile which contains all tweets sent by a user.}. This functionality include parsing functions which allows to return a set of tweets entities. 
+% To be developed
+
+Each functionalities is represented by a single function. Nevertheless, the content of a functionality could be split into several operation each represented by another function.
+
 
 
 %---------------------------------------------------------------
@@ -25,6 +46,14 @@
 - OAuth which use OpenSSL and Libcurl are required.
 - OAuth and OpenSSL could be both included in the final library package.
 - The use of Libcurl could be replace by sockets.
+
+
+\subsection{Functions implementations}
+
+Describe relevant behaviours of each functionalities:
+- Authentication using OAuth HTTP post/get
+- Receiving tweet using my own parsing functions, etc.
+- 
 
 
 \subsection{Diagram of the library}

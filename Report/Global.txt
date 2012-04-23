@@ -135,39 +135,55 @@ Required libraries . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
 3
 
-4 Design
-
-11
-
+4 Design of the library
 4.1
 
-Goal of the library . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+11
+11
+
+4.1.1
+
+Interactions with Twitter . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
 11
+
+4.1.2
+
+Easy layer to user . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+11
+
+Implementation design . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+12
+
+4.2.1
+
+Required libraries . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+12
+
+4.2.2
 
 4.2
 
-Requisites . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Functional design . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-11
+Diagram of the library . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-4.3
-
-Representation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-
-11
+12
 
 5 Implementation
 5.1
 
-12
-12
+13
+13
 
 5.1.1
 
 Requisites . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-12
+13
 
 5.1.2
 5.2
@@ -176,41 +192,41 @@ The library . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
 
 Simpliﬁcation layer . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-12
+13
 
 A demo application . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-12
+13
 
 6 Testing of the library
 
-13
+14
 
 7 Evaluation of the ptoject
 
-14
+15
 
 7.1
 
 Goal . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-14
+15
 
 7.2
 
 Schedule . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-14
+15
 
 7.3
 
 Improvements . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-14
+15
 
 8 Conclusion
 
-15
+16
 
 4
 
@@ -252,9 +268,9 @@ In my project speciﬁcation, I set my schedule as following:
 • Febuary: Design (1 week), Implementation (3 weeks).
 • March: Implementation (3 weeks), Testing (1 week).
 • April: Evaluation and report compilation (2 weeks).
-My supervisor Jo˜o and I met every week or every two weeks to discuss about planning and
+My supervisor Jo˜o and I met every week or every two weeks to discuss about the planning
 a
-progresses of my project.
+and progresses of my project.
 
 2.2
 
@@ -293,9 +309,9 @@ As I was now aware about what the tools I will use and the way to use them, I de
 library according to the features I wanted to implement.
 The next step of the development was to implement the abstract structure of the library. At
 this stage, I faced lot of issues concerning the use of OAuth, the C language and its requirements.
-Thanks to my previous years of studies, I learnt the basics of this language but I read a lot of articles,
-books and tutorials along the implementation.
-Once I ﬁnished the draft version of the library, I tested every functionalities receiving and
+During my previous years of studies I learnt the basics of this language but to build the library I
+read a lot of articles, books and tutorials along the implementation.
+Once I ﬁnished the draft version of the library, I tested every functionalities by receiving and
 sending tweets over my own account and I improved the reliability according to the results of these
 tests.
 
@@ -385,27 +401,68 @@ library)
 
 4
 
-Design
+Design of the library
 
 4.1
 
-Goal of the library
+Functional design
 
-(Layer which simplify the authentication, using the adapted libraries of OAuth, libcurl and OpenSSL)
+4.1.1
 
-4.2
+Interactions with Twitter
+Basically, the ﬁnal library should allow a developer to do:
 
-Requisites
+• To authenticate its application to Twitter.
+• To send tweets on Twitter.
+• To receive tweets from Twitter.
+And these features have to work whatever the operating system and the hardware architecture.
+I chose to do not implement any storing proprieties because it is not ﬂexible enough to let
+the developer chose the way he wants to store tweets.
 
-(libcurl or any other HTTP library and OpenSSL, both used by OAuth)
+4.1.2
 
-4.3
+Easy layer to user
 
-Representation
-
-(UML-like representation of the way it will work)
+- Don’t need to know how works neither OAuth, nor OpenSSL, nor Libcurl, nor the XML parser. Whole authentication in only one function. - Send using authentication entity in only one function.
+- Receive and parse XML results using authentication entity, in only one function.
+This library has to be a user-friendly layer. The developer does not have to know how OAuth
+works to build its own application to access to Twitter. He just have to give the basic informations
+about the registered application (the public and secret key provided by Twitter) and informations
+about its Twitter account (the login and password).
+The ﬁrst main functionality is the authentication process which gathers all OAuth operations
+and returns an authentication entity (for instance, typed as a C structure) which could be use by
 
 11
+
+the developer in a further step to send and to receive tweets. This entity contains every required
+informations needed to allow OAuth to connect to Twitter.
+The send functionality is one of the two behaviours which could use the authentication entity
+in order to send a tweet on a Twitter proﬁle.
+Finally, the receive functionality use the authentication entity as well in order to receive
+tweets from a Twitter account’s timeline1 . This functionality include parsing functions which allows
+to return a set of tweets entities.
+Each functionalities is represented by a single function. Nevertheless, the content of a functionality could be split into several operation each represented by another function.
+
+4.2
+4.2.1
+
+Implementation design
+Required libraries
+
+- OAuth which use OpenSSL and Libcurl are required. - OAuth and OpenSSL could be both included
+in the ﬁnal library package. - The use of Libcurl could be replace by sockets.
+
+4.2.2
+
+Diagram of the library
+
+- UML-like representation of the way it will work
+
+1
+
+The timeline is the part of a Twitter proﬁle which contains all tweets sent by a user.
+
+12
 
 5
 
@@ -434,13 +491,13 @@ A demo application
 
 (Graphic representation of the use of my library layer)
 
-12
+13
 
 6
 
 Testing of the library
 
-13
+14
 
 7
 
@@ -465,18 +522,18 @@ Improvements
 
 (What is it possible to do to improve my library?)
 
-14
+15
 
 8
 
 Conclusion
 
-15
+16
 
 Bibliography
 [1] F. Surname, “Title,” 2000.
 [2] D. E. Knuth, The TEXbook. Addison-Wesley, 1990.
 
-16
+17
 
 
