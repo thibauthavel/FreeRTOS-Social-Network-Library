@@ -23,13 +23,14 @@
 \contentsline {subsection}{\numberline {4.1.1}Interactions with Twitter}{11}
 \contentsline {subsection}{\numberline {4.1.2}Easy layer to user}{11}
 \contentsline {section}{\numberline {4.2}Implementation design}{12}
-\contentsline {subsection}{\numberline {4.2.1}Required libraries}{12}
-\contentsline {subsection}{\numberline {4.2.2}Functions implementations}{12}
-\contentsline {subsection}{\numberline {4.2.3}Diagram of the library}{12}
+\contentsline {subsection}{\numberline {4.2.1}Functions implementations}{12}
+\contentsline {subsection}{\numberline {4.2.2}Diagram of the library}{12}
 \contentsline {chapter}{\numberline {5}Implementation}{13}
 \contentsline {section}{\numberline {5.1}The library}{13}
-\contentsline {subsection}{\numberline {5.1.1}Requisites}{13}
-\contentsline {subsection}{\numberline {5.1.2}Simplification layer}{13}
+\contentsline {subsection}{\numberline {5.1.1}Required libraries}{13}
+\contentsline {subsection}{\numberline {5.1.2}Authentication process}{13}
+\contentsline {subsection}{\numberline {5.1.3}Send a tweet}{13}
+\contentsline {subsection}{\numberline {5.1.4}Receive a tweet}{13}
 \contentsline {section}{\numberline {5.2}A demo application}{13}
 \contentsline {chapter}{\numberline {6}Testing of the library}{14}
 \contentsline {chapter}{\numberline {7}Evaluation of the ptoject}{15}

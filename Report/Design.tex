@@ -20,12 +20,7 @@ I chose to do not implement any storing proprieties because it is not flexible e
 
 \subsection{Easy layer to user}
 
-- Don't need to know how works neither OAuth, nor OpenSSL, nor Libcurl, nor the XML parser.
-- Whole authentication in only one function.
-- Send using authentication entity in only one function.
-- Receive and parse XML results using authentication entity, in only one function.
-
-This library has to be a user-friendly layer. The developer does not have to know how OAuth works to build its own application to access to Twitter. He just have to give the basic informations about the registered application (the public and secret key provided by Twitter) and informations about its Twitter account (the login and password).
+\hspace{15mm}This library has to be a user-friendly layer. The developer does not have to know how OAuth works to build its own application to access to Twitter. He just have to give the basic informations about the registered application (the public and secret key provided by Twitter) and informations about its Twitter account (the login and password).
 
 The first main functionality is the authentication process which gathers all OAuth operations and returns an authentication entity (for instance, typed as a C structure) which could be use by the developer in a further step to send and to receive tweets. This entity contains every required informations needed to allow OAuth to connect to Twitter. 
 
@@ -41,24 +36,31 @@ Each functionalities is represented by a single function. Nevertheless, the cont
 %---------------------------------------------------------------
 \section{Implementation design}
 
-\subsection{Required libraries}
-
-- OAuth which use OpenSSL and Libcurl are required.
-- OAuth and OpenSSL could be both included in the final library package.
-- The use of Libcurl could be replace by sockets.
-
 
 \subsection{Functions implementations}
 
-Describe relevant behaviours of each functionalities:
-- Authentication using OAuth HTTP post/get
-- Receiving tweet using my own parsing functions, etc.
-- 
+% Describe relevant behaviours of each functionalities:
+% - Authentication using OAuth HTTP post/get.
+% - Send tweet using the authentication structure.
+% - Receiving tweet using my own parsing functions, etc.
+
+\hspace{15mm}Every steps of the authentication process are gather into the main authentication function. Basically each use of the OAuth library for a specific stage of the synchronisation is surrounded by a set of operations, for this very reason each stage is defined into a distinctive function. As explained above in the chapter \ref{chap:research} (\nameref{chap:research}), to authenticate an application to Twitter and then be able to access to the timeline or to send a tweet is simple but it required few steps:
+\begin{itemize}
+\item 1- Request token: it requests the first token to the Twitter service provider.
+\item 2- Direct token: it requests the token needed to obtain user authorization.
+\item 3- Verifier: it uses the direct token in order to request the PIN code (or verifier). 
+\item 4- Access token: it uses the verifier to request the final token which will be use to send or receive tweets.
+\end{itemize}
+This main function gives to the user an authentication entity, that is the one he provides to the behaviours functions (send and receive).
+
+
+
+
 
 
 \subsection{Diagram of the library}
 
-- UML-like representation of the way it will work
+% - UML-like representation of the way it will work
 
 
 

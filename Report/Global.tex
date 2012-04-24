@@ -19,7 +19,8 @@
 \usepackage{setspace}			% Interlignage
 \usepackage[dvipsnames]{xcolor}
 \usepackage{caption}
-\usepackage{appendix} 
+\usepackage{appendix}
+\usepackage{nameref} 
 
 
 
@@ -33,6 +34,7 @@
 \parskip=5pt 																					% Espaces paragraphes
 \sloppy																							% Marge à droite
 \setlength{\parindent}{15mm}																	% Indentation
+\setlength{\itemsep}{0pt}
 \interfootnotelinepenalty=150
 \widowpenalty=150
 \clubpenalty=150 
@@ -48,6 +50,11 @@
 	numberstyle=\tiny,numbersep=5pt,breaklines=true,showstringspaces=false,basicstyle=\footnotesize,emph={label},
 	backgroundcolor=\color{codegray},
 }
+\newlength{\wideitemsep}
+\setlength{\wideitemsep}{\itemsep}
+\addtolength{\wideitemsep}{-5pt}
+\let\olditem\item
+\renewcommand{\item}{\setlength{\itemsep}{\wideitemsep}\olditem}
 
 
 
