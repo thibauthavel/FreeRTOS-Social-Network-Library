@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.4.21)  24 APR 2012 15:07
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.4.21)  24 APR 2012 18:48
 entering extended mode
  %&-line parsing enabled.
 **Global.tex
@@ -387,40 +387,44 @@ Chapter 4.
 [11
 
 
-] [12]) (./Implementation.tex
+] <images/functional_design.png, id=47, 501.875pt x 259.97125pt>
+File: images/functional_design.png Graphic file (type png)
+
+<use images/functional_design.png> [12] [13 <./images/functional_design.png (PN
+G copy)>]) (./Implementation.tex
 Chapter 5.
-[13
+[14
 
 
 ]) (./Testing.tex
 Chapter 6.
-[14
+[15
 
 
 ]) (./Evaluation.tex
 Chapter 7.
-[15
+[16
 
 
 ]) (./Conclusion.tex
 Chapter 8.
-[16
+[17
 
 
 ]) (./Global.bbl)
 No file Global.ind.
-[17
+[18
 
 
 ] (./Global.aux) ) 
 Here is how much of TeX's memory you used:
- 5219 strings out of 495061
- 75669 string characters out of 1182621
- 184006 words of memory out of 3000000
- 8304 multiletter control sequences out of 15000+50000
+ 5228 strings out of 495061
+ 75870 string characters out of 1182621
+ 185006 words of memory out of 3000000
+ 8310 multiletter control sequences out of 15000+50000
  9761 words of font info for 34 fonts, out of 3000000 for 9000
  28 hyphenation exceptions out of 8191
- 36i,8n,49p,628b,277s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 36i,8n,49p,628b,331s stack positions out of 5000i,500n,10000p,200000b,50000s
 </usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmbx
 12.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr
 /share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texmf
@@ -429,9 +433,9 @@ ts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texmf-texlive/fonts/type1/publ
 ic/amsfonts/cm/cmr8.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/c
 m/cmsy10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmti12.pf
 b>
-Output written on Global.pdf (18 pages, 124667 bytes).
+Output written on Global.pdf (19 pages, 143738 bytes).
 PDF statistics:
- 92 PDF objects out of 1000 (max. 8388607)
+ 97 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 6 words of extra memory for PDF output out of 10000 (max. 10000000)
 

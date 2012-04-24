@@ -159,7 +159,7 @@ Implementation design . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
 
 4.2.1
 
-Required libraries . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Functions implementations . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
 12
 
@@ -169,64 +169,76 @@ Required libraries . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
 Functional design . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-Diagram of the library . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Functional diagram of the library . . . . . . . . . . . . . . . . . . . . . . . . .
 
-12
+13
 
 5 Implementation
 5.1
 
-13
-13
+14
+14
 
 5.1.1
 
-Requisites . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Required libraries . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-13
+14
 
 5.1.2
+
+Authentication process . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+14
+
+5.1.3
+
+Send a tweet . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+14
+
+5.1.4
 5.2
 
 The library . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-Simpliﬁcation layer . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-
-13
-
-A demo application . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-
-13
-
-6 Testing of the library
+Receive a tweet . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
 14
 
-7 Evaluation of the ptoject
+A demo application . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+14
+
+6 Testing of the library
 
 15
+
+7 Evaluation of the ptoject
+
+16
 
 7.1
 
 Goal . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-15
+16
 
 7.2
 
 Schedule . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-15
+16
 
 7.3
 
 Improvements . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-15
+16
 
 8 Conclusion
 
-16
+17
 
 4
 
@@ -264,10 +276,16 @@ Methodology
 The initial project scheduling
 In my project speciﬁcation, I set my schedule as following:
 
-• January: Research (2 weeks), design (2 weeks).
-• Febuary: Design (1 week), Implementation (3 weeks).
-• March: Implementation (3 weeks), Testing (1 week).
-• April: Evaluation and report compilation (2 weeks).
+•
+•
+•
+•
+
+January: Research (2 weeks), design (2 weeks).
+Febuary: Design (1 week), Implementation (3 weeks).
+March: Implementation (3 weeks), Testing (1 week).
+April: Evaluation and report compilation (2 weeks).
+
 My supervisor Jo˜o and I met every week or every two weeks to discuss about the planning
 a
 and progresses of my project.
@@ -287,15 +305,15 @@ online community to develop my library. As I didn’t have any knowledge about F
 several articles which deals with how it works, and how tasks are scheduled in an real-time way.
 As a consequence of this chose and because one the goals of this project is to gain knowledge
 about low-level development, the library has been build using the C language.
+Then, I deﬁned every functionalities of the ﬁnal applications. Basically, the library’s features
+are simple: it should allow a user to receive and send text statues of a social network. For instance
 1
 
 FreeRTOS is a light-weight Real-Time Operating System.
 
 7
 
-Then, I deﬁned every functionalities of the ﬁnal applications. Basically, the library’s features
-are simple: it should allow a user to receive and send text statues of a social network. For instance
-a message on the wall in Facebook or a tweet in Twitter. Facebook and Twitter are both well
+a message on the wall in Facebook or a tweet in Twitter. Facebook and Twitter are both well
 known social networks and after some research about them, I choose to build my library suitable for
 Twitter because of the solid support for OAuth which is a secured protocol to access data. Once
 again, this choice was supported by Jo˜o.
@@ -423,46 +441,75 @@ the developer chose the way he wants to store tweets.
 
 Easy layer to user
 
-- Don’t need to know how works neither OAuth, nor OpenSSL, nor Libcurl, nor the XML parser. Whole authentication in only one function. - Send using authentication entity in only one function.
-- Receive and parse XML results using authentication entity, in only one function.
 This library has to be a user-friendly layer. The developer does not have to know how OAuth
 works to build its own application to access to Twitter. He just have to give the basic informations
 about the registered application (the public and secret key provided by Twitter) and informations
 about its Twitter account (the login and password).
 The ﬁrst main functionality is the authentication process which gathers all OAuth operations
 and returns an authentication entity (for instance, typed as a C structure) which could be use by
-
-11
-
-the developer in a further step to send and to receive tweets. This entity contains every required
+the developer in a further step to send and to receive tweets. This entity contains every required
 informations needed to allow OAuth to connect to Twitter.
 The send functionality is one of the two behaviours which could use the authentication entity
 in order to send a tweet on a Twitter proﬁle.
-Finally, the receive functionality use the authentication entity as well in order to receive
+
+11
+
+Finally, the receive functionality use the authentication entity as well in order to receive
 tweets from a Twitter account’s timeline1 . This functionality include parsing functions which allows
 to return a set of tweets entities.
 Each functionalities is represented by a single function. Nevertheless, the content of a functionality could be split into several operation each represented by another function.
 
 4.2
-4.2.1
 
 Implementation design
-Required libraries
 
-- OAuth which use OpenSSL and Libcurl are required. - OAuth and OpenSSL could be both included
-in the ﬁnal library package. - The use of Libcurl could be replace by sockets.
+4.2.1
 
-4.2.2
+Functions implementations
 
-Diagram of the library
+Every steps of the authentication process are gather into the main authentication function.
+Basically each use of the OAuth library for a speciﬁc stage of the synchronisation is surrounded by a
+set of operations, for this very reason each stage is deﬁned into a distinctive function. As explained
+above in the chapter Research, to authenticate an application to Twitter and then be able to access
+to the timeline or to send a tweet is simple but it requires few steps:
+•
+•
+•
+•
 
-- UML-like representation of the way it will work
+1- Request token: it requests the ﬁrst token to the Twitter service provider.
+2- Direct token: it requests the token needed to obtain user authorization.
+3- Veriﬁer: it uses the direct token in order to request the PIN code (or veriﬁer).
+4- Access token: it uses the veriﬁer to request the ﬁnal token which will be use to send or
+receive tweets.
 
+This main function gives to the user an authentication entity, that is the one he provides to the
+behaviour functions (send and receive). This entity is typed as a C structure.
+As every behaviour functions, the send function need the access token to be able to send a text
+message over Twitter. The main function retrieves the needed informations from the authentication
+entity which are given as parameters in sub-functions2 . Whatever the sub-function, no ﬁeld of the
+authentication entity is directly used, only the main function holds this responsibility.
+To get the tweets from the user’s timeline, a request is ﬁrstly send to the Twitter service
+provider. The result is a XML content which is parsed by some sub-functions. These parsing
+functions determine how many tweets are there in the timeline, and for each of them a new structure
+is created. Thus, the main function gives to the developer a collection of tweets each represented
+by a C structure which contains the most signiﬁcant informations about it (e.g. the date, the text
+content).
 1
+2
 
 The timeline is the part of a Twitter proﬁle which contains all tweets sent by a user.
+A sub-function is used by the main function in a distributed way to perform the goal.
 
 12
+
+4.2.2
+
+Functional diagram of the library
+
+Figure 4.1: Functional diagram representing the implemented design
+
+13
 
 5
 
@@ -474,16 +521,28 @@ The library
 
 5.1.1
 
-Requisites
+Required libraries
 
-(What did I do to solve the OpenSSL and Libcurl problem)
+- OAuth which use OpenSSL and Libcurl are required. - OAuth and OpenSSL could be both included
+in the ﬁnal library package. - The use of Libcurl could be replace by sockets.
 
 5.1.2
 
-Simpliﬁcation layer
+Authentication process
 
-(What the programmer need to know before coding: private and public key)
-(How le library use OAuth to do the authentication)
+- Request token - Direct token - Access token - Authentication structure returned
+
+5.1.3
+
+Send a tweet
+
+- How use the authentication structure - Apply these informations to a behaviour
+
+5.1.4
+
+Receive a tweet
+
+- Receiving process - XML parsing: get each tweet - Store temporary informations as a structure
 
 5.2
 
@@ -491,13 +550,13 @@ A demo application
 
 (Graphic representation of the use of my library layer)
 
-13
+14
 
 6
 
 Testing of the library
 
-14
+15
 
 7
 
@@ -522,18 +581,18 @@ Improvements
 
 (What is it possible to do to improve my library?)
 
-15
+16
 
 8
 
 Conclusion
 
-16
+17
 
 Bibliography
 [1] F. Surname, “Title,” 2000.
 [2] D. E. Knuth, The TEXbook. Addison-Wesley, 1990.
 
-17
+18
 
 

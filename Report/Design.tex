@@ -44,24 +44,29 @@ Each functionalities is represented by a single function. Nevertheless, the cont
 % - Send tweet using the authentication structure.
 % - Receiving tweet using my own parsing functions, etc.
 
-\hspace{15mm}Every steps of the authentication process are gather into the main authentication function. Basically each use of the OAuth library for a specific stage of the synchronisation is surrounded by a set of operations, for this very reason each stage is defined into a distinctive function. As explained above in the chapter \ref{chap:research} (\nameref{chap:research}), to authenticate an application to Twitter and then be able to access to the timeline or to send a tweet is simple but it required few steps:
+\hspace{15mm}Every steps of the authentication process are gather into the main authentication function. Basically each use of the OAuth library for a specific stage of the synchronisation is surrounded by a set of operations, for this very reason each stage is defined into a distinctive function. As explained above in the chapter \nameref{chap:research}, to authenticate an application to Twitter and then be able to access to the timeline or to send a tweet is simple but it requires few steps:
 \begin{itemize}
 \item 1- Request token: it requests the first token to the Twitter service provider.
 \item 2- Direct token: it requests the token needed to obtain user authorization.
 \item 3- Verifier: it uses the direct token in order to request the PIN code (or verifier). 
 \item 4- Access token: it uses the verifier to request the final token which will be use to send or receive tweets.
 \end{itemize}
-This main function gives to the user an authentication entity, that is the one he provides to the behaviours functions (send and receive).
+This main function gives to the user an authentication entity, that is the one he provides to the behaviour functions (send and receive). This entity is typed as a C structure.
+
+As every behaviour functions, the send function need the access token to be able to send a text message over Twitter. The main function retrieves the needed informations from the authentication entity which are given as parameters in sub-functions\footnote{A sub-function is used by the main function in a distributed way to perform the goal.}. Whatever the sub-function, no field of the authentication entity is directly used, only the main function holds this responsibility.
+
+To get the tweets from the user's timeline, a request is firstly send to the Twitter service provider. The result is a XML content which is parsed by some sub-functions. These parsing functions determine how many tweets are there in the timeline, and for each of them a new structure is created. Thus, the main function gives to the developer a collection of tweets each represented by a C structure which contains the most significant informations about it (e.g. the date, the text content).
 
 
-
-
-
-
-\subsection{Diagram of the library}
+\subsection{Functional diagram of the library}
 
 % - UML-like representation of the way it will work
 
+\begin{figure}[h]
+  \centering
+  \includegraphics[scale=0.75]{images/functional_design.png}
+  \caption{Functional diagram representing the implemented design}
+\end{figure}
 
 
 \clearpage
