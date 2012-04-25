@@ -6,16 +6,16 @@
 
 \subsection{Interactions with Twitter}
 
-\hspace{15mm}Basically, the final library should allow a developer to do:
+\hspace{15mm}Basically, the final library should allow a developer:
 \begin{itemize}
 \item To authenticate its application to Twitter. 
-\item To send tweets on Twitter.
+\item To send tweets to Twitter.
 \item To receive tweets from Twitter.
 \end{itemize}
 
 And these features have to work whatever the operating system and the hardware architecture.
 
-I chose to do not implement any storing proprieties because it is not flexible enough to let the developer chose the way he wants to store tweets.
+I chose not implement any storing properties because it is more flexible to let the developer chose the way he wants to store tweets.
 
 
 \subsection{Easy layer to user}
@@ -29,7 +29,7 @@ The send functionality is one of the two behaviours which could use the authenti
 Finally, the receive functionality use the authentication entity as well in order to receive tweets from a Twitter account's \textbf{timeline}\footnote{The timeline is the part of a Twitter profile which contains all tweets sent by a user.}. This functionality include parsing functions which allows to return a set of tweets entities. 
 % To be developed
 
-Each functionalities is represented by a single function. Nevertheless, the content of a functionality could be split into several operation each represented by another function.
+Each functionality is represented by a single function. Nevertheless, the content of a functionality could be split into several operation each represented by another function.
 
 
 

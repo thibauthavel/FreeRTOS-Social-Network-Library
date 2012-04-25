@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.4.21)  24 APR 2012 18:48
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.4.21)  25 APR 2012 18:56
 entering extended mode
  %&-line parsing enabled.
 **Global.tex
@@ -258,18 +258,18 @@ File: lstmisc.sty 2007/02/22 1.4 (Carsten Heinz)
  (./Global.aux)
 \openout1 = `Global.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 161.
-LaTeX Font Info:    ... okay on input line 161.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 161.
-LaTeX Font Info:    ... okay on input line 161.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 161.
-LaTeX Font Info:    ... okay on input line 161.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 161.
-LaTeX Font Info:    ... okay on input line 161.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 161.
-LaTeX Font Info:    ... okay on input line 161.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 161.
-LaTeX Font Info:    ... okay on input line 161.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 162.
+LaTeX Font Info:    ... okay on input line 162.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 162.
+LaTeX Font Info:    ... okay on input line 162.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 162.
+LaTeX Font Info:    ... okay on input line 162.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 162.
+LaTeX Font Info:    ... okay on input line 162.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 162.
+LaTeX Font Info:    ... okay on input line 162.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 162.
+LaTeX Font Info:    ... okay on input line 162.
 
 (/usr/share/texmf-texlive/tex/latex/ucs/ucsencs.def
 File: ucsencs.def 2003/11/29 Fixes to fontencodings LGR, T3
@@ -332,9 +332,9 @@ driver: pdftex
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <14.4> on input line 162.
+(Font)              <14.4> on input line 163.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 162.
+(Font)              <7> on input line 163.
  [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] (./Abstract.tex
@@ -345,11 +345,11 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 
 ]) (./Global.toc
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 7.
+(Font)              <12> on input line 4.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 7.
+(Font)              <8> on input line 4.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 7.
+(Font)              <6> on input line 4.
  [3
 
 
@@ -357,12 +357,10 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 \tf@toc=\write4
 \openout4 = `Global.toc'.
 
- [4] (./Introduction.tex
-[5
-
-]
+ (./Introduction.tex
+[4]
 Chapter 1.
-[6
+[5
 
 ]) (./Methodology.tex
 Chapter 2.
@@ -374,20 +372,28 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 8.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <5> on input line 20.
- [7
+ [6
 
 
-] [8]) (./Research.tex
+] [7]) (./Research.tex
 Chapter 3.
-[9
+<images/freertos.jpg, id=35, 1606.0pt x 601.24625pt>
+File: images/freertos.jpg Graphic file (type jpg)
+ <use images/freertos.jpg>
+[8
 
+
+ <./images/freertos.jpg>]
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 32.
+ [9
 
 ] [10]) (./Design.tex
 Chapter 4.
 [11
 
 
-] <images/functional_design.png, id=47, 501.875pt x 259.97125pt>
+] <images/functional_design.png, id=49, 501.875pt x 259.97125pt>
 File: images/functional_design.png Graphic file (type png)
 
 <use images/functional_design.png> [12] [13 <./images/functional_design.png (PN
@@ -418,24 +424,24 @@ No file Global.ind.
 
 ] (./Global.aux) ) 
 Here is how much of TeX's memory you used:
- 5228 strings out of 495061
- 75870 string characters out of 1182621
- 185006 words of memory out of 3000000
- 8310 multiletter control sequences out of 15000+50000
+ 5600 strings out of 495061
+ 79262 string characters out of 1182621
+ 220006 words of memory out of 3000000
+ 8680 multiletter control sequences out of 15000+50000
  9761 words of font info for 34 fonts, out of 3000000 for 9000
  28 hyphenation exceptions out of 8191
- 36i,8n,49p,628b,331s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 36i,8n,49p,627b,1258s stack positions out of 5000i,500n,10000p,200000b,50000s
 </usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmbx
 12.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr
 /share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texmf
 -texlive/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texmf-texlive/fon
-ts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texmf-texlive/fonts/type1/publ
-ic/amsfonts/cm/cmr8.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/c
-m/cmsy10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmti12.pf
-b>
-Output written on Global.pdf (19 pages, 143738 bytes).
+ts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texmf-texlive/fonts/type1/publ
+ic/amsfonts/cm/cmr7.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/c
+m/cmr8.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
+</usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmti12.pfb>
+Output written on Global.pdf (19 pages, 228639 bytes).
 PDF statistics:
- 97 PDF objects out of 1000 (max. 8388607)
+ 102 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 6 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 11 words of extra memory for PDF output out of 10000 (max. 10000000)
 

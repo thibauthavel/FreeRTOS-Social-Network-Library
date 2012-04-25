@@ -3,24 +3,78 @@
 %---------------------------------------------------------------
 \section{Operating System: FreeRTOS}
 
+%...........................................
 \subsection{Overview}
 
-(Quick overview of the system: Free, open source, GP Licence, light-weight)
+% Quick overview of the system: Free, open source, GP Licence, light-weight
+
+\hspace{15mm}FreeRTOS is a light-weight and real-time\footnote{A system that should fit to time constraints.} operating system suitable for embedded devices. It is distributed under the GPL\footnote{General public licence is used for free and open source software.} even then with certain exceptions: a developer is required to maintain the kernel as open source, whereas he could remain closed source his applications.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[scale=0.125]{images/freertos.jpg}
+  \caption{FreeRTOS logo}
+\end{figure}
+
+The FreeRTOS source code is tiny and simple, thus it is really easy to port. It is mostly written in C and assembly. The kernel has been ported to around thirty micro-controllers.  
 
 
+%...........................................
 \subsection{Real-Time System}
 
-(Kernel mechanism: priorities and scheduling)
+% Kernel mechanism: priorities and scheduling
+\hspace{15mm}One of the main feature provided by FreeRTOS is the way the system performs threads. All tasks are scheduled depending on their priority and sorted according to a round-robin algorithm.
+
+Every files which manage tasks should include the FreeRTOS header \textit{task.h} in order to use the appropriate functions.
+
+A task can be defined as follows and should be of endless loop style:\clearpage
+\begin{lstlisting}
+void vMyTask (void * pvParameters)
+{
+	for(;;)
+	{
+		/* Task code content */
+	}
+}
+\end{lstlisting}
+
+The FreeRTOS thread API\footnote{An Application Programming Interface is a set of routines or functions given by a library.} allows to manage tasks. For instance, to create or delete them:
+\begin{lstlisting}
+xTaskHandle xHandle;
+
+xTaskCreate( vMyTask, "NAME", STACK_SIZE, &parameters, tskIDLE_PRIORITY, &xHandle );
+vTaskDelete( xHandle );
+\end{lstlisting}
+The \textit{xTaskHandle} element allows to keep a reference to the task that can be then used by other functions
+
+Depending on its presence or its position in the queue, a task can take different states:
+\begin{itemize}
+\item Ready: the task is ready to run but it is not currently executing because another task is running. From this state, it might become \textit{Suspended} or \textit{Running}.
+\item Running: this task is currently executing. From this state, it might become \textit{Blocked}, \textit{Ready} or \textit{Suspended}.
+\item Blocked: this task is not available for scheduling until a defined delay period. From this state, it might become \textit{Suspended} or \textit{Ready}.
+\item Suspend: this task is not available for scheduling without any timeout. From this state, it might become \textit{Ready}.
+\end{itemize}
+These states can be changed using the appropriate functions from the API, for instance:
+\begin{lstlisting}
+/* To suspend a specific task */
+vTaskSuspend( xHandle );
+
+/* To resume a suspended task */
+vTaskResume( xHandle );
+
+/* To raise a task priority */
+vTaskPrioritySet( xHandle, tskIDLE_PRIORITY + 1 );
+\end{lstlisting}
 
 
-\subsection{Libraries}
-
-(Existing libraries: non-free libraries for specific hardware, light system library)
-
-
+%...........................................
 \subsection{POSIX simulator}
 
-(Compilation of a library and a task)
+\hspace{15mm}To develop and test demo tasks in order to get knowledge about FreeRTOS, I worked with a simulator. This is a ported version of the operating system that allows a embedded application to be simulated on a computer running another system.
+
+As I'm a Linux user, so I chose the POSIX simulator. This simulator consist of a set of files representing the kernel and some demo applications which can all be compiled using GCC\footnote{GNU Compiler Collection is a compiler system which can compile several programming languages including C and C++.}.
+
+% Compilation of a library and a task
 
 
 

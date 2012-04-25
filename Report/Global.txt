@@ -9,14 +9,15 @@ Social network library development
 Thibaut Havel
 L1247434
 
-Supervisor : Jo˜o F. Ferreira
+Supervisor: Jo˜o F. Ferreira
 a
+Second reader: Erika Downs
 
 Abstract
 The main aim of this project is to develop a low-level library that is able to grab and store
-data from a social network. This library works in an embedded device and stored data had to be
-used to provide a simple service. To demonstrate the eﬀectiveness of the ﬁnal library, I created a
-demo service that interacts with a known social network (for example, Twitter).
+data from a social network. This library was designed for embedded devices and allows data to
+be stored and to be used to provide a simple service. To demonstrate the eﬀectiveness of the ﬁnal
+library, I created a demo service that interacts with a known social network (for example, Twitter).
 
 1
 
@@ -28,92 +29,71 @@ of my project.
 2
 
 Contents
-I
-
-Abstract
-
-II
-
-1
-
-Acknowledgements
-
-III
-
-2
-
-Development of the library
+1 Introduction
 
 5
 
-1 Introduction
-
-6
-
 2 Methodology
 
-7
+6
 
 2.1
 
 The initial project scheduling . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-7
+6
 
 2.2
 
-The eﬀective approaches . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Research plan . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-7
+6
 
 2.3
 
 The support tools . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-8
+7
 
 3 Research
 3.1
 
-9
-9
+8
+8
 
 3.1.1
 
 Overview . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-9
+8
 
 3.1.2
 
 Real-Time System . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-9
+8
 
 3.1.3
 
 Libraries . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-9
+10
 
 3.1.4
-3.2
-
-Operating System: FreeRTOS . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
 POSIX simulator . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-9
+10
 
 Twitter authentication: OAuth protocol . . . . . . . . . . . . . . . . . . . . . . . . .
 
-9
+10
 
 3.2.1
 
 Overview . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-9
+10
 
 3.2.2
 
@@ -129,13 +109,15 @@ Register an application on Twitter . . . . . . . . . . . . . . . . . . . . . . .
 
 3.2.4
 
+3.2
+
+Operating System: FreeRTOS . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
 Required libraries . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
 10
 
-3
-
-4 Design of the library
+4 Design of the library
 4.1
 
 11
@@ -148,6 +130,9 @@ Interactions with Twitter . . . . . . . . . . . . . . . . . . . . . . . . . . . 
 11
 
 4.1.2
+4.2
+
+Functional design . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
 Easy layer to user . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
@@ -157,17 +142,15 @@ Implementation design . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
 
 12
 
-4.2.1
+3
+
+4.2.1
 
 Functions implementations . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
 12
 
 4.2.2
-
-4.2
-
-Functional design . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
 Functional diagram of the library . . . . . . . . . . . . . . . . . . . . . . . . .
 
@@ -242,22 +225,18 @@ Improvements . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
 4
 
-Development of the library
-
-5
-
 1
 
 Introduction
 
 Our society tends to use more and more social networks (for instance, Twitter or Facebook).
 At the same time, we are increasingly dependent on the use of embedded devices on a day-to-day
-basis (for instance, home automation). The goal of this project is to develop a platform that allows
-an eﬀective and eﬃcient communication between embedded devices and social networks.
+basis (for instance, home automation). The goal of this project is to develop a software platform
+that allows an eﬀective and eﬃcient communication between embedded devices and social networks.
 The main aim is to develop a low-level library that is able to grab and store data from a
-social network. This library works in an embedded device and stored data has been used to provide
-a simple service. To demonstrate the eﬀectiveness of the ﬁnal library, I created a demo service that
-interacts with a known social network: Twitter.
+social network. This library was designed for embedded devices and allows data to be stored and to
+be used to provide a simple service. To demonstrate the eﬀectiveness of the ﬁnal library, I created a
+demo service that interacts with a known social network: Twitter.
 One of my personal objectives was to improve my knowledge in low-level development and
 become familiar with the C language. Also I was looking forward to improving my software development skill while working with a very speciﬁc hardware.
 Firstly, this report will present the way I started my initial research and how I designed
@@ -265,7 +244,7 @@ the library according to my functional choices. Secondly, it will present how I�
 functionalities, and what I did to test my library. Finally, this report will end by an evaluation of
 the ﬁnal product regarding the design choices, the way I’ve implemented them, and his reliability.
 
-6
+5
 
 2
 
@@ -292,26 +271,26 @@ and progresses of my project.
 
 2.2
 
-The eﬀective approaches
+Research plan
 
 My initial approach was to become familiar with the embedded device technology. I had to
 ﬁnd an adapted, a small and a simple operating system to work with, thereby I chose FreeRTOS1
 supported from my supervisor.
 My supervisor had already used this system and he had developed applications before. He
-provided me one of his own device running with FreeRTOS. So, thanks to Jo˜o and his knowledges
+provided me one of his own device running with FreeRTOS. So, thanks to Jo˜o and his knowledge
 a
 about this operating system, I had a platform in addition to a massive support from him and the
 online community to develop my library. As I didn’t have any knowledge about FreeRTOS, I read
 several articles which deals with how it works, and how tasks are scheduled in an real-time way.
 As a consequence of this chose and because one the goals of this project is to gain knowledge
-about low-level development, the library has been build using the C language.
-Then, I deﬁned every functionalities of the ﬁnal applications. Basically, the library’s features
-are simple: it should allow a user to receive and send text statues of a social network. For instance
+about low-level development, the library has been built using the C language.
+Then, I deﬁned every functionality of the ﬁnal applications. Basically, the library’s features
+are simple: it should allow a user to receive and send text from and to a social network. For instance
 1
 
 FreeRTOS is a light-weight Real-Time Operating System.
 
-7
+6
 
 a message on the wall in Facebook or a tweet in Twitter. Facebook and Twitter are both well
 known social networks and after some research about them, I choose to build my library suitable for
@@ -329,7 +308,7 @@ The next step of the development was to implement the abstract structure of the 
 this stage, I faced lot of issues concerning the use of OAuth, the C language and its requirements.
 During my previous years of studies I learnt the basics of this language but to build the library I
 read a lot of articles, books and tutorials along the implementation.
-Once I ﬁnished the draft version of the library, I tested every functionalities by receiving and
+Once I ﬁnished the draft version of the library, I tested every functionality by receiving and
 sending tweets over my own account and I improved the reliability according to the results of these
 tests.
 
@@ -350,7 +329,7 @@ chronology.
 Github is an online project hosting.
 Standards to maintaining compatibility between UNIX operating systems.
 
-8
+7
 
 3
 
@@ -364,37 +343,110 @@ Operating System: FreeRTOS
 
 Overview
 
-(Quick overview of the system: Free, open source, GP Licence, light-weight)
+FreeRTOS is a light-weight and real-time1 operating system suitable for embedded devices. It
+is distributed under the GPL2 even then with certain exceptions: a developer is required to maintain
+the kernel as open source, whereas he could remain closed source his applications.
+
+Figure 3.1: FreeRTOS logo
+The FreeRTOS source code is tiny and simple, thus it is really easy to port. It is mostly
+written in C and assembly. The kernel has been ported to around thirty micro-controllers.
 
 3.1.2
 
 Real-Time System
 
-(Kernel mechanism: priorities and scheduling)
+One of the main feature provided by FreeRTOS is the way the system performs threads. All
+tasks are scheduled depending on their priority and sorted according to a round-robin algorithm.
+Every ﬁles which manage tasks should include the FreeRTOS header task.h in order to use
+the appropriate functions.
+A task can be deﬁned as follows and should be of endless loop style:
 
-3.1.3
+1
+2
 
-Libraries
+A system that should ﬁt to time constraints.
+General public licence is used for free and open source software.
 
-(Existing libraries: non-free libraries for speciﬁc hardware, light system library)
+8
 
-3.1.4
+1
+2
+3
+4
+5
+6
+7
 
-POSIX simulator
+v o i d vMyTask ( v o i d ∗ pvParameters )
+{
+for ( ; ; )
+{
+/∗ Task code c o n t e n t ∗/
+}
+}
 
-(Compilation of a library and a task)
+The FreeRTOS thread API3 allows to manage tasks. For instance, to create or delete them:
+1
+
+xTaskHandle xHandle ;
+
+2
+3
+4
+
+xTaskCreate ( vMyTask , ”NAME” , STACK SIZE , &parameters , tskIDLE PRIORITY , &xHandle ) ;
+vTaskDelete ( xHandle ) ;
+
+The xTaskHandle element allows to keep a reference to the task that can be then used by other
+functions
+Depending on its presence or its position in the queue, a task can take diﬀerent states:
+• Ready: the task is ready to run but it is not currently executing because another task is
+running. From this state, it might become Suspended or Running.
+• Running: this task is currently executing. From this state, it might become Blocked, Ready or
+Suspended.
+• Blocked: this task is not available for scheduling until a deﬁned delay period. From this state,
+it might become Suspended or Ready.
+• Suspend: this task is not available for scheduling without any timeout. From this state, it
+might become Ready.
+These states can be changed using the appropriate functions from the API, for instance:
+1
+2
+
+/∗ To suspend a s p e c i f i c t a s k ∗/
+vTaskSuspend ( xHandle ) ;
+
+3
+4
+5
+
+/∗ To resume a suspended t a s k ∗/
+vTaskResume ( xHandle ) ;
+
+6
+7
+8
+
+/∗ To r a i s e a t a s k p r i o r i t y ∗/
+v T a s k P r i o r i t y S e t ( xHandle , tskIDLE PRIORITY + 1 ) ;
+3
+
+An Application Programming Interface is a set of routines or functions given by a library.
+
+9
+
+3.1.3
 
 3.2
 3.2.1
+
+POSIX simulator
 
 Twitter authentication: OAuth protocol
 Overview
 
 (Common authentication mechanism: token, secret key system, include graphic representations)
 
-9
-
-3.2.2
+3.2.2
 
 Existing library in C
 
@@ -428,14 +480,14 @@ Functional design
 4.1.1
 
 Interactions with Twitter
-Basically, the ﬁnal library should allow a developer to do:
+Basically, the ﬁnal library should allow a developer:
 
 • To authenticate its application to Twitter.
-• To send tweets on Twitter.
+• To send tweets to Twitter.
 • To receive tweets from Twitter.
 And these features have to work whatever the operating system and the hardware architecture.
-I chose to do not implement any storing proprieties because it is not ﬂexible enough to let
-the developer chose the way he wants to store tweets.
+I chose not implement any storing properties because it is more ﬂexible to let the developer
+chose the way he wants to store tweets.
 
 4.1.2
 
@@ -457,7 +509,7 @@ in order to send a tweet on a Twitter proﬁle.
 Finally, the receive functionality use the authentication entity as well in order to receive
 tweets from a Twitter account’s timeline1 . This functionality include parsing functions which allows
 to return a set of tweets entities.
-Each functionalities is represented by a single function. Nevertheless, the content of a functionality could be split into several operation each represented by another function.
+Each functionality is represented by a single function. Nevertheless, the content of a functionality could be split into several operation each represented by another function.
 
 4.2
 
