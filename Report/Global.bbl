@@ -1,10 +1,18 @@
 \begin{thebibliography}{1}
 
-\bibitem{keyword}
-F.~Surname, ``Title,'' 2000.
+\bibitem{liboauth}
+Robin Gareus.
+\newblock liboauth.
+\newblock \url{http://liboauth.sourceforge.net}.
 
-\bibitem{texbook}
-D.~E. Knuth, {\em The \TeX book}.
-\newblock Addison-Wesley, 1990.
+\bibitem{freertos}
+Real Time~Engineers ltd.
+\newblock Freertos website.
+\newblock \url{http://www.freertos.org}.
+
+\bibitem{twitter}
+Twitter.
+\newblock Developers documentation.
+\newblock \url{https://dev.twitter.com/docs}.
 
 \end{thebibliography}

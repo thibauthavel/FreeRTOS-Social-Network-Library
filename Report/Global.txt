@@ -75,12 +75,6 @@ Real-Time System . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
 3.1.3
 
-Libraries . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-
-10
-
-3.1.4
-
 POSIX simulator . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
 10
@@ -99,13 +93,13 @@ Overview . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
 Existing library in C . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-10
+11
 
 3.2.3
 
 Register an application on Twitter . . . . . . . . . . . . . . . . . . . . . . . .
 
-10
+11
 
 3.2.4
 
@@ -115,19 +109,19 @@ Operating System: FreeRTOS . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
 Required libraries . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-10
+11
 
 4 Design of the library
 4.1
 
-11
-11
+12
+12
 
 4.1.1
 
 Interactions with Twitter . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-11
+12
 
 4.1.2
 4.2
@@ -136,49 +130,47 @@ Functional design . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
 
 Easy layer to user . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-11
+12
 
 Implementation design . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-12
+13
 
-3
-
-4.2.1
-
-Functions implementations . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-
-12
-
-4.2.2
-
-Functional diagram of the library . . . . . . . . . . . . . . . . . . . . . . . . .
+4.2.1
 
 13
+
+Functions implementations . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+3
+
+4.2.2
+
+Functional diagram of the library . . . . . . . . . . . . . . . . . . . . . . . . .
 
 5 Implementation
 5.1
 
 14
-14
+15
+15
 
 5.1.1
 
 Required libraries . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-14
+15
 
 5.1.2
 
 Authentication process . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-14
+15
 
 5.1.3
 
 Send a tweet . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-14
+15
 
 5.1.4
 5.2
@@ -187,41 +179,41 @@ The library . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
 
 Receive a tweet . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-14
+15
 
 A demo application . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-14
+15
 
 6 Testing of the library
 
-15
+16
 
 7 Evaluation of the ptoject
 
-16
+17
 
 7.1
 
 Goal . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-16
+17
 
 7.2
 
 Schedule . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-16
+17
 
 7.3
 
 Improvements . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-16
+17
 
 8 Conclusion
 
-17
+18
 
 4
 
@@ -350,6 +342,8 @@ the kernel as open source, whereas he could remain closed source his application
 Figure 3.1: FreeRTOS logo
 The FreeRTOS source code is tiny and simple, thus it is really easy to port. It is mostly
 written in C and assembly. The kernel has been ported to around thirty micro-controllers.
+The system kernel consists of three common main ﬁles (list.c, queue.c and tasks.c) and at
+least one speciﬁc to a particular micro-controller (port.c).
 
 3.1.2
 
@@ -360,7 +354,6 @@ tasks are scheduled depending on their priority and sorted according to a round-
 Every ﬁles which manage tasks should include the FreeRTOS header task.h in order to use
 the appropriate functions.
 A task can be deﬁned as follows and should be of endless loop style:
-
 1
 2
 
@@ -400,14 +393,14 @@ vTaskDelete ( xHandle ) ;
 The xTaskHandle element allows to keep a reference to the task that can be then used by other
 functions
 Depending on its presence or its position in the queue, a task can take diﬀerent states:
-• Ready: the task is ready to run but it is not currently executing because another task is
-running. From this state, it might become Suspended or Running.
-• Running: this task is currently executing. From this state, it might become Blocked, Ready or
+• Ready: the task is ready to run but it is not currently executing because another task is running.
+From this state, it might become Suspended or Running.
+• Running: the task is currently executing. From this state, it might become Blocked, Ready or
 Suspended.
-• Blocked: this task is not available for scheduling until a deﬁned delay period. From this state,
+• Blocked : the task is not available for scheduling until a deﬁned delay period. From this state,
 it might become Suspended or Ready.
-• Suspend: this task is not available for scheduling without any timeout. From this state, it
-might become Ready.
+• Suspend : the task is not available for scheduling without any timeout. From this state, it might
+become Ready.
 These states can be changed using the appropriate functions from the API, for instance:
 1
 2
@@ -436,38 +429,64 @@ An Application Programming Interface is a set of routines or functions given by 
 
 3.1.3
 
+POSIX simulator
+
+To develop and test demo tasks in order to get knowledge about FreeRTOS, I worked with
+a simulator. This is a ported version of the operating system that allows an embedded application
+to be simulated on a computer running another system.
+As I’m a Linux user, so I chose the POSIX simulator. This simulator consist of a set of ﬁles
+representing the kernel and some demo applications which can all be compiled using GCC4 .
+My ﬁrst attempts to use the simulator were complicated by some undeﬁned references issues
+at the compilation which came from my operating system. I did managed to ﬁx the problem thanks
+to my supervisor Jo˜o. At this point, I have been able to compile the simulator and to play with the
+a
+demo applications and even create my own one.
+
 3.2
 3.2.1
-
-POSIX simulator
 
 Twitter authentication: OAuth protocol
 Overview
 
-(Common authentication mechanism: token, secret key system, include graphic representations)
+Figure 3.2: OAuth protocol: communication process
+
+4
+
+GNU Compiler Collection is a compiler system which can compile several programming languages including C
+and C++.
+
+10
+
+OAuth is the secured protocol used by Twitter to allows developers to access and share data
+from a third-party application. The authentication process is based on the public and private key
+system. Each step of the process (from the authentication to the data access) is represented by a
+granted token. The authentication consists three diﬀerent tokens:
+• The Consumer token is provided by the Twitter developers website at the application referencing.
+• The Request token is given by the service provider as a temporary token.
+• The Access token is given as a proof of authenticity that must be use to access and share data.
 
 3.2.2
 
 Existing library in C
 
-(Downloaded and tested library: samples hard to understand, idea: create a simple-to-use library
-layer)
+The Twitter developers documentation provides several implementations of OAuth protocol
+in many languages including C++, Java or Python, but for some reason not in C. However, I found
+a tiny C library under GPL, written by Robin Gareus and called liboauth. His repository gives few
+examples, thus it was easy to get to know how to use it.
+Basically, this library provides a set of functions to encode parameters according to OAuth
+speciﬁcations and to implement the protocol using HTTP requests (GET and POST methods). For
+instance, these functions could be used useful to perform the granting access rights: oauth sign url2(),
+oauth http get(), oauth http post(). However, the whole Twitter authentication process is really complex and could be packaged as only one main routine.
 
 3.2.3
 
 Register an application on Twitter
 
-(Way and proprieties of the registered application)
-
 3.2.4
 
 Required libraries
 
-(libcurl: overview and it’s seem hard to adapt to FreeRTOS, idea: create a very simple HTTP request
-library)
-(OpenSSL: overview and it’s seem hard to adapt to FreeRTOS, idea)
-
-10
+11
 
 4
 
@@ -504,7 +523,7 @@ informations needed to allow OAuth to connect to Twitter.
 The send functionality is one of the two behaviours which could use the authentication entity
 in order to send a tweet on a Twitter proﬁle.
 
-11
+12
 
 Finally, the receive functionality use the authentication entity as well in order to receive
 tweets from a Twitter account’s timeline1 . This functionality include parsing functions which allows
@@ -553,7 +572,7 @@ content).
 The timeline is the part of a Twitter proﬁle which contains all tweets sent by a user.
 A sub-function is used by the main function in a distributed way to perform the goal.
 
-12
+13
 
 4.2.2
 
@@ -561,7 +580,7 @@ Functional diagram of the library
 
 Figure 4.1: Functional diagram representing the implemented design
 
-13
+14
 
 5
 
@@ -602,13 +621,13 @@ A demo application
 
 (Graphic representation of the use of my library layer)
 
-14
+15
 
 6
 
 Testing of the library
 
-15
+16
 
 7
 
@@ -633,18 +652,19 @@ Improvements
 
 (What is it possible to do to improve my library?)
 
-16
+17
 
 8
 
 Conclusion
 
-17
+18
 
 Bibliography
-[1] F. Surname, “Title,” 2000.
-[2] D. E. Knuth, The TEXbook. Addison-Wesley, 1990.
+[1] Robin Gareus. liboauth. http://liboauth.sourceforge.net.
+[2] Real Time Engineers ltd. Freertos website. http://www.freertos.org.
+[3] Twitter. Developers documentation. https://dev.twitter.com/docs.
 
-18
+19
 
 

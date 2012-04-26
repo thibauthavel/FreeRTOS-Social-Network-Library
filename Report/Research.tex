@@ -16,7 +16,10 @@
   \caption{FreeRTOS logo}
 \end{figure}
 
-The FreeRTOS source code is tiny and simple, thus it is really easy to port. It is mostly written in C and assembly. The kernel has been ported to around thirty micro-controllers.  
+The FreeRTOS source code is tiny and simple, thus it is really easy to port. It is mostly written in C and assembly. The kernel has been ported to around thirty micro-controllers.
+
+The system kernel consists of three common main files (\textit{list.c}, \textit{queue.c} and \textit{tasks.c}) and at least one specific to a particular micro-controller (\textit{port.c}).
+
 
 
 %...........................................
@@ -49,10 +52,10 @@ The \textit{xTaskHandle} element allows to keep a reference to the task that can
 
 Depending on its presence or its position in the queue, a task can take different states:
 \begin{itemize}
-\item Ready: the task is ready to run but it is not currently executing because another task is running. From this state, it might become \textit{Suspended} or \textit{Running}.
-\item Running: this task is currently executing. From this state, it might become \textit{Blocked}, \textit{Ready} or \textit{Suspended}.
-\item Blocked: this task is not available for scheduling until a defined delay period. From this state, it might become \textit{Suspended} or \textit{Ready}.
-\item Suspend: this task is not available for scheduling without any timeout. From this state, it might become \textit{Ready}.
+\item \textit{Ready}: the task is ready to run but it is not currently executing because another task is running. From this state, it might become \textit{Suspended} or \textit{Running}.
+\item \textit{Running}: the task is currently executing. From this state, it might become \textit{Blocked}, \textit{Ready} or \textit{Suspended}.
+\item \textit{Blocked}: the task is not available for scheduling until a defined delay period. From this state, it might become \textit{Suspended} or \textit{Ready}.
+\item \textit{Suspend}: the task is not available for scheduling without any timeout. From this state, it might become \textit{Ready}.
 \end{itemize}
 These states can be changed using the appropriate functions from the API, for instance:
 \begin{lstlisting}
@@ -70,36 +73,59 @@ vTaskPrioritySet( xHandle, tskIDLE_PRIORITY + 1 );
 %...........................................
 \subsection{POSIX simulator}
 
-\hspace{15mm}To develop and test demo tasks in order to get knowledge about FreeRTOS, I worked with a simulator. This is a ported version of the operating system that allows a embedded application to be simulated on a computer running another system.
+\hspace{15mm}To develop and test demo tasks in order to get knowledge about FreeRTOS, I worked with a simulator. This is a ported version of the operating system that allows an embedded application to be simulated on a computer running another system.
 
 As I'm a Linux user, so I chose the POSIX simulator. This simulator consist of a set of files representing the kernel and some demo applications which can all be compiled using GCC\footnote{GNU Compiler Collection is a compiler system which can compile several programming languages including C and C++.}.
 
-% Compilation of a library and a task
+My first attempts to use the simulator were complicated by some undefined references issues at the compilation which came from my operating system. I did managed to fix the problem thanks to my supervisor Jo\~{a}o. At this point, I have been able to compile the simulator and to play with the demo applications and even create my own one.
 
 
 
 %---------------------------------------------------------------
 \section{Twitter authentication: OAuth protocol}
 
+%...........................................
 \subsection{Overview}
 
-(Common authentication mechanism: token, secret key system, include graphic representations)
+% Common authentication mechanism: token, secret key system, include graphic representations
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[scale=0.75]{images/oauth.png}
+  \caption{OAuth protocol: communication process}
+\end{figure}
+
+\clearpage
+
+OAuth is the secured protocol used by Twitter to allows developers to access and share data from a third-party application. The authentication process is based on the public and private key system. Each step of the process (from the authentication to the data access) is represented by a granted token. The authentication consists three different tokens:
+\begin{itemize}
+\item The \textit{Consumer token} is provided by the Twitter developers website at the application referencing.
+\item The \textit{Request token} is given by the service provider as a temporary token.
+\item The \textit{Access token} is given as a proof of authenticity that must be use to access and share data.
+\end{itemize}
 
 
+%...........................................
 \subsection{Existing library in C}
 
-(Downloaded and tested library: samples hard to understand, idea: create a simple-to-use library layer)
+% Downloaded and tested library: samples hard to understand, idea: create a simple-to-use library layer
+
+\hspace{15mm}The Twitter developers documentation provides several implementations of OAuth protocol in many languages including C++, Java or Python, but for some reason not in C. However, I found a tiny C library under GPL, written by Robin Gareus and called \textit{liboauth}. His repository gives few examples, thus it was easy to get to know how to use it.
+
+Basically, this library provides a set of functions to encode parameters according to OAuth specifications and to implement the protocol using HTTP requests (\textit{GET} and \textit{POST} methods). For instance, these functions could be used useful to perform the granting access rights: \textit{oauth\_sign\_url2()}, \textit{oauth\_http\_get()}, \textit{oauth\_http\_post()}. However, the whole Twitter authentication process is really complex and could be packaged as only one main routine.
 
 
+%...........................................
 \subsection{Register an application on Twitter}
 
-(Way and proprieties of the registered application)
+% Way and proprieties of the registered application
 
 
+%...........................................
 \subsection{Required libraries}
 
-(libcurl: overview and it's seem hard to adapt to FreeRTOS, idea: create a very simple HTTP request library)\\
-(OpenSSL: overview and it's seem hard to adapt to FreeRTOS, idea)
+% libcurl: overview and it's seem hard to adapt to FreeRTOS, idea: create a very simple HTTP request library)
+% OpenSSL: overview and it's seem hard to adapt to FreeRTOS, idea)
 
 
 
