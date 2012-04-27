@@ -120,6 +120,19 @@ Basically, this library provides a set of functions to encode parameters accordi
 
 % Way and proprieties of the registered application
 
+\hspace{15mm}The first step is the account registration: I created a personal account which is the same no matter I use Twitter as a simple user sending tweets and following profiles, or as a developer creating applications using the API features.
+
+Then, I registered a new application in the Twitter developers website to get the first required token to use the Twitter API via OAuth. The main informations are the name of the application and the access level: read and/or write which means that the application will be allowed to receive and/or send tweets.
+
+At the end of the process, Twitter gives the \textit{Consumer token} (a set of a public and a private key) and also the useful URL to send requests. These URL are static so they might be stored into the main file that gather the whole authentication. 
+
+\clearpage
+\begin{figure}[h]
+  \centering
+  \includegraphics[scale=0.75]{images/register.png}
+  \caption{Application informations from Twitter developers website}
+\end{figure}
+
 
 %...........................................
 \subsection{Required libraries}
@@ -127,6 +140,13 @@ Basically, this library provides a set of functions to encode parameters accordi
 % libcurl: overview and it's seem hard to adapt to FreeRTOS, idea: create a very simple HTTP request library)
 % OpenSSL: overview and it's seem hard to adapt to FreeRTOS, idea)
 
+The liboauth required two libraries: \textbf{OpenSSL} and \textbf{libcurl}, thereby to build and library that could communicate with Twitter from an embedded device, these library must be ported and included.
+
+OpenSSL is a open source library implementing the \textit{Secure Sockets Layer} and the \textit{Transport Layer Security} protocols and including several encryption algorithms. Libcurl is a library that allows to perform several kind of requests including FTP, IMAP, HTTP and HTTPS.
+
+These two libraries are free open source and portable. As they could be compiled to be used with an embedded device, they are suitable for my project.
+
+I downloaded both of them and I checked the source code. I even tried to quickly port and compile them to the FreeRTOS POSIX simulator, but without success. The investigation about how to fix the compilation issues should be put aside until the library fully works on the simulator.
 
 
 \clearpage
