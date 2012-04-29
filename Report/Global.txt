@@ -109,36 +109,36 @@ Operating System: FreeRTOS . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
 Required libraries . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-11
+12
 
 4 Design of the library
 4.1
 
-12
-12
+13
+13
 
 4.1.1
 
 Interactions with Twitter . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-12
+13
 
 4.1.2
 4.2
 
 Functional design . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-Easy layer to user . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+A user-friendly layer . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-12
+13
 
 Implementation design . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-13
+14
 
 4.2.1
 
-13
+14
 
 Functions implementations . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 3
@@ -148,72 +148,63 @@ Functions implementations . . . . . . . . . . . . . . . . . . . . . . . . . . . 
 Functional diagram of the library . . . . . . . . . . . . . . . . . . . . . . . . .
 
 5 Implementation
+
+15
+16
+
 5.1
 
-14
-15
-15
-
-5.1.1
-
-Required libraries . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-
-15
-
-5.1.2
-
-Authentication process . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-
-15
-
-5.1.3
-
-Send a tweet . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-
-15
-
-5.1.4
-5.2
-
-The library . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-
-Receive a tweet . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-
-15
-
-A demo application . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-
-15
-
-6 Testing of the library
+Required libraries . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
 16
 
-7 Evaluation of the ptoject
+5.2
+
+Authentication process . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
 17
+
+5.3
+
+Send a tweet . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+18
+
+5.4
+
+Receive a tweet . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+18
+
+6 Testing of the library
+
+19
+
+7 Evaluation of the project
+
+20
 
 7.1
 
 Goal . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-17
+20
 
 7.2
 
 Schedule . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-17
+20
 
 7.3
 
 Improvements . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-17
+20
 
 8 Conclusion
 
-18
+21
 
 4
 
@@ -474,19 +465,44 @@ in many languages including C++, Java or Python, but for some reason not in C. H
 a tiny C library under GPL, written by Robin Gareus and called liboauth. His repository gives few
 examples, thus it was easy to get to know how to use it.
 Basically, this library provides a set of functions to encode parameters according to OAuth
-speciﬁcations and to implement the protocol using HTTP requests (GET and POST methods). For
-instance, these functions could be used useful to perform the granting access rights: oauth sign url2(),
-oauth http get(), oauth http post(). However, the whole Twitter authentication process is really complex and could be packaged as only one main routine.
+speciﬁcations and to implement the protocol using HTTP requests (GET and POST methods). For instance, these functions could be used useful to perform the granting access rights:
+oauth sign url2() , oauth http get() , oauth http post() . However, the whole Twitter authentication process is really complex and could be packaged as only one main routine.
 
 3.2.3
 
 Register an application on Twitter
 
+The ﬁrst step is the account registration: I created a personal account which is the same no
+matter I use Twitter as a simple user sending tweets and following proﬁles, or as a developer creating
+applications using the API features.
+Then, I registered a new application in the Twitter developers website to get the ﬁrst required
+token to use the Twitter API via OAuth. The main informations are the name of the application
+and the access level: read and/or write which means that the application will be allowed to receive
+and/or send tweets.
+At the end of the process, Twitter gives the Consumer token (a set of a public and a private
+key) and also the useful URL to send requests. These URL are static so they might be stored into
+the main ﬁle that gather the whole authentication.
+
+11
+
+Figure 3.3: Application informations from Twitter developers website
+
 3.2.4
 
 Required libraries
 
-11
+The liboauth required two libraries: OpenSSL and libcurl, thereby to build and library that could
+communicate with Twitter from an embedded device, these library must be ported and included.
+OpenSSL is a open source library implementing the Secure Sockets Layer and the Transport
+Layer Security protocols and including several encryption algorithms. Libcurl is a library that allows
+to perform several kind of requests including FTP, IMAP, HTTP and HTTPS.
+These two libraries are free open source and portable. As they could be compiled to be used
+with an embedded device, they are suitable for my project.
+I downloaded both of them and I checked the source code. I even tried to quickly port and
+compile them to the FreeRTOS POSIX simulator, but without success. The investigation about how
+to ﬁx the compilation issues should be put aside until the library fully works on the simulator.
+
+12
 
 4
 
@@ -510,7 +526,7 @@ chose the way he wants to store tweets.
 
 4.1.2
 
-Easy layer to user
+A user-friendly layer
 
 This library has to be a user-friendly layer. The developer does not have to know how OAuth
 works to build its own application to access to Twitter. He just have to give the basic informations
@@ -523,7 +539,7 @@ informations needed to allow OAuth to connect to Twitter.
 The send functionality is one of the two behaviours which could use the authentication entity
 in order to send a tweet on a Twitter proﬁle.
 
-12
+13
 
 Finally, the receive functionality use the authentication entity as well in order to receive
 tweets from a Twitter account’s timeline1 . This functionality include parsing functions which allows
@@ -548,9 +564,9 @@ to the timeline or to send a tweet is simple but it requires few steps:
 •
 •
 
-1- Request token: it requests the ﬁrst token to the Twitter service provider.
-2- Direct token: it requests the token needed to obtain user authorization.
-3- Veriﬁer: it uses the direct token in order to request the PIN code (or veriﬁer).
+1- Consumer token: it is the ﬁrst token given by the Twitter service provider.
+2- Request token: it requests the token needed to obtain user authorization.
+3- Veriﬁer: it uses the request token in order to get the PIN code (or veriﬁer).
 4- Access token: it uses the veriﬁer to request the ﬁnal token which will be use to send or
 receive tweets.
 
@@ -572,7 +588,7 @@ content).
 The timeline is the part of a Twitter proﬁle which contains all tweets sent by a user.
 A sub-function is used by the main function in a distributed way to perform the goal.
 
-13
+14
 
 4.2.2
 
@@ -580,7 +596,7 @@ Functional diagram of the library
 
 Figure 4.1: Functional diagram representing the implemented design
 
-14
+15
 
 5
 
@@ -588,50 +604,129 @@ Implementation
 
 5.1
 
-The library
-
-5.1.1
-
 Required libraries
 
-- OAuth which use OpenSSL and Libcurl are required. - OAuth and OpenSSL could be both included
-in the ﬁnal library package. - The use of Libcurl could be replace by sockets.
+To be able to write the library, I ﬁrst decided to implement the dependencies: liboauth,
+OpenSSL and libcurl.
+I started by downloading liboauth. The content of the library is really simple because it
+consists of eight C source code and header ﬁles. I managed to compile the FreeRTOS simulator
+including the OAuth library: in order to do so, I ﬁrst edited the simulator makeﬁle 1 by hand.
 
-5.1.2
+Figure 5.1: FreeRTOS POSIX simulator, makeﬁle architecture
+As shown in the ﬁgure above, the compilation instructions are gather into a Debug folder
+where rules are split into sub-ﬁles. Thus, I added a subdir.mk listing the C source codes ﬁles of the
+library and I referenced the name of the sub-directory into sources.mk.
+To compile liboauth the system requires OpenSSL and libcurl. Therefore I added some GCC
+options that references these libraries into the makeﬁle: -lssl -lcrypto -lcurl. Nevertheless, the libraries
+used are those installed on my own system, not those speciﬁc to simulated FreeRTOS system, which
+is not suitable for an embedded environment.
+The best possibility could be to port OpenSSL and libcurl to FreeRTOS in order to make
+liboauth totally independent of my system. These libraries are massive and require many research
+to be ported, moreover that was not an immediate priority under the plan, so I chose to set aside
+this issue until my Twitter library works.
+1
+
+A makeﬁle is a ﬁle containing compilation instructions.
+
+16
+
+5.2
 
 Authentication process
 
-- Request token - Direct token - Access token - Authentication structure returned
+Prior to determining the authentication process, I deﬁned the required informations to perform it as follows:
+• The Consumer token allows to authorise a speciﬁc application to access data from Twitter.
+• The user login and password prove this user allows the application to access to his timeline.
+• The URL to send requests are static informations given by Twitter.
+I chose to deﬁned the Consumer token and the user informations as parameters of the main authentication function. In this way, the developer will be able to chose which Twitter application and
+which Twitter account would used by the library to access data. The URL are deﬁned as static ﬁelds
+into the library.
+Then, the ﬁrst step of the authentication is the use of the Consumer token given by Twitter to
+get the Request token. Whatever the request, the URL and sometimes the parameters are generated
+into a speciﬁc function according to the Twitter speciﬁcations. For this ﬁrst stage:
+1
+2
 
-5.1.3
+t w i t t e r r e q u e s t t o k e n u r l ( consumer key , c o n s u m e r s e c r e t , &r e q u e s t t o k e n u r l ) ;
+t w i t t e r r e q u e s t t o k e n ( r e q u e s t t o k e n u r l , &r e q u e s t t o k e n k e y , &r e q u e s t t o k e n s e c r e t , &
+callback ) ;
+
+Basically, the output parameters begin by the & symbol because I assign the result values to the speciﬁed variables, so I need to know its references. For instance, the ﬁrst function use the consumer key
+and the consumer secret to get the generated request token url . And the second one use the
+request token url value to return the request token key , the request token secret and the
+callback .
+The Veriﬁer step is probably the most important but also the more complex. As usual, the
+URL is generated by a function and then the request is sent by another one:
+1
+2
+
+t w i t t e r d i r e c t t o k e n u r l ( r e q u e s t t o k e n k e y , &d i r e c t t o k e n u r l ) ;
+t w i t t e r v e r i f i e r ( d i r e c t t o k e n u r l , request token key , &v e r i f i e r ) ;
+
+But the twitter verifier function is divided into several steps:
+• Send a HTTP GET request using OAuth: oauth http get() .
+• Parse the HTML result of the request and get the authenticity code using
+twitter direct token authenticity() .
+• Regenerate another URL and some parameters using the authenticity code, and the user account informations through twitter direct token url2() .
+• Send a HTTP POST request using the OAuth with the new URL and the generated parameters:
+oauth http post() .
+17
+
+• Parse the HTML result of the request and get the ﬁnal PIN code (or veriﬁer) with
+twitter direct token pin() .
+The ﬁnal step of the authentication is to obtaining the Access token:
+1
+
+2
+
+t w i t t e r a c c e s s t o k e n u r l ( consumer key , c o n s u m e r s e c r e t , r e q u e s t t o k e n k e y ,
+r e q u e s t t o k e n s e c r e t , v e r i f i e r , &a c c e s s t o k e n u r l ) ;
+t w i t t e r a c c e s s t o k e n ( a c c e s s t o k e n u r l , &a c c e s s t o k e n k e y , &a c c e s s t o k e n s e c r e t , &
+a c c e s s t o k e n u s e r n a m e , &a c c e s s t o k e n u s e r i d ) ;
+
+These functions use the two ﬁrst tokens (Consumer and Request) and the Veriﬁer to obtain the ﬁnal
+token which could be use as a proof of user authenticity and user allowance about data accessing
+from his timeline.
+Finally, the main function gives to the developer a C entity (typed as a structure) call
+twitterAuthEntity deﬁned with the following ﬁelds:
+•
+•
+•
+•
+
+5.3
+
+The
+The
+The
+The
+
+user screen name.
+user identiﬁer.
+Access token key.
+Access token secret.
 
 Send a tweet
 
 - How use the authentication structure - Apply these informations to a behaviour
 
-5.1.4
+5.4
 
 Receive a tweet
 
 - Receiving process - XML parsing: get each tweet - Store temporary informations as a structure
 
-5.2
-
-A demo application
-
-(Graphic representation of the use of my library layer)
-
-15
+18
 
 6
 
 Testing of the library
 
-16
+19
 
 7
 
-Evaluation of the ptoject
+Evaluation of the project
 
 7.1
 
@@ -652,19 +747,29 @@ Improvements
 
 (What is it possible to do to improve my library?)
 
-17
+20
 
 8
 
 Conclusion
 
-18
+21
 
 Bibliography
-[1] Robin Gareus. liboauth. http://liboauth.sourceforge.net.
-[2] Real Time Engineers ltd. Freertos website. http://www.freertos.org.
-[3] Twitter. Developers documentation. https://dev.twitter.com/docs.
+[1]
+[2]
+[3]
+[4]
+[5]
+[6]
 
-19
+Robin Gareus. liboauth. http://liboauth.sourceforge.net.
+GitHub. Github, social coding. https://github.com.
+Real Time Engineers ltd. Freertos website. http://www.freertos.org.
+The OpenSSL Project. Openssl. http://www.openssl.org.
+Daniel Stenberg. libcurl. http://curl.haxx.se.
+Twitter. Developers documentation. https://dev.twitter.com/docs.
+
+22
 
 

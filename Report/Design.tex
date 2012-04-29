@@ -18,7 +18,7 @@ And these features have to work whatever the operating system and the hardware a
 I chose not implement any storing properties because it is more flexible to let the developer chose the way he wants to store tweets.
 
 
-\subsection{Easy layer to user}
+\subsection{A user-friendly layer}
 
 \hspace{15mm}This library has to be a user-friendly layer. The developer does not have to know how OAuth works to build its own application to access to Twitter. He just have to give the basic informations about the registered application (the public and secret key provided by Twitter) and informations about its Twitter account (the login and password).
 
@@ -46,9 +46,9 @@ Each functionality is represented by a single function. Nevertheless, the conten
 
 \hspace{15mm}Every steps of the authentication process are gather into the main authentication function. Basically each use of the OAuth library for a specific stage of the synchronisation is surrounded by a set of operations, for this very reason each stage is defined into a distinctive function. As explained above in the chapter \nameref{chap:research}, to authenticate an application to Twitter and then be able to access to the timeline or to send a tweet is simple but it requires few steps:
 \begin{itemize}
-\item 1- Request token: it requests the first token to the Twitter service provider.
-\item 2- Direct token: it requests the token needed to obtain user authorization.
-\item 3- Verifier: it uses the direct token in order to request the PIN code (or verifier). 
+\item 1- Consumer token: it is the first token given by the Twitter service provider.
+\item 2- Request token: it requests the token needed to obtain user authorization.
+\item 3- Verifier: it uses the request token in order to get the PIN code (or verifier). 
 \item 4- Access token: it uses the verifier to request the final token which will be use to send or receive tweets.
 \end{itemize}
 This main function gives to the user an authentication entity, that is the one he provides to the behaviour functions (send and receive). This entity is typed as a C structure.

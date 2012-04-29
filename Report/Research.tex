@@ -48,7 +48,7 @@ xTaskHandle xHandle;
 xTaskCreate( vMyTask, "NAME", STACK_SIZE, &parameters, tskIDLE_PRIORITY, &xHandle );
 vTaskDelete( xHandle );
 \end{lstlisting}
-The \textit{xTaskHandle} element allows to keep a reference to the task that can be then used by other functions
+The \cfunction{xTaskHandle} element allows to keep a reference to the task that can be then used by other functions
 
 Depending on its presence or its position in the queue, a task can take different states:
 \begin{itemize}
@@ -112,7 +112,7 @@ OAuth is the secured protocol used by Twitter to allows developers to access and
 
 \hspace{15mm}The Twitter developers documentation provides several implementations of OAuth protocol in many languages including C++, Java or Python, but for some reason not in C. However, I found a tiny C library under GPL, written by Robin Gareus and called \textit{liboauth}. His repository gives few examples, thus it was easy to get to know how to use it.
 
-Basically, this library provides a set of functions to encode parameters according to OAuth specifications and to implement the protocol using HTTP requests (\textit{GET} and \textit{POST} methods). For instance, these functions could be used useful to perform the granting access rights: \textit{oauth\_sign\_url2()}, \textit{oauth\_http\_get()}, \textit{oauth\_http\_post()}. However, the whole Twitter authentication process is really complex and could be packaged as only one main routine.
+Basically, this library provides a set of functions to encode parameters according to OAuth specifications and to implement the protocol using HTTP requests (\textit{GET} and \textit{POST} methods). For instance, these functions could be used useful to perform the granting access rights: \cfunction{oauth\_sign\_url2()}, \cfunction{oauth\_http\_get()}, \cfunction{oauth\_http\_post()}. However, the whole Twitter authentication process is really complex and could be packaged as only one main routine.
 
 
 %...........................................

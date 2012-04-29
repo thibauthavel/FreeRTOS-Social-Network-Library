@@ -5,10 +5,25 @@ Robin Gareus.
 \newblock liboauth.
 \newblock \url{http://liboauth.sourceforge.net}.
 
+\bibitem{github}
+GitHub.
+\newblock Github, social coding.
+\newblock \url{https://github.com}.
+
 \bibitem{freertos}
 Real Time~Engineers ltd.
 \newblock Freertos website.
 \newblock \url{http://www.freertos.org}.
+
+\bibitem{openssl}
+The~OpenSSL Project.
+\newblock Openssl.
+\newblock \url{http://www.openssl.org}.
+
+\bibitem{libcurl}
+Daniel Stenberg.
+\newblock libcurl.
+\newblock \url{http://curl.haxx.se}.
 
 \bibitem{twitter}
 Twitter.
