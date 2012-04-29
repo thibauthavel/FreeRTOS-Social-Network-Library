@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.4.21)  29 APR 2012 01:21
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.4.21)  29 APR 2012 19:32
 entering extended mode
  %&-line parsing enabled.
 **Global.tex
@@ -428,32 +428,35 @@ Underfull \hbox (badness 8151) in paragraph at lines 50--51
 c-ity code us-ing
  []
 
-[17] [18]) (./Testing.tex
+[17] [18] <images/xml.png, id=77, 301.125pt x 194.7275pt>
+File: images/xml.png Graphic file (type png)
+ <use images/xml.png>
+[19 <./images/xml.png (PNG copy)>]) (./Testing.tex
 Chapter 6.
-[19
+[20
 
 
 ]) (./Evaluation.tex
 Chapter 7.
-[20
+[21
 
 
 ]) (./Conclusion.tex
 Chapter 8.
-[21
+[22
 
 
 ]) (./Global.bbl)
 No file Global.ind.
-[22
+[23
 
 
 ] (./Global.aux) ) 
 Here is how much of TeX's memory you used:
- 5718 strings out of 495061
- 81576 string characters out of 1182621
+ 5771 strings out of 495061
+ 82492 string characters out of 1182621
  220006 words of memory out of 3000000
- 8789 multiletter control sequences out of 15000+50000
+ 8841 multiletter control sequences out of 15000+50000
  10240 words of font info for 36 fonts, out of 3000000 for 9000
  28 hyphenation exceptions out of 8191
  36i,8n,49p,627b,1258s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -467,9 +470,9 @@ share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texmf-t
 exlive/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-texlive/font
 s/type1/public/amsfonts/cm/cmti12.pfb></usr/share/texmf-texlive/fonts/type1/pub
 lic/amsfonts/cm/cmtt12.pfb></usr/share/texmf/fonts/type1/public/lm/lmtt12.pfb>
-Output written on Global.pdf (23 pages, 364938 bytes).
+Output written on Global.pdf (24 pages, 374520 bytes).
 PDF statistics:
- 126 PDF objects out of 1000 (max. 8388607)
+ 130 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 26 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 31 words of extra memory for PDF output out of 10000 (max. 10000000)
 

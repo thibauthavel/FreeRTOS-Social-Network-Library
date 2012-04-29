@@ -25,7 +25,7 @@ The best possibility could be to port OpenSSL and libcurl to FreeRTOS in order t
 
 \hspace{15mm}Prior to determining the authentication process, I defined the required informations to perform it as follows:
 \begin{itemize}
-\item The \textit{Consumer token} allows to authorise a specific application to access data from Twitter.
+\item The \textit{Consumer token} allows a specific application to access data from Twitter.
 \item The user login and password prove this user allows the application to access to his timeline.
 \item The URL to send requests are static informations given by Twitter.
 \end{itemize}
@@ -60,28 +60,60 @@ twitter_access_token(access_token_url, &access_token_key, &access_token_secret, 
 \end{lstlisting}
 These functions use the two first tokens (\textit{Consumer} and \textit{Request}) and the \textit{Verifier} to obtain the final token which could be use as a proof of user authenticity and user allowance about data accessing from his timeline.
 
-Finally, the main function gives to the developer a C entity (typed as a structure) call \cfunction{twitterAuthEntity} defined with the following fields:
+Finally, the main function gives to the developer a C entity (typed as a structure) called \cfunction{twitterAuthEntity} and defined with the following fields:
 \begin{itemize}
-\item The user screen name.
-\item The user identifier.
-\item The \textit{Access token} key.
-\item The \textit{Access token} secret.
+\item The user identifier and screen name.
+\item The \textit{Consumer token} key and secret.
+\item The \textit{Access token} key and secret.
 \end{itemize}
 
 
 %---------------------------------------------------------------
 \section{Send a tweet}
 
-- How use the authentication structure
-- Apply these informations to a behaviour
+\hspace{15mm}As all operations allowed by the final library, the main function require the authentication entity. Thus, this entity is one of the parameter and the fields of the structure which store the details of the authentication are used inside the function in order to perform the send operation.
+
+The second parameter is the content of the tweet, indeed. Twitter allows to send text-based posts of up 140 characters. Other extra-details might be attached to the tweet (e.g. the geo-localisation) but this library only supports the text content.
+
+To perform the submission, the library first generate the URL and the parameters of the HTTP POST request, and then send the tweet:
+\begin{lstlisting}
+twitter_tweet_url(tweet_content, consumer_key, consumer_secret, access_token_key, access_token_secret, &tweet_url, &tweet_param);
+twitter_tweet(tweet_url, tweet_param, &post_result);
+\end{lstlisting}
+
+If the last function succeed, it gives the XML value of the submitted tweet. This content is parsed and returned as a \cfunction{tweet} which is typed as a structure with the following fields:
+\begin{itemize}
+\item The tweet identifier.
+\item The creation date.
+\item The user screen name.
+\item The tweet text content.
+\end{itemize}
 
 
 %---------------------------------------------------------------
 \section{Receive a tweet}
 
-- Receiving process
-- XML parsing: get each tweet
-- Store temporary informations as a structure
+\hspace{15mm}The main function gets the entire timeline which means all tweets are received using one routine:
+\begin{lstlisting}
+twitter_timeline_user(consumer_key, consumer_secret, access_token_key, access_token_secret, access_token_user_name, &timeline_user);
+\end{lstlisting}
 
+The received content is in XML format and the data structure is defined as follows:
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[scale=0.75]{images/xml.png}
+  \caption{Tweets XML data structure}
+\end{figure}
+In the figure above, I chose to display only useful elements of the structure: those I use to fulfil \cfunction{tweet} entities.
+
+To parse XML data I written some tool functions to count, give a value or all values from specific elements:
+\begin{lstlisting}
+char * xml_parser_get (const char * xml_content, const char * element_key)
+int xml_parser_count (const char * xml_content, const char * element_key)
+void xml_parser_getall (const char * xml_content, const char * element_key, char * element_value[])
+\end{lstlisting}
+
+Using these functions, the main one enables the developer to get an array of \cfunction{tweet}.
 
 \clearpage

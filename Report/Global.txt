@@ -174,37 +174,37 @@ Send a tweet . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
 Receive a tweet . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-18
+19
 
 6 Testing of the library
 
-19
+20
 
 7 Evaluation of the project
 
-20
+21
 
 7.1
 
 Goal . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-20
+21
 
 7.2
 
 Schedule . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-20
+21
 
 7.3
 
 Improvements . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-20
+21
 
 8 Conclusion
 
-21
+22
 
 4
 
@@ -369,7 +369,7 @@ for ( ; ; )
 }
 }
 
-The FreeRTOS thread API3 allows to manage tasks. For instance, to create or delete them:
+The FreeRTOS thread API3 enables to manage tasks. For instance, to create or delete them:
 1
 
 xTaskHandle xHandle ;
@@ -423,7 +423,7 @@ An Application Programming Interface is a set of routines or functions given by 
 POSIX simulator
 
 To develop and test demo tasks in order to get knowledge about FreeRTOS, I worked with
-a simulator. This is a ported version of the operating system that allows an embedded application
+a simulator. This is a ported version of the operating system that enables an embedded application
 to be simulated on a computer running another system.
 As I’m a Linux user, so I chose the POSIX simulator. This simulator consist of a set of ﬁles
 representing the kernel and some demo applications which can all be compiled using GCC4 .
@@ -448,7 +448,7 @@ and C++.
 
 10
 
-OAuth is the secured protocol used by Twitter to allows developers to access and share data
+OAuth is the secured protocol used by Twitter to enable developers to access and share data
 from a third-party application. The authentication process is based on the public and private key
 system. Each step of the process (from the authentication to the data access) is represented by a
 granted token. The authentication consists three diﬀerent tokens:
@@ -494,8 +494,8 @@ Required libraries
 The liboauth required two libraries: OpenSSL and libcurl, thereby to build and library that could
 communicate with Twitter from an embedded device, these library must be ported and included.
 OpenSSL is a open source library implementing the Secure Sockets Layer and the Transport
-Layer Security protocols and including several encryption algorithms. Libcurl is a library that allows
-to perform several kind of requests including FTP, IMAP, HTTP and HTTPS.
+Layer Security protocols and including several encryption algorithms. Libcurl is a library that
+perform several kind of requests including FTP, IMAP, HTTP and HTTPS.
 These two libraries are free open source and portable. As they could be compiled to be used
 with an embedded device, they are suitable for my project.
 I downloaded both of them and I checked the source code. I even tried to quickly port and
@@ -515,7 +515,7 @@ Functional design
 4.1.1
 
 Interactions with Twitter
-Basically, the ﬁnal library should allow a developer:
+Basically, the ﬁnal library should enables a developer:
 
 • To authenticate its application to Twitter.
 • To send tweets to Twitter.
@@ -542,8 +542,7 @@ in order to send a tweet on a Twitter proﬁle.
 13
 
 Finally, the receive functionality use the authentication entity as well in order to receive
-tweets from a Twitter account’s timeline1 . This functionality include parsing functions which allows
-to return a set of tweets entities.
+tweets from a Twitter account’s timeline1 . This functionality include parsing functions which enables to return a set of tweets entities.
 Each functionality is represented by a single function. Nevertheless, the content of a functionality could be split into several operation each represented by another function.
 
 4.2
@@ -635,7 +634,7 @@ A makeﬁle is a ﬁle containing compilation instructions.
 Authentication process
 
 Prior to determining the authentication process, I deﬁned the required informations to perform it as follows:
-• The Consumer token allows to authorise a speciﬁc application to access data from Twitter.
+• The Consumer token allows a speciﬁc application to access data from Twitter.
 • The user login and password prove this user allows the application to access to his timeline.
 • The URL to send requests are static informations given by Twitter.
 I chose to deﬁned the Consumer token and the user informations as parameters of the main authentication function. In this way, the developer will be able to chose which Twitter application and
@@ -687,42 +686,76 @@ a c c e s s t o k e n u s e r n a m e , &a c c e s s t o k e n u s e r i d ) ;
 These functions use the two ﬁrst tokens (Consumer and Request) and the Veriﬁer to obtain the ﬁnal
 token which could be use as a proof of user authenticity and user allowance about data accessing
 from his timeline.
-Finally, the main function gives to the developer a C entity (typed as a structure) call
-twitterAuthEntity deﬁned with the following ﬁelds:
-•
-•
-•
-•
+Finally, the main function gives to the developer a C entity (typed as a structure) called
+twitterAuthEntity and deﬁned with the following ﬁelds:
+• The user identiﬁer and screen name.
+• The Consumer token key and secret.
+• The Access token key and secret.
 
 5.3
 
-The
-The
-The
-The
-
-user screen name.
-user identiﬁer.
-Access token key.
-Access token secret.
-
 Send a tweet
 
-- How use the authentication structure - Apply these informations to a behaviour
+As all operations allowed by the ﬁnal library, the main function require the authentication
+entity. Thus, this entity is one of the parameter and the ﬁelds of the structure which store the details
+of the authentication are used inside the function in order to perform the send operation.
+The second parameter is the content of the tweet, indeed. Twitter allows to send textbased posts of up 140 characters. Other extra-details might be attached to the tweet (e.g. the
+geo-localisation) but this library only supports the text content.
+To perform the submission, the library ﬁrst generate the URL and the parameters of the
+HTTP POST request, and then send the tweet:
+1
+
+2
+
+t w i t t e r t w e e t u r l ( t w e e t c o n t e n t , consumer key , c o n s u m e r s e c r e t , a c c e s s t o k e n k e y ,
+a c c e s s t o k e n s e c r e t , &t w e e t u r l , &tweet param ) ;
+t w i t t e r t w e e t ( t w e e t u r l , tweet param , &p o s t r e s u l t ) ;
+
+If the last function succeed, it gives the XML value of the submitted tweet. This content is
+parsed and returned as a tweet which is typed as a structure with the following ﬁelds:
+• The tweet identiﬁer.
+• The creation date.
+18
+
+• The user screen name.
+• The tweet text content.
 
 5.4
 
 Receive a tweet
+The main function gets the entire timeline which means all tweets are received using one
 
-- Receiving process - XML parsing: get each tweet - Store temporary informations as a structure
+routine:
+1
 
-18
+t w i t t e r t i m e l i n e u s e r ( consumer key , c o n s u m e r s e c r e t , a c c e s s t o k e n k e y ,
+a c c e s s t o k e n s e c r e t , a c c e s s t o k e n u s e r n a m e , &t i m e l i n e u s e r ) ;
+
+The received content is in XML format and the data structure is deﬁned as follows:
+
+Figure 5.2: Tweets XML data structure
+In the ﬁgure above, I chose to display only useful elements of the structure: those I use to
+fulﬁl tweet entities.
+To parse XML data I written some tool functions to count, give a value or all values from
+speciﬁc elements:
+1
+2
+3
+
+char ∗ x m l p a r s e r g e t ( const char ∗ xml content , const char ∗ element key )
+i n t xml parser count ( const char ∗ xml content , const char ∗ element key )
+void x m l p a r s e r g e t a l l ( const char ∗ xml content , const char ∗ element key , char ∗
+element value [ ] )
+
+Using these functions, the main one enables the developer to get an array of tweet .
+
+19
 
 6
 
 Testing of the library
 
-19
+20
 
 7
 
@@ -747,13 +780,13 @@ Improvements
 
 (What is it possible to do to improve my library?)
 
-20
+21
 
 8
 
 Conclusion
 
-21
+22
 
 Bibliography
 [1]
@@ -770,6 +803,6 @@ The OpenSSL Project. Openssl. http://www.openssl.org.
 Daniel Stenberg. libcurl. http://curl.haxx.se.
 Twitter. Developers documentation. https://dev.twitter.com/docs.
 
-22
+23
 
 

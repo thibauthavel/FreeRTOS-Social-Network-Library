@@ -25,10 +25,10 @@
 \contentsline {section}{\numberline {5.1}Required libraries}{16}
 \contentsline {section}{\numberline {5.2}Authentication process}{17}
 \contentsline {section}{\numberline {5.3}Send a tweet}{18}
-\contentsline {section}{\numberline {5.4}Receive a tweet}{18}
-\contentsline {chapter}{\numberline {6}Testing of the library}{19}
-\contentsline {chapter}{\numberline {7}Evaluation of the project}{20}
-\contentsline {section}{\numberline {7.1}Goal}{20}
-\contentsline {section}{\numberline {7.2}Schedule}{20}
-\contentsline {section}{\numberline {7.3}Improvements}{20}
-\contentsline {chapter}{\numberline {8}Conclusion}{21}
+\contentsline {section}{\numberline {5.4}Receive a tweet}{19}
+\contentsline {chapter}{\numberline {6}Testing of the library}{20}
+\contentsline {chapter}{\numberline {7}Evaluation of the project}{21}
+\contentsline {section}{\numberline {7.1}Project aim and personal goal}{21}
+\contentsline {section}{\numberline {7.2}Compliance with schedule}{21}
+\contentsline {section}{\numberline {7.3}Possible improvements}{21}
+\contentsline {chapter}{\numberline {8}Conclusion}{22}

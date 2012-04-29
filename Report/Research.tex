@@ -41,7 +41,7 @@ void vMyTask (void * pvParameters)
 }
 \end{lstlisting}
 
-The FreeRTOS thread API\footnote{An Application Programming Interface is a set of routines or functions given by a library.} allows to manage tasks. For instance, to create or delete them:
+The FreeRTOS thread API\footnote{An Application Programming Interface is a set of routines or functions given by a library.} enables to manage tasks. For instance, to create or delete them:
 \begin{lstlisting}
 xTaskHandle xHandle;
 
@@ -73,7 +73,7 @@ vTaskPrioritySet( xHandle, tskIDLE_PRIORITY + 1 );
 %...........................................
 \subsection{POSIX simulator}
 
-\hspace{15mm}To develop and test demo tasks in order to get knowledge about FreeRTOS, I worked with a simulator. This is a ported version of the operating system that allows an embedded application to be simulated on a computer running another system.
+\hspace{15mm}To develop and test demo tasks in order to get knowledge about FreeRTOS, I worked with a simulator. This is a ported version of the operating system that enables an embedded application to be simulated on a computer running another system.
 
 As I'm a Linux user, so I chose the POSIX simulator. This simulator consist of a set of files representing the kernel and some demo applications which can all be compiled using GCC\footnote{GNU Compiler Collection is a compiler system which can compile several programming languages including C and C++.}.
 
@@ -97,7 +97,7 @@ My first attempts to use the simulator were complicated by some undefined refere
 
 \clearpage
 
-OAuth is the secured protocol used by Twitter to allows developers to access and share data from a third-party application. The authentication process is based on the public and private key system. Each step of the process (from the authentication to the data access) is represented by a granted token. The authentication consists three different tokens:
+OAuth is the secured protocol used by Twitter to enable developers to access and share data from a third-party application. The authentication process is based on the public and private key system. Each step of the process (from the authentication to the data access) is represented by a granted token. The authentication consists three different tokens:
 \begin{itemize}
 \item The \textit{Consumer token} is provided by the Twitter developers website at the application referencing.
 \item The \textit{Request token} is given by the service provider as a temporary token.
@@ -142,7 +142,7 @@ At the end of the process, Twitter gives the \textit{Consumer token} (a set of a
 
 The liboauth required two libraries: \textbf{OpenSSL} and \textbf{libcurl}, thereby to build and library that could communicate with Twitter from an embedded device, these library must be ported and included.
 
-OpenSSL is a open source library implementing the \textit{Secure Sockets Layer} and the \textit{Transport Layer Security} protocols and including several encryption algorithms. Libcurl is a library that allows to perform several kind of requests including FTP, IMAP, HTTP and HTTPS.
+OpenSSL is a open source library implementing the \textit{Secure Sockets Layer} and the \textit{Transport Layer Security} protocols and including several encryption algorithms. Libcurl is a library that perform several kind of requests including FTP, IMAP, HTTP and HTTPS.
 
 These two libraries are free open source and portable. As they could be compiled to be used with an embedded device, they are suitable for my project.
 
