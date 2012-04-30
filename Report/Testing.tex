@@ -13,7 +13,7 @@ make clean; make all
 ./FreeRTOS_Posix
 \end{lstlisting}
 
-This task used static fields containing the required informations to proceed the authentication: the \textit{Consumer token} provided by Twitter and the details of my personal account. For each step, I chose to display the content of the returned values in order to be sure that the operations are successfully done.
+This task used static fields containing the required informations to proceed the authentication: the \textit{Consumer token} provided by Twitter and the details of my personal account. For each step, I chose to display the content of the returned values in order to be sure that the operations are successful done.
 
 For instance, the output console displays for first steps of the authentication:
 \begin{lstlisting}
@@ -26,7 +26,7 @@ request_token_secret : tEcLdyfssLstUOWgvm9of3sBrjakqIGTaGrbWr0A8cs
 callback             : true 
 \end{lstlisting}
 
-The receive tweet request displayed the whole XML content, so I chose to redirect the standard output to a temporary file. For instance, a tweet was first displayed as follows:\clearpage
+The \textit{receive tweet} request displayed the whole XML content, so I chose to redirect the standard output to a temporary file. For instance, a tweet was first displayed as follows:\clearpage
 \begin{lstlisting}
 <status>
   <created_at>Tue Apr 03 16:23:32 +0000 2012</created_at>
@@ -41,15 +41,15 @@ The receive tweet request displayed the whole XML content, so I chose to redirec
 </status>
 \end{lstlisting}
 
-Then, I tested the main functions using the resulted entities (\cfunction{twitterAuthEntity} and \cfunction{tweet}) and trying to make it crash: for instance, by specifying wrong parameters.
+Then, I tested the main functions using the resulted entities (\cfunction{twitterAuthEntity} and \cfunction{tweet}) and tried to make it crash: for instance, by specifying wrong parameters.
 
-As I wrote in the previous chapter, I added some referencing options to the GCC compiler to be able to use liboauth in my library, thus the simulator used the dependencies installed on my own system because I did not ported them. However, except the issue of these portable libraries (OpenSSL and libcurl), my project has been running successfully on the simulator, which means that the library is also portable and it has been supposed to work on an embedded device using FreeRTOS as operating system.
+As I wrote in the previous chapter, I have added some referencing options to the GCC compiler to be able to use liboauth in my library, thus the simulator used the dependencies installed on my own system because I did not ported them. However, except the issue of these portable libraries (OpenSSL and libcurl), my project has been running successfully on the simulator, which means that the library is also portable and it has been supposed to work on an embedded device using FreeRTOS as operating system.
 
 
 %---------------------------------------------------------------
 \section{Embedded device }
 
-\hspace{15mm}The week before the deadline, Jo\~{a}o and I tried to set up the library in the embedded device using the compiler specific to the micro-controller. But we did not managed to do that because of the two dependencies that I decided to put aside and to port only if I had enough time left, which did not occur.
+\hspace{15mm}The week before the deadline, Jo\~{a}o and I tried to set up the library in the embedded device using the compiler specific to the micro-controller. But we did not manage to do that because of the two dependencies that I decided to put aside and to port only if I had enough time left, which did not happen.
 
 Nevertheless, as I wrote above, this issue does not mean that the library is not portable.
 

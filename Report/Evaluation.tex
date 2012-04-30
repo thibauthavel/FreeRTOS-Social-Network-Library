@@ -4,19 +4,19 @@
 %---------------------------------------------------------------
 \section{Project aim and personal goal}
 
-\hspace{15mm}The main aim of this project was to develop library that is able to grab data from a social network. This part of the goal has been achieved, as a mater of fact my library enables a developer to get a user timeline and send tweets after granted access using the appropriate authentication protocol.
+\hspace{15mm}The main aim of this project was to develop a library that is able to grab data from a social network. This part of the goal has been achieved, as a matter of fact my library enables a developer to get a user timeline and to send tweets after granted access using the appropriate authentication protocol.
 
 Regarding the portability, the library might be used by any device or any system. Nevertheless, two dependencies are required: OpenSSL and libcurl which are both also portable.
 
-This library has also been build in order to be reused or integrated to another project. Every piece of the project has been documented and this report has also been made to provide a support as regards of the way it works. The source code and the report are freely available on Github.
+This library has also been built in order to be reused or integrated to another project. Every piece of the project has been documented and this report has also been made to provide a support. The source code and the report are freely available on Github.
 
-As regards my personal goals, I learned a lot about the low-level development, including the C language and especially library dependencies and compilation, but I also gained a great deal of knowledge about embedded devices thanks to my investigations into FreeRTOS and the support of Jo\~{a}o along my research and the development of my library.
+Regarding my personal goals, I learned a lot about the low-level development, including the C language and especially library dependencies and compilation, but I also gained a great deal of knowledge about embedded devices thanks to my investigations into FreeRTOS and the support of Jo\~{a}o along my research and the development of my library.
 
 
 %---------------------------------------------------------------
 \section{Compliance with schedule}
 
-\hspace{15mm}This project was not only a technical challenge to me, but also a time management challenge and organization regarding the development and the research. I did a schedule in my project specifications. The following schedule shows how the development went in practice:
+\hspace{15mm}This project was not only a technical challenge to me, but also a time management and organization challenge regarding the development and the research. I did a schedule in my project specifications. The following schedule shows how the development went in practice:
 \begin{itemize}
 \item January: Research (3 weeks), research and design (1 week).
 \item Febuary: Research, design and implementations (4 weeks).
@@ -24,8 +24,8 @@ As regards my personal goals, I learned a lot about the low-level development, i
 \item April: Implementation and testing (2 weeks), evaluation and report compilation (2 weeks).
 \end{itemize}
 
-Actually, the initial research period took longer than expected, and I still continued to do a lot of research along the development of the library. 
-Regarding the implementation I spent two more weeks as expected because of library dependency and compilation issues. I finished the report compilation which was final stage of the project three weeks after the expected one.
+Actually, the initial research period took longer than expected, and I did not stop my research along the development of the library. 
+Regarding the implementation, I spent two more weeks as expected because of library dependency and compilation issues. I finished the report compilation which was the final stage of the project three weeks after the expected.
 
 If I had to do my project over again, I would spend more time designing the library and less time searching a way to implement the dependencies (OpenSSL and libcurl) into FreeRTOS because it was not the point of the project.
 
@@ -33,7 +33,7 @@ If I had to do my project over again, I would spend more time designing the libr
 %---------------------------------------------------------------
 \section{Possible improvements}
 
-\hspace{15mm}As I did the documentation and my source code is open, few improvements can be done. As far as I am concerned, I would change several aspect of the source code. For instance the error detection into the functions for a better reliability. But also the way the XML parsing is performed: an existing and portable library could maybe be included instead of my simple and basic routines.
+\hspace{15mm}As I wrote up the documentation and as my source code is open, improvements can be achieved. As far as I am concerned, I would change several aspects of the source code. For instance the error detection into the functions for a better reliability. But also the way the XML parsing is performed: an existing and portable library could maybe be included instead of my simple and basic routines.
 
 Some additions could also be done, especially the way requests are performed: libcurl could maybe be replaced by the use of TCP/UDP sockets, and then it would be fully independent and portable. Or the library could enable a developer to send and receive messages from a different social network (for instance Facebook).
 

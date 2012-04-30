@@ -1,8 +1,14 @@
 \begin{thebibliography}{1}
 
+\bibitem{realtime}
+Alan Burns and Andy Wellings.
+\newblock {\em {Real-Time Systems and Programming Languages: Ada, Real-Time
+  Java and C/Real-Time POSIX}}.
+\newblock Addison Wesley, 2009.
+
 \bibitem{liboauth}
 Robin Gareus.
-\newblock liboauth.
+\newblock {libOAuth}.
 \newblock \url{http://liboauth.sourceforge.net}.
 
 \bibitem{github}
@@ -10,14 +16,19 @@ GitHub.
 \newblock Github, social coding.
 \newblock \url{https://github.com}.
 
+\bibitem{cguide}
+Eric Huss.
+\newblock {\em {The C Library Reference Guide}}.
+\newblock 1997.
+
 \bibitem{freertos}
 Real Time~Engineers ltd.
-\newblock Freertos website.
+\newblock {FreeRTOS website}.
 \newblock \url{http://www.freertos.org}.
 
 \bibitem{openssl}
 The~OpenSSL Project.
-\newblock Openssl.
+\newblock {OpenSSL}.
 \newblock \url{http://www.openssl.org}.
 
 \bibitem{libcurl}

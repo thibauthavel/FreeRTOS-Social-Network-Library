@@ -16,16 +16,16 @@
 
 The FreeRTOS source code is tiny and simple, thus it is really easy to port. It is mostly written in C and assembly. The kernel has been ported to around thirty micro-controllers.
 
-The system kernel consists of three common main files (\textit{list.c}, \textit{queue.c} and \textit{tasks.c}) and at least one specific to a particular micro-controller (\textit{port.c}).
+The kernel consists of three common main files (\textit{list.c}, \textit{queue.c} and \textit{tasks.c}) and at least one specific to a particular micro-controller (\textit{port.c}).
 
 
 
 %...........................................
-\subsection{Real-Time System}
+\subsection{A real-Time System}
 
-\hspace{15mm}One of the main feature provided by FreeRTOS is the way the system performs threads. All tasks are scheduled depending on their priority and sorted according to a round-robin algorithm.
+\hspace{15mm}One of the main feature provided by FreeRTOS is the way the system performs threads. All tasks are scheduled depending on their priority and sorted out according to a round-robin algorithm.
 
-Every files which manage tasks should include the FreeRTOS header \textit{task.h} in order to use the appropriate functions.
+Every file which manage tasks should include the FreeRTOS header \textit{task.h} in order to use the appropriate functions.
 
 A task can be defined as follows and should be of endless loop style:\clearpage
 \begin{lstlisting}
@@ -68,13 +68,13 @@ vTaskPrioritySet( xHandle, tskIDLE_PRIORITY + 1 );
 
 
 %...........................................
-\subsection{POSIX simulator}
+\subsection{The POSIX simulator}
 
-\hspace{15mm}To develop and test demo tasks in order to get knowledge about FreeRTOS, I worked with a simulator. This is a ported version of the operating system that enables an embedded application to be simulated on a computer running another system.
+\hspace{15mm}To develop and test demo tasks in order to get knowledge about FreeRTOS, I have worked with a simulator. This is a ported version of the operating system that enables an embedded application to be simulated on a computer running another system.
 
-As I'm a Linux user, so I chose the POSIX simulator. This simulator consist of a set of files representing the kernel and some demo applications which can all be compiled using GCC\footnote{GNU Compiler Collection is a compiler system which can compile several programming languages including C and C++.}.
+As I'm a Linux user, I chose the POSIX simulator. This simulator consists of a set of files representing the kernel and some demo applications which can all be compiled using GCC\footnote{GNU Compiler Collection is a compiler system which can compile several programming languages including C and C++.}.
 
-My first attempts to use the simulator were complicated by some undefined references issues at the compilation which came from my operating system. I did managed to fix the problem thanks to my supervisor Jo\~{a}o. At this point, I have been able to compile the simulator and to play with the demo applications and even create my own one.
+My first attempts to use the simulator were complicated by some undefined references issues at the compilation which came from my operating system. I did manage to fix the problem thanks to my supervisor Jo\~{a}o. At this point, I have been able to compile the simulator and to play with the demo applications and even create my own one.
 
 
 
@@ -92,28 +92,28 @@ My first attempts to use the simulator were complicated by some undefined refere
 
 \clearpage
 
-OAuth is the secured protocol used by Twitter to enable developers to access and share data from a third-party application. The authentication process is based on the public and private key system. Each step of the process (from the authentication to the data access) is represented by a granted token. The authentication consists three different tokens:
+OAuth is the secured protocol used by Twitter to enable developers to access and share data from a third-party application. The authentication process is based on the public and private key system. Each step of the process (from the authentication to the data access) is represented by a granted token. The authentication consists of three different tokens:
 \begin{itemize}
 \item The \textit{Consumer token} is provided by the Twitter developers website at the application referencing.
 \item The \textit{Request token} is given by the service provider as a temporary token.
-\item The \textit{Access token} is given as a proof of authenticity that must be use to access and share data.
+\item The \textit{Access token} is given as a proof of authenticity that must be used to access and share data.
 \end{itemize}
 
 
 %...........................................
 \subsection{Existing library in C}
 
-\hspace{15mm}The Twitter developers documentation provides several implementations of OAuth protocol in many languages including C++, Java or Python, but for some reason not in C. However, I found a tiny C library under GPL, written by Robin Gareus and called \textit{liboauth}. His repository gives few examples, thus it was easy to get to know how to use it.
+\hspace{15mm}The Twitter developers documentation provides several implementations of OAuth protocol in many languages including C++, Java or Python, but for some reason not in C. However, I have found a tiny C library under GPL, written by Robin Gareus and called \textit{liboauth}. His repository gives few examples, thus it was easy to get to know how to use it.
 
-Basically, this library provides a set of functions to encode parameters according to OAuth specifications and to implement the protocol using HTTP requests (\textit{GET} and \textit{POST} methods). For instance, these functions could be used useful to perform the granting access rights: \cfunction{oauth\_sign\_url2()}, \cfunction{oauth\_http\_get()}, \cfunction{oauth\_http\_post()}. However, the whole Twitter authentication process is really complex and could be packaged as only one main routine.
+Basically, this library provides a set of functions to encode parameters according to OAuth specifications and to implement the protocol using HTTP requests (\textit{GET} and \textit{POST} methods). For instance, these functions could be used to perform the granting access rights: \cfunction{oauth\_sign\_url2()}, \cfunction{oauth\_http\_get()}, \cfunction{oauth\_http\_post()}. However, the whole Twitter authentication process is really complex and could be packaged as only one main routine.
 
 
 %...........................................
 \subsection{Register an application on Twitter}
 
-\hspace{15mm}The first step is the account registration: I created a personal account which is the same no matter I use Twitter as a simple user sending tweets and following profiles, or as a developer creating applications using the API features.
+\hspace{15mm}The first step is the account registration: I created a personal account which is the same whether I use Twitter as a simple user sending tweets and following profiles, or as a developer creating applications using the API features.
 
-Then, I registered a new application in the Twitter developers website to get the first required token to use the Twitter API via OAuth. The main informations are the name of the application and the access level: read and/or write which means that the application will be allowed to receive and/or send tweets.
+Then, I registered a new application in the Twitter developers website to get the first required token to use the Twitter API via OAuth. The main information is the name of the application and the access level: read and/or write which means that the application will be allowed to receive and/or send tweets.
 
 At the end of the process, Twitter gives the \textit{Consumer token} (a set of a public and a private key) and also the useful URL to send requests. These URL are static so they might be stored into the main file that gather the whole authentication. 
 
@@ -121,14 +121,14 @@ At the end of the process, Twitter gives the \textit{Consumer token} (a set of a
 \begin{figure}[h]
   \centering
   \includegraphics[scale=0.75]{images/register.png}
-  \caption{Application informations from Twitter developers website}
+  \caption{Application information from Twitter developers website}
 \end{figure}
 
 
 %...........................................
 \subsection{Required libraries}
 
-\hspace{15mm}The liboauth required two libraries: \textbf{OpenSSL} and \textbf{libcurl}, thereby to build and library that could communicate with Twitter from an embedded device, these library must be ported and included.
+\hspace{15mm}The liboauth required two libraries: \textbf{OpenSSL} and \textbf{libcurl}, therefore to build a library that could communicate with Twitter from an embedded device, these libraries must be ported and included.
 
 OpenSSL is a open source library implementing the \textit{Secure Sockets Layer} and the \textit{Transport Layer Security} protocols and including several encryption algorithms. Libcurl is a library that perform several kind of requests including FTP, IMAP, HTTP and HTTPS.
 

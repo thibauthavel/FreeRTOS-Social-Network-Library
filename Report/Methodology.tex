@@ -17,23 +17,23 @@ My supervisor Jo\~{a}o and I met every week or every two weeks to discuss about 
 %---------------------------------------------------------------
 \section{Research plan}
 
-\hspace{15mm}My initial approach was to become familiar with the embedded device technology. I had to find an adapted, a small and a simple operating system to work with, thereby I chose \textbf{FreeRTOS}\footnote{FreeRTOS is a light-weight Real-Time Operating System.} supported from my supervisor.
+\hspace{15mm}My initial approach was to become familiar with the embedded device technology. I had to find an adapted, small and simple operating system to work with, thereby I chose \textbf{FreeRTOS}\footnote{FreeRTOS is a light-weight Real-Time Operating System.} supported from my supervisor.
 
-My supervisor had already used this system and he had developed applications before. He provided me one of his own device running with FreeRTOS. So, thanks to Jo\~{a}o and his knowledge about this operating system, I had a platform in addition to a massive support from him and the online community to develop my library. As I didn't have any knowledge about FreeRTOS, I read several articles which deals with how it works, and how tasks are scheduled in an real-time way.
+He had already used this system and he had developed applications before. He provided me one of his own device running with FreeRTOS. So, thanks to Jo\~{a}o and his knowledge about this operating system, I had a platform in addition to a massive support from him and the online community to develop my library. As I didn't have any knowledge about FreeRTOS, I read several articles which deals with how it works, and how tasks are scheduled in an real-time way.
 
-As a consequence of this chose and because one the goals of this project is to gain knowledge about low-level development, the library has been built using the C language.
+As a consequence of this choice and because one the goals of this project is to gain knowledge about low-level development, the library was built using the C language.
 
 Then, I defined every functionality of the final applications. Basically, the library's features are simple: it should allow a user to receive and send text from and to a social network. For instance a \textit{message on the wall} in \textbf{Facebook} or a \textit{tweet} in \textbf{Twitter}. Facebook and Twitter are both well known social networks and after some research about them, I choose to build my library suitable for Twitter because of the solid support for \textbf{OAuth} which is a secured protocol to access data. Once again, this choice was supported by Jo\~{a}o.
 
-At this point, I had to defined how to receive and to send tweets, so I've started by looking for any existing solutions. In the next chapter, I will discuss why I chose to build my own library from scratch only using OAuth.
+At this point, I had to define how to receive and send tweets, so I've started by looking for any existing solutions. In the next chapter, I will discuss why I chose to build my own library from scratch only using OAuth.
 
-After this key decision, I've learned how OAuth works and how to register an application on Twitter it in order to access to the data.
+After this key decision, I've learned how OAuth works and how to register an application on Twitter in order to access to the data.
 
-As I was now aware about what the tools I will use and the way to use them, I designed the library according to the features I wanted to implement.
+As I was now aware about what the tools I will be using and the way to use them, I designed the library according to the features I wanted to implement.
 
-The next step of the development was to implement the abstract structure of the library. At this stage, I faced lot of issues concerning the use of OAuth, the C language and its requirements. During my previous years of studies I learnt the basics of this language but to build the library I read a lot of articles, books and tutorials along the implementation.
+The next step of the development was to implement the abstract structure of the library. At this stage, I faced lot of issues concerning the use of OAuth, the C language and its requirements. During my previous years of studies I learnt the basics of this language but to build the library I had to read a lot of articles, books and tutorials along the implementation.
 
-Once I finished the draft version of the library, I tested every functionality by receiving and sending tweets over my own account and I improved the reliability according to the results of these tests.
+Once I had finished the draft version of the library, I tested every functionality by receiving and sending tweets over my own account and I improved the reliability according to the results of these tests.
 
 % If enought time left : fit this with existing method
 
