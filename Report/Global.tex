@@ -75,6 +75,12 @@
 	{\fontfamily{lmtt}\selectfont #1}
 }
 
+\newcommand{\console}[1]
+{
+	\colorbox{black}{\begin{minipage}[c]{1\linewidth}\textcolor{white}{\texttt{#1}}\end{minipage}}
+}
+
+
 % Enlever le nom chapitre
 \makeatletter
 \def\@makechapterhead#1{%

@@ -186,25 +186,25 @@ Receive a tweet . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
 
 7.1
 
-Goal . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Project aim and personal goal . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
 21
 
 7.2
 
-Schedule . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Compliance with schedule . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
 21
 
 7.3
 
-Improvements . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Possible improvements . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-21
+22
 
 8 Conclusion
 
-22
+23
 
 4
 
@@ -225,7 +225,7 @@ become familiar with the C language. Also I was looking forward to improving my 
 Firstly, this report will present the way I started my initial research and how I designed
 the library according to my functional choices. Secondly, it will present how I’ve implemented these
 functionalities, and what I did to test my library. Finally, this report will end by an evaluation of
-the ﬁnal product regarding the design choices, the way I’ve implemented them, and his reliability.
+the ﬁnal product regarding the design choices, the way I’ve implemented them, and its reliability.
 
 5
 
@@ -763,30 +763,68 @@ Evaluation of the project
 
 7.1
 
-Goal
+Project aim and personal goal
 
-(Is my goal achieved, why/why not?)
-(Is my work could be use by someone else, why/why not?)
+The main aim of this project was to develop library that is able to grab data from a social
+network. This part of the goal has been achieved, as a mater of fact my library enables a developer
+to get a user timeline and send tweets after granted access using the appropriate authentication
+protocol.
+Regarding the portability, the library might be used by any device or any system. Nevertheless, two dependencies are required: OpenSSL and libcurl which are both also portable.
+This library has also been build in order to be reused or integrated to another project. Every
+piece of the project has been documented and this report has also been made to provide a support
+as regards of the way it works. The source code and the report are freely available on Github.
+As regards my personal goals, I learned a lot about the low-level development, including the
+C language and especially library dependencies and compilation, but I also gained a great deal of
+knowledge about embedded devices thanks to my investigations into FreeRTOS and the support of
+Jo˜o along my research and the development of my library.
+a
 
 7.2
 
-Schedule
+Compliance with schedule
 
-(Did I follow my schedule, why/why not?)
+This project was not only a technical challenge to me, but also a time management challenge and organization regarding the development and the research. I did a schedule in my project
+speciﬁcations. The following schedule shows how the development went in practice:
+•
+•
+•
+•
+
+January: Research (3 weeks), research and design (1 week).
+Febuary: Research, design and implementations (4 weeks).
+March: Research and implementations (4 weeks).
+April: Implementation and testing (2 weeks), evaluation and report compilation (2 weeks).
+
+21
+
+Actually, the initial research period took longer than expected, and I still continued to do
+a lot of research along the development of the library. Regarding the implementation I spent two
+more weeks as expected because of library dependency and compilation issues. I ﬁnished the report
+compilation which was ﬁnal stage of the project three weeks after the expected one.
+If I had to do my project over again, I would spend more time designing the library and less
+time searching a way to implement the dependencies (OpenSSL and libcurl) into FreeRTOS because
+it was not the point of the project.
 
 7.3
 
-Improvements
+Possible improvements
 
-(What is it possible to do to improve my library?)
+As I did the documentation and my source code is open, few improvements can be done.
+As far as I am concerned, I would change several aspect of the source code. For instance the error
+detection into the functions for a better reliability. But also the way the XML parsing is performed:
+an existing and portable library could maybe be included instead of my simple and basic routines.
+Some additions could also be done, especially the way requests are performed: libcurl could
+maybe be replaced by the use of TCP/UDP sockets, and then it would be fully independent and
+portable. Or the library could enable a developer to send and receive messages from a diﬀerent social
+network (for instance Facebook).
 
-21
+22
 
 8
 
 Conclusion
 
-22
+23
 
 Bibliography
 [1]
@@ -803,6 +841,6 @@ The OpenSSL Project. Openssl. http://www.openssl.org.
 Daniel Stenberg. libcurl. http://curl.haxx.se.
 Twitter. Developers documentation. https://dev.twitter.com/docs.
 
-23
+24
 
 

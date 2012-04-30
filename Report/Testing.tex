@@ -1,4 +1,58 @@
 \chapter{Testing of the library}
 
 
+%---------------------------------------------------------------
+\section{FreeRTOS POSIX simulator}
+
+\hspace{15mm}To test my library, I used the FreeRTOS POSIX simulator running on my Linux operating system. I first created a simple task executing step by step the authentication process and using the standard output to be sure everything works. First of all, I did not use the three main functions (authentication, send and receive) to perform my initial tests.
+
+To compile the simulator including the demo task and the libraries and to execute it:
+\begin{lstlisting}
+cd FreeRTOS_Posix/Debug/
+make clean; make all
+./FreeRTOS_Posix
+\end{lstlisting}
+
+This task used static fields containing the required informations to proceed the authentication: the \textit{Consumer token} provided by Twitter and the details of my personal account. For each step, I chose to display the content of the returned values in order to be sure that the operations are successfully done.
+
+For instance, the output console displays for first steps of the authentication:
+\begin{lstlisting}
+Step 1 --------------------------------
+request_token_url : https://api.twitter.com/oauth/request_token?oauth_consumer_key=VB5FifD1HLhmLmsj8tZA&oauth_nonce=b7D1myYQGy_yF_5RFrLs0&oauth_signature_method=HMAC-SHA1&oauth_timestamp=1334924651&oauth_version=1.0&oauth_signature=rGoA99tkEd%2B7%2F2RpSvZOzm%2FqVWI%3D 
+
+Step 2 --------------------------------
+request_token_key    : ebvnwX6MslItt3uPwzXxN6TcNdbzy3Q9byZN0cr0Dwc 
+request_token_secret : tEcLdyfssLstUOWgvm9of3sBrjakqIGTaGrbWr0A8cs 
+callback             : true 
+\end{lstlisting}
+
+The receive tweet request displayed the whole XML content, so I chose to redirect the standard output to a temporary file. For instance, a tweet was first displayed as follows:\clearpage
+\begin{lstlisting}
+<status>
+  <created_at>Tue Apr 03 16:23:32 +0000 2012</created_at>
+  <id>187213757825564672</id>
+  <text>Multi-tweets test.</text>
+  // irrelevant elements
+  <user>
+    <id>488884688</id>
+    <screen_name>thibaut_havel</screen_name>
+    // irrelevant elements
+  </user>
+</status>
+\end{lstlisting}
+
+Then, I tested the main functions using the resulted entities (\cfunction{twitterAuthEntity} and \cfunction{tweet}) and trying to make it crash: for instance, by specifying wrong parameters.
+
+As I wrote in the previous chapter, I added some referencing options to the GCC compiler to be able to use liboauth in my library, thus the simulator used the dependencies installed on my own system because I did not ported them. However, except the issue of these portable libraries (OpenSSL and libcurl), my project has been running successfully on the simulator, which means that the library is also portable and it has been supposed to work on an embedded device using FreeRTOS as operating system.
+
+
+%---------------------------------------------------------------
+\section{Embedded device }
+
+\hspace{15mm}The week before the deadline, Jo\~{a}o and I tried to set up the library in the embedded device using the compiler specific to the micro-controller. But we did not managed to do that because of the two dependencies that I decided to put aside and to port only if I had enough time left, which did not occur.
+
+Nevertheless, as I wrote above, this issue does not mean that the library is not portable.
+
+
+
 \clearpage

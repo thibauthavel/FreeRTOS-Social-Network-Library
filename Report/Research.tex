@@ -6,8 +6,6 @@
 %...........................................
 \subsection{Overview}
 
-% Quick overview of the system: Free, open source, GP Licence, light-weight
-
 \hspace{15mm}FreeRTOS is a light-weight and real-time\footnote{A system that should fit to time constraints.} operating system suitable for embedded devices. It is distributed under the GPL\footnote{General public licence is used for free and open source software.} even then with certain exceptions: a developer is required to maintain the kernel as open source, whereas he could remain closed source his applications.
 
 \begin{figure}[h]
@@ -25,7 +23,6 @@ The system kernel consists of three common main files (\textit{list.c}, \textit{
 %...........................................
 \subsection{Real-Time System}
 
-% Kernel mechanism: priorities and scheduling
 \hspace{15mm}One of the main feature provided by FreeRTOS is the way the system performs threads. All tasks are scheduled depending on their priority and sorted according to a round-robin algorithm.
 
 Every files which manage tasks should include the FreeRTOS header \textit{task.h} in order to use the appropriate functions.
@@ -87,8 +84,6 @@ My first attempts to use the simulator were complicated by some undefined refere
 %...........................................
 \subsection{Overview}
 
-% Common authentication mechanism: token, secret key system, include graphic representations
-
 \begin{figure}[h]
   \centering
   \includegraphics[scale=0.75]{images/oauth.png}
@@ -108,8 +103,6 @@ OAuth is the secured protocol used by Twitter to enable developers to access and
 %...........................................
 \subsection{Existing library in C}
 
-% Downloaded and tested library: samples hard to understand, idea: create a simple-to-use library layer
-
 \hspace{15mm}The Twitter developers documentation provides several implementations of OAuth protocol in many languages including C++, Java or Python, but for some reason not in C. However, I found a tiny C library under GPL, written by Robin Gareus and called \textit{liboauth}. His repository gives few examples, thus it was easy to get to know how to use it.
 
 Basically, this library provides a set of functions to encode parameters according to OAuth specifications and to implement the protocol using HTTP requests (\textit{GET} and \textit{POST} methods). For instance, these functions could be used useful to perform the granting access rights: \cfunction{oauth\_sign\_url2()}, \cfunction{oauth\_http\_get()}, \cfunction{oauth\_http\_post()}. However, the whole Twitter authentication process is really complex and could be packaged as only one main routine.
@@ -117,8 +110,6 @@ Basically, this library provides a set of functions to encode parameters accordi
 
 %...........................................
 \subsection{Register an application on Twitter}
-
-% Way and proprieties of the registered application
 
 \hspace{15mm}The first step is the account registration: I created a personal account which is the same no matter I use Twitter as a simple user sending tweets and following profiles, or as a developer creating applications using the API features.
 
@@ -137,10 +128,7 @@ At the end of the process, Twitter gives the \textit{Consumer token} (a set of a
 %...........................................
 \subsection{Required libraries}
 
-% libcurl: overview and it's seem hard to adapt to FreeRTOS, idea: create a very simple HTTP request library)
-% OpenSSL: overview and it's seem hard to adapt to FreeRTOS, idea)
-
-The liboauth required two libraries: \textbf{OpenSSL} and \textbf{libcurl}, thereby to build and library that could communicate with Twitter from an embedded device, these library must be ported and included.
+\hspace{15mm}The liboauth required two libraries: \textbf{OpenSSL} and \textbf{libcurl}, thereby to build and library that could communicate with Twitter from an embedded device, these library must be ported and included.
 
 OpenSSL is a open source library implementing the \textit{Secure Sockets Layer} and the \textit{Transport Layer Security} protocols and including several encryption algorithms. Libcurl is a library that perform several kind of requests including FTP, IMAP, HTTP and HTTPS.
 
