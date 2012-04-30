@@ -24,7 +24,8 @@ library, I created a demo service that interacts with a known social network (fo
 Acknowledgements
 I would like to thank my supervisor Jo˜o Ferreira for his support all over the development
 a
-of my project.
+of my project. But also his advice regarding the development of the library, the initial informations
+he provided to me, and all the tests we did together using his own embedded device.
 
 2
 
@@ -180,31 +181,43 @@ Receive a tweet . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
 
 20
 
-7 Evaluation of the project
+6.1
+
+FreeRTOS POSIX simulator . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+20
+
+6.2
+
+Embedded device . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
 21
+
+7 Evaluation of the project
+
+22
 
 7.1
 
 Project aim and personal goal . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-21
+22
 
 7.2
 
 Compliance with schedule . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-21
+22
 
 7.3
 
 Possible improvements . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-22
+23
 
 8 Conclusion
 
-23
+24
 
 4
 
@@ -491,8 +504,9 @@ the main ﬁle that gather the whole authentication.
 
 Required libraries
 
-The liboauth required two libraries: OpenSSL and libcurl, thereby to build and library that could
-communicate with Twitter from an embedded device, these library must be ported and included.
+The liboauth required two libraries: OpenSSL and libcurl, thereby to build and library
+that could communicate with Twitter from an embedded device, these library must be ported and
+included.
 OpenSSL is a open source library implementing the Secure Sockets Layer and the Transport
 Layer Security protocols and including several encryption algorithms. Libcurl is a library that
 perform several kind of requests including FTP, IMAP, HTTP and HTTPS.
@@ -755,7 +769,100 @@ Using these functions, the main one enables the developer to get an array of twe
 
 Testing of the library
 
+6.1
+
+FreeRTOS POSIX simulator
+
+To test my library, I used the FreeRTOS POSIX simulator running on my Linux operating
+system. I ﬁrst created a simple task executing step by step the authentication process and using the
+standard output to be sure everything works. First of all, I did not use the three main functions
+(authentication, send and receive) to perform my initial tests.
+To compile the simulator including the demo task and the libraries and to execute it:
+1
+2
+3
+
+cd FreeRTOS Posix /Debug/
+make c l e a n ; make a l l
+. / FreeRTOS Posix
+
+This task used static ﬁelds containing the required informations to proceed the authentication: the Consumer token provided by Twitter and the details of my personal account. For each
+step, I chose to display the content of the returned values in order to be sure that the operations are
+successfully done.
+For instance, the output console displays for ﬁrst steps of the authentication:
+1
+2
+
+Step 1 −−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−
+r e q u e s t t o k e n u r l : h t t p s : // a p i . t w i t t e r . com/ oauth / r e q u e s t t o k e n ? o a u t h c o n s u m e r k e y=
+VB5FifD1HLhmLmsj8tZA&o a u t h n o n c e=b7D1myYQGy yF 5RFrLs0&o a u t h s i g n a t u r e m e t h o d=
+HMAC
+−SHA1&oauth timestamp =1334924651& o a u t h v e r s i o n =1.0& o a u t h s i g n a t u r e=rGoA99tkEd%2B7
+%2F2RpSvZOzm%2FqVWI%3D
+
+3
+4
+5
+6
+7
+
+Step 2 −−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−
+request token key
+: ebvnwX6MslItt3uPwzXxN6TcNdbzy3Q9byZN0cr0Dwc
+r e q u e s t t o k e n s e c r e t : tEcLdyfssLstUOWgvm9of3sBrjakqIGTaGrbWr0A8cs
+callback
+: true
+
+The receive tweet request displayed the whole XML content, so I chose to redirect the
+standard output to a temporary ﬁle. For instance, a tweet was ﬁrst displayed as follows:
+
 20
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+
+<s t a t u s >
+<c r e a t e d a t >Tue Apr 03 1 6 : 2 3 : 3 2 +0000 2012</ c r e a t e d a t >
+<id >187213757825564672 </ id>
+<t e x t >Multi−t w e e t s t e s t .</ t e x t >
+// i r r e l e v a n t e l e m e n t s
+<u s e r >
+<id >488884688</ id>
+<screen name >t h i b a u t h a v e l </screen name >
+// i r r e l e v a n t e l e m e n t s
+</u s e r >
+</ s t a t u s >
+
+Then, I tested the main functions using the resulted entities ( twitterAuthEntity and
+tweet ) and trying to make it crash: for instance, by specifying wrong parameters.
+As I wrote in the previous chapter, I added some referencing options to the GCC compiler
+to be able to use liboauth in my library, thus the simulator used the dependencies installed on my
+own system because I did not ported them. However, except the issue of these portable libraries
+(OpenSSL and libcurl), my project has been running successfully on the simulator, which means
+that the library is also portable and it has been supposed to work on an embedded device using
+FreeRTOS as operating system.
+
+6.2
+
+Embedded device
+
+The week before the deadline, Jo˜o and I tried to set up the library in the embedded device
+a
+using the compiler speciﬁc to the micro-controller. But we did not managed to do that because of
+the two dependencies that I decided to put aside and to port only if I had enough time left, which
+did not occur.
+Nevertheless, as I wrote above, this issue does not mean that the library is not portable.
+
+21
 
 7
 
@@ -795,7 +902,7 @@ Febuary: Research, design and implementations (4 weeks).
 March: Research and implementations (4 weeks).
 April: Implementation and testing (2 weeks), evaluation and report compilation (2 weeks).
 
-21
+22
 
 Actually, the initial research period took longer than expected, and I still continued to do
 a lot of research along the development of the library. Regarding the implementation I spent two
@@ -818,13 +925,25 @@ maybe be replaced by the use of TCP/UDP sockets, and then it would be fully inde
 portable. Or the library could enable a developer to send and receive messages from a diﬀerent social
 network (for instance Facebook).
 
-22
+23
 
 8
 
 Conclusion
 
-23
+In this ﬁnal year project, the development of a social network library written in a low-level
+language is presented. This library enables a developer to authenticate his application on Twitter,
+but also to receive and send text-based messages called tweets.
+This features has been tested on the simulator of a lightweight operating system: FreeRTOS, which prove the portability and the partial independence of the library, and thus it is suitable
+for embedded devices.
+All the objectives of this project has been achieved. The functional goal was to perform a
+communication between Twitter and an application thanks to the library. Moreover, the personal
+aim was to improve my knowledge in low-level development and become familiar with the C language,
+and this is precisely what is happened.
+This project allows any interested developer to work on further improvements. The source
+code will still open to use and modiﬁcation by other people.
+
+24
 
 Bibliography
 [1]
@@ -841,6 +960,6 @@ The OpenSSL Project. Openssl. http://www.openssl.org.
 Daniel Stenberg. libcurl. http://curl.haxx.se.
 Twitter. Developers documentation. https://dev.twitter.com/docs.
 
-24
+25
 
 
