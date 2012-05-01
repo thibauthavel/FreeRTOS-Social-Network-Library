@@ -36,8 +36,10 @@
 /* Defines */
 #define netSTACK_SIZE      ((unsigned short)512)
 #define netNUMBER_OF_TASKS (1)
+#define VERBOSE            1
+
 #define USER_SCREEN_NAME   "thibaut_havel"
-#define USER_PASSWORD      "74107410"
+#define USER_PASSWORD      "*************"
 #define CONSUMER_KEY       "VB5FifD1HLhmLmsj8tZA"
 #define CONSUMER_SECRET    "OdE18zFiva5TsC3rPQmq9BlYXhfBPFWJq2bY6Ib40"
 
@@ -68,7 +70,6 @@ static void mainTask (void *pvParameters)
     int doItOnce = 1;
     
     const char * const taskStartMsg = "Twitter task started.\r\n";
-    const char * const doItMsg = "I did it!\r\n";
    
     vPrintDisplayMessage(&taskStartMsg);
     pusTaskCheckVariable = (unsigned short *) pvParameters;
@@ -80,63 +81,42 @@ static void mainTask (void *pvParameters)
         {
             vTaskSuspendAll();
             {
-                char * request_token_url;
-                char * oauth_token;
-                char * oauth_token_secret;
-                char * callback;
-                char * direct_token_url;
-                char * verifier;
-                char * access_token_url;
-                char * access_token;
-                char * access_token_secret;
-                char * access_token_user_name;
-                char * access_token_user_id;
-                char * tweet_url;
-                char * tweet_param;
-                
-
-                printf("\n\nAuthentication:\n");
+                printf("\n[TWITTER] Authentication...\n");
                 twitterAuthEntity auth = twitter_authentication(CONSUMER_KEY, CONSUMER_SECRET, USER_SCREEN_NAME, USER_PASSWORD);
-                /*
-                printf("user_id=%s\n", auth.user_id);
-                printf("user_screen_name=%s\n", auth.user_screen_name);
-                printf("consumer_key=%s\n", auth.consumer_key);
-                printf("consumer_secret=%s\n", auth.consumer_secret);
-                printf("access_key=%s\n", auth.access_key);
-                printf("access_secret=%s\n", auth.access_secret);
-                */
+                if(VERBOSE)
+                {
+                    printf("user_id=%s\n", auth.user_id);
+                    printf("user_screen_name=%s\n", auth.user_screen_name);
+                    printf("consumer_key=%s\n", auth.consumer_key);
+                    printf("consumer_secret=%s\n", auth.consumer_secret);
+                    printf("access_key=%s\n", auth.access_key);
+                    printf("access_secret=%s\n", auth.access_secret);
+                }
 
-                printf("\n\nReceive tweets:\n");
+                printf("[TWITTER] Receive tweets...\n");
                 tweetEntity * tweets;
                 int count = twitter_receive_tweets(auth, &tweets);
-                /*
-                int i;
-                for(i = 0 ; i < count ; i++)
+                if(VERBOSE)
                 {
-                    printf("Tweet (%d) : %s\n", i, tweets[i].tweet_text);
+                    printf("count=%d\n", count);
+                    int i;
+                    for(i = 0 ; i < count ; i++)
+                    {
+                        printf("Tweet (%d) : %s\n", i, tweets[i].tweet_text);
+                    }
                 }
-                */              
 
-                /*
-                // Step 3 : Get the send tweets URL
-                printf("\n\nStep 3 --------------------------------\n\n");
-                time_t time_tmp;
-                time(&time_tmp);
-                char * tweet = xstrdup("This tweet has been sent via the library, the "); 
-                tweet = xstrcat(tweet, ctime(&time_tmp));
-                twitter_tweet_url(tweet, CONSUMER_KEY, CONSUMER_SECRET, access_token, access_token_secret, &tweet_url, &tweet_param);
-                printf("tweet_url : %s\n", tweet_url);
-                printf("tweet_param : %s\n", tweet_param);
-                
-                // Step 4 : Send the tweet
-                printf("\n\nStep 4 --------------------------------\n\n");
-                char * post_result;
-                //twitter_tweet(tweet_url, tweet_param, &post_result);
-                //printf("post_result : %s\n", post_result);
-                
-                printf("\n\nEnd behaviours ************************\n\n");
-                printf("\n\n+++++++++++++++++++++++++++++++++++++++\n\n");
-                */
+                printf("[TWITTER] Send a tweet...\n");
+                tweetEntity tweet = twitter_send_tweet(auth, "This is another test.");
+                if(VERBOSE)
+                {
+                    printf("tweet_id=%s\n", tweet.tweet_id);
+                    printf("tweet_date=%s\n", tweet.tweet_date);
+                    printf("user_screen_name=%s\n", tweet.user_screen_name);
+                    printf("tweet_text=%s\n", tweet.tweet_text);
+                }
+
+                printf("\n");
                 fflush(stdout);
             }
             xTaskResumeAll();
