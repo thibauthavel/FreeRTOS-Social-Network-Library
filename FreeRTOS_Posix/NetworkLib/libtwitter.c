@@ -1,14 +1,11 @@
 /*
- *    FreeRTOS Social Network Library
- *    https://github.com/thibauthavel/FreeRTOS-Social-Network-Library
- *    
- *    Author:       Thibaut HAVEL
- *    Date:         13/02/2012
- *
- *    Last update : 21/04/2012
+ *	FreeRTOS Social Network Library
+ *	https://github.com/thibauthavel/FreeRTOS-Social-Network-Library
+ *	
+ *	Author: Thibaut HAVEL
+ *	Date:   2012
  *
  */
-
 
 
 /*
@@ -19,11 +16,6 @@
 /* System headers */
 #include <stdio.h>
 #include <string.h>
-#include <time.h>
-
-/* FreeRTOS headers */
-#include "FreeRTOS.h"
-#include "task.h"
 
 /* Other requiered library */
 #include "oauth.h"
@@ -32,26 +24,18 @@
 #include "libtwitter.h"
 
 
-/*-----------------------------------------------------------*/
+/*
+ * STATIC FIELDS
+ *-----------------------------------------------------------*/
 
-
-#define USER_SCREEN_NAME    "thibaut_havel"
-#define USER_EMAIL          "********"
-#define USER_ID             "********"
-#define USER_PASSWORD       "********"
-#define CONSUMER_KEY        "VB5FifD1HLhmLmsj8tZA"
-#define CONSUMER_SECRET     "OdE18zFiva5TsC3rPQmq9BlYXhfBPFWJq2bY6Ib40"
-#define OAUTH_TOKEN         "488884688-gBSVVjk722PjHgPx5mBPY1wTsL0Bmlv8QAazwgMy"
-#define OAUTH_TOKEN_SECRET  "6jLaHA3wLRiUGAidt9q4doIx3IXX8U1D6ntyUuVMN1g"
 
 #define TWITTER_REQUEST_TOKEN_URL  "https://api.twitter.com/oauth/request_token"
 #define TWITTER_DIRECT_TOKEN_URL   "https://api.twitter.com/oauth/authorize"
 #define TWITTER_ACCESS_TOKEN_URL   "https://api.twitter.com/oauth/access_token"
 #define TWITTER_SEND_TWEET_URL     "http://twitter.com/statuses/update.xml"
-
 #define TWITTER_TIMELINE_USER_URL  "http://twitter.com/statuses/user_timeline.xml"
 
-#define TWITTER_TWEET_SIZE  140
+#define TWITTER_TWEET_SIZE         140
 
 
 
@@ -322,109 +306,59 @@ void xml_parser_getall (const char * xml_content, const char * element_key, char
 
 
 /*
- * MAIN FUNCTION
+ * MAIN FUNCTIONS
  *-----------------------------------------------------------*/
+ 
+ 
+/*
+ *  IN  : consumer_key
+ *  IN  : consumer_secret
+ *  IN  : user_screen_name
+ *  IN  : user_password
+ *  OUT : twitterAuthEntity
+ */
 
+twitterAuthEntity twitter_authentication (const char * consumer_key, const char * consumer_secret, const char * user_screen_name, const char * user_password)
+{    
+    char * request_token_url;
+    char * oauth_token;
+    char * oauth_token_secret;
+    char * callback;
+    char * direct_token_url;
+    char * verifier;
+    char * access_token_url;
+    char * access_token;
+    char * access_token_secret;
+    char * access_token_user_name;
+    char * access_token_user_id;
+    
+    twitterAuthEntity auth;
 
-void twitterizer (void)
-{
-    vTaskSuspendAll();
-    {
-        char * request_token_url;
-        char * oauth_token;
-        char * oauth_token_secret;
-        char * callback;
-        char * direct_token_url;
-        char * verifier;
-        char * access_token_url;
-        char * access_token;
-        char * access_token_secret;
-        char * access_token_user_name;
-        char * access_token_user_id;
-        char * tweet_url;
-        char * tweet_param;
+    printf("* I'm using the 'Consumer token' to get the 'Request token': ");
+    twitter_request_token_url(consumer_key, consumer_secret, &request_token_url);
+    twitter_request_token(request_token_url, &oauth_token, &oauth_token_secret, &callback);
+    printf("DONE\n");
+    
+    printf("* I'm using the 'Request token' to get the 'Verifier': ");
+    twitter_direct_token_url(oauth_token, &direct_token_url);
+    twitter_verifier(direct_token_url, oauth_token, user_screen_name, user_password, &verifier);
+    printf("DONE\n");
 
+    printf("* I'm using the 'Consumer token', the 'Request token' and the 'Verifier' to get the 'Access token': ");
+    twitter_access_token_url(consumer_key, consumer_secret, oauth_token, oauth_token_secret, verifier, &access_token_url);
+    twitter_access_token(access_token_url, &access_token, &access_token_secret, &access_token_user_name, &access_token_user_id);
+    printf("DONE\n");    
 
-        printf("\n\nBegin authentication ******************\n\n");
+    auth.user_id = access_token_user_id;
+    auth.user_screen_name = access_token_user_name;
+    auth.consumer_key = consumer_key;
+    auth.consumer_secret = consumer_secret;
+    auth.access_key = access_token;
+    auth.access_secret = access_token_secret;
 
-        // Step 1 : Get the request token URL
-        printf("\n\nStep 1 --------------------------------\n\n");
-        twitter_request_token_url(CONSUMER_KEY, CONSUMER_SECRET, &request_token_url);
-        printf("request_token_url : %s \n", request_token_url);
-        
-        // Step 2 : Use the request token URL to get a token
-        printf("\n\nStep 2 --------------------------------\n\n");
-        twitter_request_token(request_token_url, &oauth_token, &oauth_token_secret, &callback);
-        printf("oauth_token        : %s \n", oauth_token);
-        printf("oauth_token_secret : %s \n", oauth_token_secret);
-        printf("callback           : %s \n", callback);
-        
-        // Step 3 : Get the direct token URL
-        printf("\n\nStep 3 --------------------------------\n\n");
-        twitter_direct_token_url(oauth_token, &direct_token_url);
-        printf("direct_token_url : %s \n", direct_token_url);
-
-        // Step 4 : Verifier
-        printf("\n\nStep 4 --------------------------------\n\n");
-        twitter_verifier(direct_token_url, oauth_token, &verifier);
-        printf("verifier : %s \n", verifier);
-
-        // Step 5 : Get the access token URL
-        printf("\n\nStep 5 --------------------------------\n\n");
-        twitter_access_token_url(CONSUMER_KEY, CONSUMER_SECRET, oauth_token, oauth_token_secret, verifier, &access_token_url);
-        printf("access_token_url : %s \n", access_token_url);
-        
-        // Step 6 : Use the access token URL to get a token
-        printf("\n\nStep 6 --------------------------------\n\n");
-        twitter_access_token(access_token_url, &access_token, &access_token_secret, &access_token_user_name, &access_token_user_id);
-        printf("access_token : %s \n", access_token);
-        printf("access_token_secret : %s \n", access_token_secret);
-        printf("access_token_user_name : %s \n", access_token_user_name);
-        printf("access_token_user_id : %s \n", access_token_user_id);
-        
-        printf("\n\nEnd authentication ********************\n\n");
-        printf("\n\nBegin behaviours **********************\n\n");
-        
-        // Step 1 : Get the user timeline
-        printf("\n\nStep 1 --------------------------------\n\n");
-        char * timeline_user;
-        twitter_timeline_user(CONSUMER_KEY, CONSUMER_SECRET, access_token, access_token_secret, access_token_user_name, &timeline_user);
-        printf("timeline_user : [XML content]\n", timeline_user);
-        
-        // Step 2 : Parse the timeline into tweets
-        printf("\n\nStep 2 --------------------------------\n\n");
-        int count_tweets = xml_parser_count(timeline_user, "text");
-        char * tweets[count_tweets];
-        xml_parser_getall(timeline_user, "text", tweets);
-        int i;
-        for(i = 0 ; i < sizeof(tweets)/sizeof(char*) ; i++)
-        {
-            printf("Tweet (%d) : %s\n", i, tweets[i]);
-        }
-        
-        // Step 3 : Get the send tweets URL
-        printf("\n\nStep 3 --------------------------------\n\n");
-        time_t time_tmp;
-        time(&time_tmp);
-        char * tweet = xstrdup("This tweet has been sent via the library, the "); 
-        tweet = xstrcat(tweet, ctime(&time_tmp));
-        twitter_tweet_url(tweet, CONSUMER_KEY, CONSUMER_SECRET, access_token, access_token_secret, &tweet_url, &tweet_param);
-        printf("tweet_url : %s\n", tweet_url);
-        printf("tweet_param : %s\n", tweet_param);
-        
-        // Step 4 : Send the tweet
-        printf("\n\nStep 4 --------------------------------\n\n");
-        char * post_result;
-        twitter_tweet(tweet_url, tweet_param, &post_result);
-        printf("post_result : %s\n", post_result);
-        
-        printf("\n\nEnd behaviours ************************\n\n");
-        printf("\n\n+++++++++++++++++++++++++++++++++++++++\n\n");
-        
-        fflush(stdout);
-    }
-    xTaskResumeAll();
+    return auth;
 }
+
 
 
 
@@ -552,9 +486,11 @@ void twitter_direct_token_url2 (const char * direct_token_url, const char * auth
 /*
  *  IN  : direct_token_url
  *  IN  : oauth_token
+ *  IN  : user_screen_name
+ *  IN  : user_password
  *  OUT : verifier
  */
-void twitter_verifier (const char * direct_token_url, const char * oauth_token, char ** verifier)
+void twitter_verifier (const char * direct_token_url, const char * oauth_token, const char * user_screen_name, const char * user_password, char ** verifier)
 {
     char * direct_token_script;
     char * direct_token_authenticity;
@@ -571,7 +507,7 @@ void twitter_verifier (const char * direct_token_url, const char * oauth_token, 
     unsigned needle_keychar2_times = 5;
     twitter_direct_token_authenticity(direct_token_script, needle_keychar1, needle_keychar1_times, needle_keychar2, needle_keychar2_times, &direct_token_authenticity);
     
-    twitter_direct_token_url2(direct_token_url, direct_token_authenticity, oauth_token, USER_SCREEN_NAME, USER_PASSWORD, NULL, 0,  &direct_token_url2, &direct_token_prm2);
+    twitter_direct_token_url2(direct_token_url, direct_token_authenticity, oauth_token, user_screen_name, user_password, NULL, 0,  &direct_token_url2, &direct_token_prm2);
     
     direct_token_script2 = oauth_http_post(direct_token_url2, direct_token_prm2);
     
