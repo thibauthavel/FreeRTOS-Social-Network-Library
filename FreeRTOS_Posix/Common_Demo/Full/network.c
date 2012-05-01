@@ -38,8 +38,8 @@
 #define netNUMBER_OF_TASKS (1)
 #define VERBOSE            1
 
-#define USER_SCREEN_NAME   "thibaut_havel"
-#define USER_PASSWORD      "*************"
+#define USER_SCREEN_NAME   "dev_socnetlib"
+#define USER_PASSWORD      "secretpassword"
 #define CONSUMER_KEY       "VB5FifD1HLhmLmsj8tZA"
 #define CONSUMER_SECRET    "OdE18zFiva5TsC3rPQmq9BlYXhfBPFWJq2bY6Ib40"
 
