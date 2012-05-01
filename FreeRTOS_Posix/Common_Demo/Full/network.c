@@ -1,9 +1,9 @@
 /*
- *	FreeRTOS Social Network Library
- *	https://github.com/thibauthavel/FreeRTOS-Social-Network-Library
- *	
- *	Author: Thibaut HAVEL
- *	Date:   2012
+ *  FreeRTOS Social Network Library
+ *  https://github.com/thibauthavel/FreeRTOS-Social-Network-Library
+ *  
+ *  Author: Thibaut HAVEL
+ *  Date:   2012
  *
  *  This program use the OAuth library in order to get 'Tweets'
  *  from a Twitter account (thibaut_havel).
@@ -55,7 +55,7 @@ static volatile unsigned short taskCheck[netNUMBER_OF_TASKS] = { (unsigned short
 
 void startNetworkTask (unsigned portBASE_TYPE uxPriority)
 {
-	xTaskCreate(mainTask, "Twitter", netSTACK_SIZE, (void *)&(taskCheck[0]), uxPriority, NULL);
+    xTaskCreate(mainTask, "Twitter", netSTACK_SIZE, (void *)&(taskCheck[0]), uxPriority, NULL);
 }
 
 
@@ -70,14 +70,14 @@ static void mainTask (void *pvParameters)
     const char * const taskStartMsg = "Twitter task started.\r\n";
     const char * const doItMsg = "I did it!\r\n";
    
-	vPrintDisplayMessage(&taskStartMsg);
-	pusTaskCheckVariable = (unsigned short *) pvParameters;
+    vPrintDisplayMessage(&taskStartMsg);
+    pusTaskCheckVariable = (unsigned short *) pvParameters;
 
-	/* Keep performing the task */
-	for(;;)
-	{
-	    if(doItOnce)
-	    {
+    /* Keep performing the task */
+    for(;;)
+    {
+        if(doItOnce)
+        {
             vTaskSuspendAll();
             {
                 char * request_token_url;
@@ -94,39 +94,30 @@ static void mainTask (void *pvParameters)
                 char * tweet_url;
                 char * tweet_param;
                 
-                twitterAuthEntity auth;
-
 
                 printf("\n\nAuthentication:\n");
-                auth = twitter_authentication(CONSUMER_KEY, CONSUMER_SECRET, USER_SCREEN_NAME, USER_PASSWORD);
-		/*
-		printf("user_id=%s\n", auth.user_id);
-		printf("user_screen_name=%s\n", auth.user_screen_name);
-		printf("consumer_key=%s\n", auth.consumer_key);
-		printf("consumer_secret=%s\n", auth.consumer_secret);
-		printf("access_key=%s\n", auth.access_key);
-		printf("access_secret=%s\n", auth.access_secret);
-		*/
+                twitterAuthEntity auth = twitter_authentication(CONSUMER_KEY, CONSUMER_SECRET, USER_SCREEN_NAME, USER_PASSWORD);
+                /*
+                printf("user_id=%s\n", auth.user_id);
+                printf("user_screen_name=%s\n", auth.user_screen_name);
+                printf("consumer_key=%s\n", auth.consumer_key);
+                printf("consumer_secret=%s\n", auth.consumer_secret);
+                printf("access_key=%s\n", auth.access_key);
+                printf("access_secret=%s\n", auth.access_secret);
+                */
 
                 printf("\n\nReceive tweets:\n");
-                
-                // Step 1 : Get the user timeline
-                printf("\n\nStep 1 --------------------------------\n\n");
-                char * timeline_user;
-                twitter_timeline_user(CONSUMER_KEY, CONSUMER_SECRET, access_token, access_token_secret, access_token_user_name, &timeline_user);
-                printf("timeline_user : [XML content]\n", timeline_user);
-                
-                // Step 2 : Parse the timeline into tweets
-                printf("\n\nStep 2 --------------------------------\n\n");
-                int count_tweets = xml_parser_count(timeline_user, "text");
-                char * tweets[count_tweets];
-                xml_parser_getall(timeline_user, "text", tweets);
+                tweetEntity * tweets;
+                int count = twitter_receive_tweets(auth, &tweets);
+                /*
                 int i;
-                for(i = 0 ; i < sizeof(tweets)/sizeof(char*) ; i++)
+                for(i = 0 ; i < count ; i++)
                 {
-                    printf("Tweet (%d) : %s\n", i, tweets[i]);
+                    printf("Tweet (%d) : %s\n", i, tweets[i].tweet_text);
                 }
-                
+                */              
+
+                /*
                 // Step 3 : Get the send tweets URL
                 printf("\n\nStep 3 --------------------------------\n\n");
                 time_t time_tmp;
@@ -150,13 +141,13 @@ static void mainTask (void *pvParameters)
             }
             xTaskResumeAll();
 
-	        doItOnce--;
-	    }
-	    
-		taskYIELD();
-		(*pusTaskCheckVariable)++;
-		taskYIELD();
-	}
+            doItOnce--;
+        }
+        
+        taskYIELD();
+        (*pusTaskCheckVariable)++;
+        taskYIELD();
+    }
 }
 
 
@@ -170,17 +161,17 @@ portBASE_TYPE xAreNetTaskStillRunning (void)
     static unsigned short lastTaskCheck[netNUMBER_OF_TASKS] = { (unsigned short)0 };
     portBASE_TYPE xReturn = pdTRUE, xTask;
 
-	/* Check the tasks are still running by ensuring their check variables are still incrementing. */
-	for(xTask = 0 ; xTask < netNUMBER_OF_TASKS ; xTask++)
-	{
-		if(taskCheck[xTask] == lastTaskCheck[xTask])
-		{
-			/* The check has not incremented so an error exists. */
-			xReturn = pdFALSE;
-		}
+    /* Check the tasks are still running by ensuring their check variables are still incrementing. */
+    for(xTask = 0 ; xTask < netNUMBER_OF_TASKS ; xTask++)
+    {
+        if(taskCheck[xTask] == lastTaskCheck[xTask])
+        {
+            /* The check has not incremented so an error exists. */
+            xReturn = pdFALSE;
+        }
 
-		lastTaskCheck[xTask] = taskCheck[xTask];
-	}
+        lastTaskCheck[xTask] = taskCheck[xTask];
+    }
 
-	return xReturn;
+    return xReturn;
 }

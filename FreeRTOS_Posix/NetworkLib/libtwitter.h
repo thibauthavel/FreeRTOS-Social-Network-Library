@@ -16,16 +16,26 @@
 
 typedef struct tae
 {
-    char *  user_id;
-    char *  user_screen_name;
-    char *  consumer_key;
-    char *  consumer_secret;
-    char *  access_key;
-    char *  access_secret;
+    char * user_id;
+    char * user_screen_name;
+    char * consumer_key;
+    char * consumer_secret;
+    char * access_key;
+    char * access_secret;
 } twitterAuthEntity;
+
+typedef struct te
+{
+    char * tweet_id;
+    char * tweet_date;
+    char * user_screen_name;
+    char * tweet_text; 
+} tweetEntity;
 
 
 twitterAuthEntity twitter_authentication(const char *consumer_key, const char *consumer_secret, const char *user_screen_name, const char *user_password);
+
+int twitter_receive_tweets(const twitterAuthEntity auth, tweetEntity **tweets);
 
 
 void twitter_timeline_user_url(const char *url_init,const char *url_init_type,const char *consumer_key,const char *consumer_secret,const char *access_token,const char *access_token_secret,const char *access_token_user_name,char **url);

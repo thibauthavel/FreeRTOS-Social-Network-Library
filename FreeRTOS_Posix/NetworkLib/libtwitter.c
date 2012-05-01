@@ -1,9 +1,9 @@
 /*
- *	FreeRTOS Social Network Library
- *	https://github.com/thibauthavel/FreeRTOS-Social-Network-Library
- *	
- *	Author: Thibaut HAVEL
- *	Date:   2012
+ *  FreeRTOS Social Network Library
+ *  https://github.com/thibauthavel/FreeRTOS-Social-Network-Library
+ *  
+ *  Author: Thibaut HAVEL
+ *  Date:   2012
  *
  */
 
@@ -152,31 +152,31 @@ int xsubstr(const char *in_str, unsigned in_start, unsigned in_end, char **out_s
 
 char * xstrtrim (const char *str_src)
 {
-	char *str = xstrdup(str_src);
-	char *str2 = NULL;
-	int str_src_len = strlen(str);
+    char *str = xstrdup(str_src);
+    char *str2 = NULL;
+    int str_src_len = strlen(str);
 
-	str2 = xrealloc(str2, str_src_len+1);
-	memset(str2, 0, str_src_len+1);
+    str2 = xrealloc(str2, str_src_len+1);
+    memset(str2, 0, str_src_len+1);
 
-	int i, j = 0;
+    int i, j = 0;
 
-	for (i = 0; i < str_src_len; i++)		
-	{
-		if (str[i] == ' ' || str[i] == '\t' || str[i] == '\n')
-		{
-			continue;
-		}
-		else
-		{					
-			str2[j] = str[i];
-			j++;
-		}
-	}	
+    for (i = 0; i < str_src_len; i++)       
+    {
+        if (str[i] == ' ' || str[i] == '\t' || str[i] == '\n')
+        {
+            continue;
+        }
+        else
+        {                   
+            str2[j] = str[i];
+            j++;
+        }
+    }   
 
-	str2[j] = 0;
+    str2[j] = 0;
 
-	return str2;
+    return str2;
 }
 
 
@@ -303,6 +303,19 @@ void xml_parser_getall (const char * xml_content, const char * element_key, char
 }
 
 
+/*-----------------------------------------------*/
+
+
+char * printfred (const char * str)
+{
+    char * redstr = "\033[1;31m";
+    redstr = xstrcat(redstr, str);
+    redstr = xstrcat(redstr, "\033[0m");
+
+    printf(redstr);
+}
+
+
 
 
 /*
@@ -311,11 +324,11 @@ void xml_parser_getall (const char * xml_content, const char * element_key, char
  
  
 /*
- *  IN  : consumer_key
- *  IN  : consumer_secret
- *  IN  : user_screen_name
- *  IN  : user_password
- *  OUT : twitterAuthEntity
+ *  IN     : consumer_key
+ *  IN     : consumer_secret
+ *  IN     : user_screen_name
+ *  IN     : user_password
+ *  RETURN : twitterAuthEntity
  */
 
 twitterAuthEntity twitter_authentication (const char * consumer_key, const char * consumer_secret, const char * user_screen_name, const char * user_password)
@@ -337,17 +350,17 @@ twitterAuthEntity twitter_authentication (const char * consumer_key, const char 
     printf("* I'm using the 'Consumer token' to get the 'Request token': ");
     twitter_request_token_url(consumer_key, consumer_secret, &request_token_url);
     twitter_request_token(request_token_url, &oauth_token, &oauth_token_secret, &callback);
-    printf("DONE\n");
+    printfred("DONE\n");
     
     printf("* I'm using the 'Request token' to get the 'Verifier': ");
     twitter_direct_token_url(oauth_token, &direct_token_url);
     twitter_verifier(direct_token_url, oauth_token, user_screen_name, user_password, &verifier);
-    printf("DONE\n");
+    printfred("DONE\n");
 
     printf("* I'm using the 'Consumer token', the 'Request token' and the 'Verifier' to get the 'Access token': ");
     twitter_access_token_url(consumer_key, consumer_secret, oauth_token, oauth_token_secret, verifier, &access_token_url);
-    twitter_access_token(access_token_url, &access_token, &access_token_secret, &access_token_user_name, &access_token_user_id);
-    printf("DONE\n");    
+    twitter_access_token(access_token_url, &access_token, &access_token_secret, &access_token_user_id, &access_token_user_name);
+    printfred("DONE\n"); 
 
     auth.user_id = access_token_user_id;
     auth.user_screen_name = access_token_user_name;
@@ -359,6 +372,49 @@ twitterAuthEntity twitter_authentication (const char * consumer_key, const char 
     return auth;
 }
 
+
+/*
+ *  IN     : twitterAuthEntity
+ *  OUT    : count
+ *  RETURN : tweetEntity[]
+ */
+
+int twitter_receive_tweets(const twitterAuthEntity auth, tweetEntity ** tweets)
+{
+    char * timeline_user;
+
+    printf("* I'm getting the timeline: ");
+    twitter_timeline_user(auth.consumer_key, auth.consumer_secret, auth.access_key, auth.access_secret, auth.user_screen_name, &timeline_user);
+    printfred("DONE\n");
+
+    printf("* I'm counting tweets: ");
+    int count_tweets = xml_parser_count(timeline_user, "text");
+    printfred("DONE\n");
+
+    printf("* I'm parsing tweets: ");
+    char * tweet_id[count_tweets];
+    char * tweet_date[count_tweets];
+    char * tweet_text[count_tweets];
+    xml_parser_getall(timeline_user, "id", tweet_id);
+    xml_parser_getall(timeline_user, "created_at", tweet_date);
+    xml_parser_getall(timeline_user, "text", tweet_text);
+    printfred("DONE\n");
+
+    printf("* I'm fulfilling the entities: ");
+    tweetEntity result[count_tweets];
+    int i;
+    for(i = 0 ; i < count_tweets ; i++)
+    {
+        result[i].tweet_id = tweet_id[i];
+        result[i].tweet_date = tweet_date[i];
+        result[i].user_screen_name = auth.user_screen_name;
+        result[i].tweet_text = tweet_text[i];
+    }
+    printfred("DONE\n");
+
+    *tweets = result;
+    return count_tweets;
+}
 
 
 
