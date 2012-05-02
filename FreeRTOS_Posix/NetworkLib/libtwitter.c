@@ -1,11 +1,13 @@
-/*
- *  FreeRTOS Social Network Library
- *  https://github.com/thibauthavel/FreeRTOS-Social-Network-Library
- *  
- *  Author: Thibaut HAVEL
- *  Date:   2012
- *
+/**
+ *  @brief      Social Network Library - Twitter
+ *  @details    https://github.com/thibauthavel/FreeRTOS-Social-Network-Library
+ *  @file       libtwitter.c
+ *  @author     Thibaut Havel
+ *  @date       2012
+ *  @remark     Some ideas/pieces of code are from: Gridtwit (http://code.google.com/p/gridtwit) by yuzhujiutian
  */
+
+
 
 
 /*
@@ -24,18 +26,21 @@
 #include "libtwitter.h"
 
 
+
+
 /*
  * STATIC FIELDS
  *-----------------------------------------------------------*/
 
 
-#define TWITTER_REQUEST_TOKEN_URL  "https://api.twitter.com/oauth/request_token"
-#define TWITTER_DIRECT_TOKEN_URL   "https://api.twitter.com/oauth/authorize"
-#define TWITTER_ACCESS_TOKEN_URL   "https://api.twitter.com/oauth/access_token"
-#define TWITTER_SEND_TWEET_URL     "http://twitter.com/statuses/update.xml"
-#define TWITTER_TIMELINE_USER_URL  "http://twitter.com/statuses/user_timeline.xml"
+#define TWITTER_REQUEST_TOKEN_URL  "https://api.twitter.com/oauth/request_token"    ///< URL to get the 'Request token'.
+#define TWITTER_DIRECT_TOKEN_URL   "https://api.twitter.com/oauth/authorize"        ///< URL to get the 'Verifier'.
+#define TWITTER_ACCESS_TOKEN_URL   "https://api.twitter.com/oauth/access_token"     ///< URL to get the 'Access token'.
+#define TWITTER_SEND_TWEET_URL     "http://twitter.com/statuses/update.xml"         ///< URL to post a tweet.
+#define TWITTER_TIMELINE_USER_URL  "http://twitter.com/statuses/user_timeline.xml"  ///< URL to get the tweets.
 
-#define TWITTER_TWEET_SIZE         140
+#define TWITTER_TWEET_SIZE         140                                              ///< The tweet maximum size.
+
 
 
 
@@ -44,6 +49,14 @@
  *-----------------------------------------------------------*/
 
 
+/**
+ * String concate.
+ *
+ * @author Gridtwit by yuzhujiutian.
+ * @param s1 First string.
+ * @param s2 Second string.
+ * @return s1 + s2.
+ */
 char * xstrcat (const char *s1, const char *s2) 
 {
     int ptr_len = 0;
@@ -59,9 +72,15 @@ char * xstrcat (const char *s1, const char *s2)
 }
 
 
-/*-----------------------------------------------------------*/
-
-
+/**
+ * Character search.
+ *
+ * @author Gridtwit by yuzhujiutian.
+ * @param in_str String to search in.
+ * @param in_chr Character to find.
+ * @param in_chr_times Number of the occurence.
+ * @return The position.
+ */
 int xstrchr2 (const char *in_str, unsigned in_chr, unsigned in_chr_times)
 {
     int in_strchr_len;
@@ -104,9 +123,16 @@ int xstrchr2 (const char *in_str, unsigned in_chr, unsigned in_chr_times)
 }
 
 
-/*-----------------------------------------------------------*/
-
-
+/**
+ * Extact substring.
+ *
+ * @author Gridtwit by yuzhujiutian.
+ * @param in_str The initial string.
+ * @param in_start Begining of the substring.
+ * @param in_end End of the substring.
+ * @param out_substr Field to store the substring.
+ * @return In case of error.
+ */
 int xsubstr(const char *in_str, unsigned in_start, unsigned in_end, char **out_substr)
 {
     int substr_len = 0;
@@ -147,9 +173,13 @@ int xsubstr(const char *in_str, unsigned in_start, unsigned in_end, char **out_s
 }
 
 
-/*-----------------------------------------------------------*/
-
-
+/**
+ * Trim a string (removes ' ', '\t' and '\n').
+ *
+ * @author Gridtwit by yuzhujiutian.
+ * @param str_src The initial string.
+ * @return The string after trim.
+ */
 char * xstrtrim (const char *str_src)
 {
     char *str = xstrdup(str_src);
@@ -180,9 +210,13 @@ char * xstrtrim (const char *str_src)
 }
 
 
-/*-----------------------------------------------------------*/
-
-
+/**
+ * Index of a substring
+ *
+ * @param cs The string to search in.
+ * @param ct The substring.
+ * @return Index of the substring.
+ */
 int isubstr (const char * cs, const char * ct)
 {
     int index = -1;
@@ -201,9 +235,13 @@ int isubstr (const char * cs, const char * ct)
 }
 
 
-/*-----------------------------------------------------------*/
-
-
+/**
+ * Get the first occurence of a XML element.
+ *
+ * @param xml_content A XML content.
+ * @param element_key The name of the element ('<element_key>value to return</element_key>').
+ * @return The element value.
+ */
 char * xml_parser_get (const char * xml_content, const char * element_key)
 {
 
@@ -214,15 +252,18 @@ char * xml_parser_get (const char * xml_content, const char * element_key)
     int    index_end;
     char * value;
 
+    // Prepare the begining tag: <element_key>
     element_begin = xstrdup("<");
     element_begin = xstrcat(element_begin, element_key);
     element_begin = xstrcat(element_begin, ">");
     element_begin_size = strlen(element_begin);
     
+    // Prepare the end tage: </element_key>
     element_end = xstrdup("</");
     element_end = xstrcat(element_end, element_key);
     element_end = xstrcat(element_end, ">");
     
+    // Search the position
     index_begin = isubstr(xml_content, element_begin);
     index_end = isubstr(xml_content, element_end);
     
@@ -236,9 +277,13 @@ char * xml_parser_get (const char * xml_content, const char * element_key)
 }
 
 
-/*-----------------------------------------------------------*/
-
-
+/**
+ * Count the values of a XML element.
+ *
+ * @param xml_content A XML content.
+ * @param element_key The name of the element ('<element_key>value to return</element_key>').
+ * @return Number of values.
+ */
 int xml_parser_count (const char * xml_content, const char * element_key)
 {
     char * buffer;
@@ -270,9 +315,13 @@ int xml_parser_count (const char * xml_content, const char * element_key)
 }
 
 
-/*-----------------------------------------------------------*/
-
-
+/**
+ * Get all values of a XML element.
+ *
+ * @param xml_content A XML content.
+ * @param element_key The name of the element ('<element_key>value to return</element_key>').
+ * @return The element values.
+ */
 void xml_parser_getall (const char * xml_content, const char * element_key, char * element_value[])
 {
     char * buffer;
@@ -282,6 +331,7 @@ void xml_parser_getall (const char * xml_content, const char * element_key, char
     
     if(strlen(element_key)== 0)   return 0;
 
+    // Prepare the end tag
     element_end = xstrdup("</");
     element_end = xstrcat(element_end, element_key);
     element_end = xstrcat(element_end, ">");
@@ -290,12 +340,12 @@ void xml_parser_getall (const char * xml_content, const char * element_key, char
     buffer = strdup(xml_content);
     buffer_position = isubstr(buffer, element_end);
     
+    // Parse each found occurence
     int i = 0;
     while(buffer_position != -1)
     {
         element_value[i] = xml_parser_get(buffer, element_key);
         i++;
-        //printf("element=%s\n", xml_parser_get(buffer, element_key));
         
         xsubstr(buffer, (buffer_position + element_end_size), strlen(buffer)-1, &buffer);
         buffer_position = isubstr(buffer, element_end);
@@ -304,19 +354,13 @@ void xml_parser_getall (const char * xml_content, const char * element_key, char
 
 
 
+
 /*
  * MAIN FUNCTIONS
  *-----------------------------------------------------------*/
  
- 
-/*
- *  IN     : consumer_key
- *  IN     : consumer_secret
- *  IN     : user_screen_name
- *  IN     : user_password
- *  RETURN : twitterAuthEntity
- */
 
+// libtwitter.h
 twitterAuthEntity twitter_authentication (const char * consumer_key, const char * consumer_secret, const char * user_screen_name, const char * user_password)
 {    
     char * request_token_url;
@@ -333,15 +377,19 @@ twitterAuthEntity twitter_authentication (const char * consumer_key, const char 
     
     twitterAuthEntity auth;
 
+    // Get the 'Request token'
     twitter_request_token_url(consumer_key, consumer_secret, &request_token_url);
     twitter_request_token(request_token_url, &oauth_token, &oauth_token_secret, &callback);
     
+    // Get the 'Verifier'
     twitter_direct_token_url(oauth_token, &direct_token_url);
     twitter_verifier(direct_token_url, oauth_token, user_screen_name, user_password, &verifier);
 
+    // Get the 'Access token'
     twitter_access_token_url(consumer_key, consumer_secret, oauth_token, oauth_token_secret, verifier, &access_token_url);
     twitter_access_token(access_token_url, &access_token, &access_token_secret, &access_token_user_id, &access_token_user_name);
 
+    // Store these informations to the entity
     auth.user_id = xstrdup(access_token_user_id);
     auth.user_screen_name = xstrdup(access_token_user_name);
     auth.consumer_key = xstrdup(consumer_key);
@@ -353,20 +401,18 @@ twitterAuthEntity twitter_authentication (const char * consumer_key, const char 
 }
 
 
-/*
- *  IN     : twitterAuthEntity
- *  OUT    : tweetEntity[]
- *  RETURN : count
- */
-
+// libtwitter.h
 int twitter_receive_tweets(const twitterAuthEntity auth, tweetEntity ** tweets)
 {
     char * timeline_user;
 
+    // Get the timeline
     twitter_timeline_user(auth.consumer_key, auth.consumer_secret, auth.access_key, auth.access_secret, auth.user_screen_name, &timeline_user);
 
+    // Count the tweets
     int count_tweets = xml_parser_count(timeline_user, "text");
 
+    // Get the informations of each tweet
     char * tweet_id[count_tweets];
     char * tweet_date[count_tweets];
     char * tweet_text[count_tweets];
@@ -374,6 +420,7 @@ int twitter_receive_tweets(const twitterAuthEntity auth, tweetEntity ** tweets)
     xml_parser_getall(timeline_user, "created_at", tweet_date);
     xml_parser_getall(timeline_user, "text", tweet_text);
 
+    // Store these informations into an array of tweet entities
     tweetEntity result[count_tweets];
     int i;
     for(i = 0 ; i < count_tweets ; i++)
@@ -389,12 +436,7 @@ int twitter_receive_tweets(const twitterAuthEntity auth, tweetEntity ** tweets)
 }
 
 
-/*
- *  IN     : auth
- *  IN     : tweet
- *  RETURN : tweetEntity
- */
-
+// libtwitter.h
 tweetEntity twitter_send_tweet (const twitterAuthEntity auth, const char * tweet)
 {
     char * tweet_url;
@@ -403,10 +445,13 @@ tweetEntity twitter_send_tweet (const twitterAuthEntity auth, const char * tweet
 
     tweetEntity result;
 
+    // Get the URL to send the tweet
     twitter_tweet_url(tweet, auth.consumer_key, auth.consumer_secret, auth.access_key, auth.access_secret, &tweet_url, &tweet_param);
     
+    // Send the tweet
     twitter_tweet(tweet_url, tweet_param, &tweet_result);
 
+    // Store the details of the returned XML value into a tweet entity
     result.tweet_id = xml_parser_get(tweet_result, "id");
     result.tweet_date = xml_parser_get(tweet_result, "created_at");
     result.user_screen_name = auth.user_screen_name;
@@ -417,28 +462,33 @@ tweetEntity twitter_send_tweet (const twitterAuthEntity auth, const char * tweet
 
 
 
+
 /*
  * AUTHENTICATION FUNCTIONS
  *-----------------------------------------------------------*/
 
 
-/*
- *  IN  : consumer_key
- *  IN  : consumer_secret
- *  OUT : request_token_url
+/**
+ * Prepare the 'Request token' URL.
+ *
+ * @param consumer_key The 'Consumer token' key.
+ * @param consumer_secret The 'Consumer token' secret.
+ * @param request_token_url The field to store the URL.
  */
 void twitter_request_token_url (const char * consumer_key, const char * consumer_secret, char ** request_token_url)
 {
-    // Useing OAuth to get the URL
+    // Using OAuth to get the URL
     *request_token_url = oauth_sign_url2(TWITTER_REQUEST_TOKEN_URL, NULL, OA_HMAC, NULL, consumer_key, consumer_secret, NULL, NULL);
 }
 
 
-/*
- *  IN  : request_token_url
- *  OUT : oauth_token
- *  OUT : oauth_token_secret
- *  OUT : callback
+/**
+ * Send the request to get the 'Request token' using the URL.
+ *
+ * @param request_token_url The URL to send the request.
+ * @param oauth_token Field to store the 'Request token' key.
+ * @param oauth_token_secret Field to store the 'Request token' secret.
+ * @param callback Field to store the callback URL.
  */
 void twitter_request_token (const char * request_token_url, char ** oauth_token, char ** oauth_token_secret, char ** callback)
 {
@@ -462,9 +512,11 @@ void twitter_request_token (const char * request_token_url, char ** oauth_token,
 }
 
 
-/*
- *  IN  : oauth_token
- *  OUT : direct_token_url
+/**
+ * Prepare the first URL used to get the 'Verifier'.
+ *
+ * @param oauth_token The 'Request token' key.
+ * @param direct_token_url Field to store the URL used to get the 'Verifier'.
  */
 void twitter_direct_token_url (const char * oauth_token, char ** direct_token_url)
 {
@@ -478,16 +530,18 @@ void twitter_direct_token_url (const char * oauth_token, char ** direct_token_ur
 }
 
 
-/*
- *  IN  : direct_token_url
- *  IN  : authenticity
- *  IN  : direct_token
- *  IN  : user
- *  IN  : password
- *  IN  : submit_value
- *  IN  : signin_flag
- *  OUT : direct_token_url2
- *  OUT : direct_token_prm2
+/**
+ * Prepare the second URL used to get the 'Verifier'.
+ *
+ * @param direct_token_url The first URL.
+ * @param authenticity The authenticity number from the first URL.
+ * @param direct_token The temporary token.
+ * @param user The user account login.
+ * @param password The user account password.
+ * @param submit_value The value from the first URL.
+ * @param signin_flag Flags use by the second URL.
+ * @param direct_token_url2 Field to store the second URL.
+ * @param direct_token_prm2 Field to store the parameters of the second URL.
  */
 void twitter_direct_token_url2 (const char * direct_token_url, const char * authenticity, const char * direct_token, const char * user, const char * password, const char * submit_value, int signin_flag, char ** direct_token_url2, char ** direct_token_prm2)
 {
@@ -502,6 +556,8 @@ void twitter_direct_token_url2 (const char * direct_token_url, const char * auth
     char * direct_token_url2_tmp = NULL;
     char * direct_token_prm2_tmp = NULL;
     
+    
+    // Gathering the initial URL to all the parameters, flags, options, etc.
     direct_token_url2_tmp = xstrdup(direct_token_url);
     
     direct_token_prm2_tmp = xstrdup(authenticity_str);
@@ -537,13 +593,15 @@ void twitter_direct_token_url2 (const char * direct_token_url, const char * auth
     *direct_token_prm2 = direct_token_prm2_tmp;
 }
 
-
-/*
- *  IN  : direct_token_url
- *  IN  : oauth_token
- *  IN  : user_screen_name
- *  IN  : user_password
- *  OUT : verifier
+ 
+/**
+ * Get the 'Verifier'.
+ *
+ * @param direct_token_url The first URL.
+ * @param oauth_token The 'Request token' key.
+ * @param user_screen_name The user account login.
+ * @param user_password The user account password.
+ * @param verifier Field to store the 'Verifier'.
  */
 void twitter_verifier (const char * direct_token_url, const char * oauth_token, const char * user_screen_name, const char * user_password, char ** verifier)
 {
@@ -554,18 +612,23 @@ void twitter_verifier (const char * direct_token_url, const char * oauth_token, 
     char * direct_token_script2;
     char * direct_token_pin;
 
+    // Send the request to the first URL.
     direct_token_script = oauth_http_get(direct_token_url, NULL);
     
+    // Get the authenticity number from the HTML result of the first URL request.
     unsigned needle_keychar1 = 34;      // corresponds to the character "
     unsigned needle_keychar2 = 34;
     unsigned needle_keychar1_times = 4; 
     unsigned needle_keychar2_times = 5;
     twitter_direct_token_authenticity(direct_token_script, needle_keychar1, needle_keychar1_times, needle_keychar2, needle_keychar2_times, &direct_token_authenticity);
     
+    // Prepare the second URL.
     twitter_direct_token_url2(direct_token_url, direct_token_authenticity, oauth_token, user_screen_name, user_password, NULL, 0,  &direct_token_url2, &direct_token_prm2);
     
+    // Send the request to the second URL.
     direct_token_script2 = oauth_http_post(direct_token_url2, direct_token_prm2);
     
+    // Get the final 'Verifier' from the HTML result of the second URL request.
     needle_keychar1 = 62;               // corresponds to the character >
     needle_keychar2 = 60;               // corresponds to the character <
     needle_keychar1_times = 2;
@@ -574,15 +637,17 @@ void twitter_verifier (const char * direct_token_url, const char * oauth_token, 
     
     *verifier = direct_token_pin;
 }
+ 
 
-
-/*
- *  IN  : script
- *  IN  : keychar1
- *  IN  : keychar1_times
- *  IN  : keychar2
- *  IN  : keychar2_times
- *  OUT : authenticity
+/**
+ * Get the authenticity number from a HTML content.
+ *
+ * @param script The HTML result to search in.
+ * @param keychar1 The character at the begining of the number.
+ * @param keychar1_times The number of keychar1 occurence.
+ * @param keychar2 The character at the end of the number.
+ * @param keychar2_times The number of keychar2 occurence.
+ * @param authenticity Field to store the authenticity number.
  */
 void twitter_direct_token_authenticity (const char * script, unsigned keychar1, unsigned keychar1_times, unsigned keychar2, unsigned keychar2_times, char ** authenticity)
 {
@@ -592,6 +657,7 @@ void twitter_direct_token_authenticity (const char * script, unsigned keychar1, 
     char * hay_stack;
     char * authenticity_value;
 
+    // Search the authenticity into the HTML result.
     needle_keyword = xstrdup("authenticity_token");
     hay_stack = strstr(script, needle_keyword);
     needle_keychar1_pos = xstrchr2(hay_stack, keychar1, keychar1_times);
@@ -601,14 +667,16 @@ void twitter_direct_token_authenticity (const char * script, unsigned keychar1, 
     *authenticity = authenticity_value;
 }
 
-
-/*
- *  IN  : script
- *  IN  : keychar1
- *  IN  : keychar1_times
- *  IN  : keychar2
- *  IN  : keychar2_times
- *  OUT : pin
+ 
+/**
+ * Get the 'Verifier' from a HTML content.
+ *
+ * @param script The HTML content.
+ * @param keychar1 The character at the begining of the PIN.
+ * @param keychar1_times The number of keychar1 occurence.
+ * @param keychar2 The character at the end of the PIN.
+ * @param keychar2_times The number of keychar2 occurence.
+ * @param pin The final 'Verifier'.
  */
 void twitter_direct_token_pin (const char * script, unsigned keychar1, unsigned keychar1_times, unsigned keychar2, unsigned keychar2_times, char ** pin)
 {
@@ -618,6 +686,7 @@ void twitter_direct_token_pin (const char * script, unsigned keychar1, unsigned 
     char * hay_stack;
     char * pin_value;
     
+    // Search the 'Verifier' from the HTML content.
     needle_keyword = xstrdup("kbd"); // oauth_pin
     hay_stack = strstr(script, needle_keyword);
     needle_keychar1_pos = xstrchr2(hay_stack, keychar1, keychar1_times);
@@ -627,14 +696,16 @@ void twitter_direct_token_pin (const char * script, unsigned keychar1, unsigned 
     *pin = pin_value;
 }
 
-
-/*
- *  IN  : consumer_key
- *  IN  : consumer_secret
- *  IN  : oauth_token
- *  IN  : oauth_token_secret
- *  IN  : verifier
- *  OUT : url
+ 
+/**
+ * Prepare the 'Access token' URL.
+ *
+ * @param consumer_key The 'Consumer token' key.
+ * @param consumer_secret The 'Consumer token' secret.
+ * @param oauth_token The 'Request token' key.
+ * @param oauth_token_secret The 'Request token' secret.
+ * @param verifier The 'Verifier'.
+ * @param url Field to store the URL.
  */
 void twitter_access_token_url (const char * consumer_key, const char * consumer_secret, const char * oauth_token, const char * oauth_token_secret, const char * verifier, char ** access_token_url)
 {
@@ -647,13 +718,15 @@ void twitter_access_token_url (const char * consumer_key, const char * consumer_
     *access_token_url = url_tmp;
 }
 
-
-/*
- *  IN  : access_token_url
- *  OUT : access_token
- *  OUT : access_token_secret
- *  OUT : access_token_user_name
- *  OUT : access_token_user_id
+ 
+/**
+ * Get the final 'Access token'.
+ *
+ * @param access_token_url The 'Access token' URL.
+ * @param access_token Field to store the 'Access token' key.
+ * @param access_token_secret Field to store the 'Access token' secret.
+ * @param access_token_user_name Field to store the user name.
+ * @param access_token_user_id Field to store the user identifier.
  */
 void twitter_access_token(const char * access_token_url, char ** access_token, char ** access_token_secret, char ** access_token_user_name, char ** access_token_user_id)
 {
@@ -683,20 +756,23 @@ void twitter_access_token(const char * access_token_url, char ** access_token, c
 
 
 
+
 /*
  * USER BEHAVIOURS FUNCTIONS
  *-----------------------------------------------------------*/
  
 
-/*
- *  IN  : url_init
- *  IN  : url_init_type
- *  IN  : consumer_key
- *  IN  : consumer_secret
- *  IN  : access_token
- *  IN  : access_token_secret
- *  IN  : access_token_user_name
- *  OUT : url
+/**
+ * Prepare the timeline URL.
+ *
+ * @param url_init The initial URL.
+ * @param url_init_type The additional options.
+ * @param consumer_key The 'Consumer token' key.
+ * @param consumer_secret The 'Consumer token' secret.
+ * @param access_token The 'Access token' key.
+ * @param access_token_secret The 'Access token' secret.
+ * @param access_token_user_name The user name.
+ * @param url Field to store the URL.
  */
 void twitter_timeline_user_url(const char * url_init, const char * url_init_type, const char * consumer_key, const char * consumer_secret, const char * access_token, const char * access_token_secret, const char * access_token_user_name, char ** url)
 {
@@ -719,13 +795,15 @@ void twitter_timeline_user_url(const char * url_init, const char * url_init_type
 }
 
 
-/*
- *  IN  : consumer_key
- *  IN  : consumer_secret
- *  IN  : access_token
- *  IN  : access_token_secret
- *  IN  : access_token_user_name
- *  OUT : timeline_user_result
+/**
+ * Get the user timeline.
+ *
+ * @param consumer_key The 'Consumer token' key.
+ * @param consumer_secret The 'Consumer token' secret.
+ * @param access_token The 'Access token' key.
+ * @param access_token_secret The 'Access token' secret.
+ * @param access_token_user_name The user name.
+ * @param timeline_user_result Field to store the XML result representing the timeline.
  */
 void twitter_timeline_user (const char * consumer_key, const char * consumer_secret, const char * access_token, const char * access_token_secret, const char * access_token_user_name, char ** timeline_user_result)
 {
@@ -744,14 +822,16 @@ void twitter_timeline_user (const char * consumer_key, const char * consumer_sec
 }
 
 
-/*
- *  IN  : status
- *  IN  : consumer_key
- *  IN  : consumer_secret
- *  IN  : access_token
- *  IN  : access_token_secret
- *  OUT : url
- *  OUT : param
+/**
+ * Prepare the URL to send a tweet.
+ *
+ * @param status The message to tweet.
+ * @param consumer_key The 'Consumer token' key.
+ * @param consumer_secret The 'Consumer token' secret.
+ * @param access_token The 'Access token' key.
+ * @param access_token_secret The 'Access token' secret.
+ * @param url Field to store the URL.
+ * @param param Field to store the parameters.
  */
 void twitter_tweet_url (const char * status, const char * consumer_key, const char * consumer_secret, const char * access_token, const char * access_token_secret, char ** url, char ** param)
 {
@@ -770,10 +850,12 @@ void twitter_tweet_url (const char * status, const char * consumer_key, const ch
 }
 
 
-/*
- *  IN  : url
- *  IN  : param
- *  OUT : script
+/**
+ * Send the tweet to the timeline.
+ *
+ * @param url The URL to send the tweet.
+ * @param param The parameters to use.
+ * @param script The XML result representing the sent tweet.
  */
 void twitter_tweet (const char * url, const char * param, char ** script)
 {
@@ -781,4 +863,3 @@ void twitter_tweet (const char * url, const char * param, char ** script)
     
     *script = result;
 }
-
