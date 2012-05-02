@@ -342,12 +342,12 @@ twitterAuthEntity twitter_authentication (const char * consumer_key, const char 
     twitter_access_token_url(consumer_key, consumer_secret, oauth_token, oauth_token_secret, verifier, &access_token_url);
     twitter_access_token(access_token_url, &access_token, &access_token_secret, &access_token_user_id, &access_token_user_name);
 
-    auth.user_id = access_token_user_id;
-    auth.user_screen_name = access_token_user_name;
-    auth.consumer_key = consumer_key;
-    auth.consumer_secret = consumer_secret;
-    auth.access_key = access_token;
-    auth.access_secret = access_token_secret;
+    auth.user_id = xstrdup(access_token_user_id);
+    auth.user_screen_name = xstrdup(access_token_user_name);
+    auth.consumer_key = xstrdup(consumer_key);
+    auth.consumer_secret = xstrdup(consumer_secret);
+    auth.access_key = xstrdup(access_token);
+    auth.access_secret = xstrdup(access_token_secret);
 
     return auth;
 }
@@ -378,10 +378,10 @@ int twitter_receive_tweets(const twitterAuthEntity auth, tweetEntity ** tweets)
     int i;
     for(i = 0 ; i < count_tweets ; i++)
     {
-        result[i].tweet_id = tweet_id[i];
-        result[i].tweet_date = tweet_date[i];
-        result[i].user_screen_name = auth.user_screen_name;
-        result[i].tweet_text = tweet_text[i];
+        result[i].tweet_id = xstrdup(tweet_id[i]);
+        result[i].tweet_date = xstrdup(tweet_date[i]);
+        result[i].user_screen_name = xstrdup(auth.user_screen_name);
+        result[i].tweet_text = xstrdup(tweet_text[i]);
     }
 
     *tweets = result;

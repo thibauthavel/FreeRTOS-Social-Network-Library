@@ -102,12 +102,13 @@ static void mainTask (void *pvParameters)
                     int i;
                     for(i = 0 ; i < count ; i++)
                     {
-                        printf("Tweet (%d) : %s\n", i, tweets[i].tweet_text);
+                        printf("Tweet (%d) : ", i);
+                        printf("%s\n", tweets[i].tweet_text);
                     }
                 }
 
                 printf("[TWITTER] Send a tweet...\n");
-                tweetEntity tweet = twitter_send_tweet(auth, "This is another test.");
+                tweetEntity tweet = twitter_send_tweet(auth, "Ultimate test.");
                 if(VERBOSE)
                 {
                     printf("tweet_id=%s\n", tweet.tweet_id);
@@ -115,7 +116,6 @@ static void mainTask (void *pvParameters)
                     printf("user_screen_name=%s\n", tweet.user_screen_name);
                     printf("tweet_text=%s\n", tweet.tweet_text);
                 }
-
                 printf("\n");
                 fflush(stdout);
             }
