@@ -421,16 +421,17 @@ int twitter_receive_tweets(const twitterAuthEntity auth, tweetEntity ** tweets)
     xml_parser_getall(timeline_user, "text", tweet_text);
 
     // Store these informations into an array of tweet entities
-    tweetEntity result[count_tweets];
+    tweetEntity * result;
+    result = malloc(sizeof(tweetEntity) * count_tweets);
     int i;
     for(i = 0 ; i < count_tweets ; i++)
     {
-        result[i].tweet_id = xstrdup(tweet_id[i]);
-        result[i].tweet_date = xstrdup(tweet_date[i]);
-        result[i].user_screen_name = xstrdup(auth.user_screen_name);
-        result[i].tweet_text = xstrdup(tweet_text[i]);
+        (result+i)->tweet_id = xstrdup(tweet_id[i]);
+        (result+i)->tweet_date = xstrdup(tweet_date[i]);
+        (result+i)->user_screen_name = xstrdup(auth.user_screen_name);
+        (result+i)->tweet_text = xstrdup(tweet_text[i]);
     }
-
+ 
     *tweets = result;
     return count_tweets;
 }

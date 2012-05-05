@@ -14,7 +14,8 @@ C_SRCS += \
 ../Common_Demo/Full/integer.c \
 ../Common_Demo/Full/print.c \
 ../Common_Demo/Full/semtest.c \
-../Common_Demo/Full/network.c 
+../Common_Demo/Full/network.c \
+../Common_Demo/Full/twitter.c
 
 OBJS += \
 ./Common_Demo/Full/BlockQ.o \
@@ -27,7 +28,8 @@ OBJS += \
 ./Common_Demo/Full/integer.o \
 ./Common_Demo/Full/print.o \
 ./Common_Demo/Full/semtest.o \
-./Common_Demo/Full/network.o
+./Common_Demo/Full/network.o \
+./Common_Demo/Full/twitter.o
 
 C_DEPS += \
 ./Common_Demo/Full/BlockQ.d \
@@ -40,7 +42,9 @@ C_DEPS += \
 ./Common_Demo/Full/integer.d \
 ./Common_Demo/Full/print.d \
 ./Common_Demo/Full/semtest.d \
-./Common_Demo/Full/network.d
+./Common_Demo/Full/network.d \
+./Common_Demo/Full/twitter.d
+
 
 # Each subdirectory must supply rules for building sources it contributes
 Common_Demo/Full/%.o: ../Common_Demo/Full/%.c

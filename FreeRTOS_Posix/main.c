@@ -37,6 +37,7 @@
 #include "countsem.h"
 #include "recmutex.h"
 #include "network.h"
+#include "twitter.h"
 
 #include "AsyncIO/AsyncIO.h"
 #include "AsyncIO/AsyncIOSocket.h"
@@ -117,7 +118,7 @@ int main( void )
 	}
 
 	/* CREATE ALL THE DEMO APPLICATION TASKS. */
-	startNetworkTask(tskIDLE_PRIORITY);
+	startTwitterTask(tskIDLE_PRIORITY);
 
 	/* Create the co-routines that communicate with the tick hook. */
 	vStartHookCoRoutines();
@@ -337,54 +338,6 @@ static void prvCheckOtherTasksAreStillRunning( void )
 {
 static short sErrorHasOccurred = pdFALSE;
 static unsigned long uxLastHookCallCount = 0, uxLastQueueSendCount = 0;
-
-	if( xAreBlockingQueuesStillRunning() != pdTRUE )
-	{
-		vDisplayMessage( "Blocking queues count unchanged!\r\n" );
-		sErrorHasOccurred = pdTRUE;
-	}
-
-	if( xAreMathsTaskStillRunning() != pdTRUE )
-	{
-		vDisplayMessage( "Maths task count unchanged!\r\n" );
-		sErrorHasOccurred = pdTRUE;
-	}
-
-	if( xArePollingQueuesStillRunning() != pdTRUE )
-	{
-		vDisplayMessage( "Polling queue count unchanged!\r\n" );
-		sErrorHasOccurred = pdTRUE;
-	}
-
-	if( xAreSemaphoreTasksStillRunning() != pdTRUE )
-	{
-		vDisplayMessage( "Semaphore take count unchanged!\r\n" );
-		sErrorHasOccurred = pdTRUE;
-	}
-
-	if( xAreMultiEventTasksStillRunning() != pdTRUE )
-	{
-		vDisplayMessage( "Error in multi events tasks!\r\n" );
-		sErrorHasOccurred = pdTRUE;
-	}
-
-	if( xAreHookCoRoutinesStillRunning() != pdTRUE )
-	{
-		vDisplayMessage( "Error in tick hook to co-routine communications!\r\n" );
-		sErrorHasOccurred = pdTRUE;
-	}
-
-	if( xAreBlockTimeTestTasksStillRunning() != pdTRUE )
-	{
-		vDisplayMessage( "Error in block time test tasks!\r\n" );
-		sErrorHasOccurred = pdTRUE;
-	}
-
-	if( xAreQueuePeekTasksStillRunning() != pdTRUE )
-	{
-		vDisplayMessage( "Error in queue peek test task!\r\n" );
-		sErrorHasOccurred = pdTRUE;
-	}
 
 #if mainCPU_INTENSIVE_TASKS == 1
 	if( xAreRecursiveMutexTasksStillRunning() != pdTRUE )

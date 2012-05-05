@@ -103,7 +103,7 @@ static void mainTask (void *pvParameters)
                     for(i = 0 ; i < count ; i++)
                     {
                         printf("Tweet (%d) : ", i);
-                        printf("%s\n", tweets[i].tweet_text);
+                        printf("%s\n", (tweets+i)->tweet_text);
                     }
                 }
 
