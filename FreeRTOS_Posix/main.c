@@ -403,7 +403,7 @@ static unsigned long uxLastHookCallCount = 0, uxLastQueueSendCount = 0;
 
 	if( sErrorHasOccurred == pdFALSE )
 	{
-		vDisplayMessage( "OK\n" );
+		//vDisplayMessage( "OK\n" );
 	}
 }
 /*-----------------------------------------------------------*/

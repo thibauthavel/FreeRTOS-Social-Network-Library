@@ -34,15 +34,9 @@ typedef struct TWITTER_QUEUE
     volatile short * checkVariable;
 } twitterQueue;
 
-typedef struct TWEET_SET
-{
-    int           count;
-    tweetEntity * tweets;
-} tweetSet;
-
 /* Task definition */
-static void producerTask (void *pvParameters);
-static void consumerTask  (void *pvParameters);
+static void clientTask (void *pvParameters);
+static void eventTask  (void *pvParameters);
 
 /* Check tasks running */
 static volatile unsigned short taskCheck[twitNUMBER_OF_TASKS] = { (short) 0, (short) 0 };
@@ -57,7 +51,7 @@ void startTwitterTask (unsigned portBASE_TYPE uxPriority)
     twitterQueue * tQ2;
 
     tQ1                 = (twitterQueue *)pvPortMalloc(sizeof(twitterQueue));
-    tQ1->queue          = xQueueCreate(10, (unsigned portBASE_TYPE)sizeof(tweetSet));
+    tQ1->queue          = xQueueCreate(10, (unsigned portBASE_TYPE)sizeof(char *));
     tQ1->blockTime      = (portTickType)0;
     tQ1->checkVariable  = &(taskCheck[0]);
 
@@ -66,25 +60,29 @@ void startTwitterTask (unsigned portBASE_TYPE uxPriority)
     tQ2->blockTime      = (portTickType)0;
     tQ2->checkVariable  = &(taskCheck[1]);
 
-    xTaskCreate(producerTask, "TwitterProducer", twitSTACK_SIZE, (void *)tQ1, uxPriority, NULL);
-    xTaskCreate(consumerTask, "TwitterConsumer", twitSTACK_SIZE, (void *)tQ2, uxPriority, NULL);
+    xTaskCreate(clientTask, "Client", twitSTACK_SIZE, (void *)tQ1, uxPriority, NULL);
+    xTaskCreate(eventTask,  "Event",  twitSTACK_SIZE, (void *)tQ2, uxPriority, NULL);
 }
 
 
 /*-----------------------------------------------------------*/
 
 
-static void producerTask (void *pvParameters)
+static void clientTask (void *pvParameters)
 {
     twitterQueue *  tQ  = (twitterQueue *) pvParameters;
 
     twitterAuthEntity auth;
     tweetEntity * tweets;
+    char * readId[100];
+    char * readText[100];
     int count;
+    int i;
 
     int isAuthenticated = 0;
+    int iRead = 0; 
 
-    const char * const taskStartMsg = "[TWITTER] Producer task started.\r\n";
+    const char * const taskStartMsg = "Client task started.\r\n";
     vPrintDisplayMessage(&taskStartMsg);
 
     /* Keep performing the task */
@@ -96,18 +94,24 @@ static void producerTask (void *pvParameters)
 
             if(count != 0)
             {
-                tweetSet ts;
-                ts.count  = count;
-                ts.tweets = tweets;
-
-                if(xQueueSend(tQ->queue, (void *)&ts, tQ->blockTime) == pdPASS)
+                for(i = 0 ; i < count ; i++)
                 {
-                    (*tQ->checkVariable)++;
+                    if(!arrayContains(readId, iRead, tweets[i].tweet_id))
+                    {
+                        readId[iRead] = tweets[i].tweet_id;
+                        readText[iRead] = xstrdup(tweets[i].tweet_text);
+ 
+                        if(xQueueSendToBack(tQ->queue, (void *)&(readText[iRead]), tQ->blockTime) == pdPASS)
+                        {
+                            (*tQ->checkVariable)++;
+                        }
+
+                        iRead++;
+                    }
                 }
-            }
+           }
             else
             {
-                /* No tweet, it's weird: check the authentication */ 
                 isAuthenticated = 0;
             }
         }
@@ -117,12 +121,7 @@ static void producerTask (void *pvParameters)
 
             if(strlen(auth.access_key) != 0  &&  strlen(auth.access_secret) != 0)
             {
-                printf("[TWITTER] Authentication succeed.\n");
                 isAuthenticated = 1;
-            }
-            else
-            {
-                printf("[TWITTER] Authentication failed.\n");
             }
         }
 
@@ -134,33 +133,21 @@ static void producerTask (void *pvParameters)
 /*-----------------------------------------------------------*/
 
 
-static void consumerTask  (void *pvParameters)
+static void eventTask  (void *pvParameters)
 {
-    twitterQueue * tQ  = (twitterQueue *) pvParameters;
-    tweetSet ts;
-    char * readId[100];
-    int iRead = 0;
+    char * tweet;
     int i;
+    twitterQueue * tQ  = (twitterQueue *) pvParameters;
 
-    const char * const taskStartMsg = "[TWITTER] Consumer task started.\r\n";
+    const char * const taskStartMsg = "Event task started.\r\n";
     vPrintDisplayMessage(&taskStartMsg);
 
     /* Keep performing the task */
     for(;;)
     {
-        if(xQueueReceive(tQ->queue, &ts, tQ->blockTime) == pdPASS)
+        if(xQueueReceive(tQ->queue, &tweet, tQ->blockTime) == pdPASS)
         {
-            for(i = 0 ; i < ts.count ; i++)
-            {
-                if(!arrayContains(readId, iRead, ts.tweets[i].tweet_id))
-                {
-                    readId[iRead] = ts.tweets[i].tweet_id;
-                    iRead++;
-
-                    printf("[TWITTER] Tweet received: %s\n", ts.tweets[i].tweet_text);
-                }
-            }
-
+            printf("New tweet: '%s'\n", tweet);
             (*tQ->checkVariable)++;
         }
     }
