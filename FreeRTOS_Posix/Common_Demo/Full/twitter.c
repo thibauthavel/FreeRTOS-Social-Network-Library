@@ -34,12 +34,6 @@ typedef struct TWITTER_QUEUE
     volatile short * checkVariable;
 } twitterQueue;
 
-typedef struct TWEET_SET
-{
-    int           count;
-    tweetEntity * tweets;
-} tweetSet;
-
 /* Task definition */
 static void producerTask (void *pvParameters);
 static void consumerTask  (void *pvParameters);
@@ -79,9 +73,6 @@ static void producerTask (void *pvParameters)
     twitterQueue *  tQ  = (twitterQueue *) pvParameters;
 
     twitterAuthEntity auth;
-    tweetEntity * tweets;
-    int count;
-
     int isAuthenticated = 0;
 
     const char * const taskStartMsg = "[TWITTER] Producer task started.\r\n";
@@ -92,16 +83,10 @@ static void producerTask (void *pvParameters)
     {
         if(isAuthenticated)
         {
-            count = twitter_receive_tweets(auth, &tweets);
+            tweetSet ts = twitter_receive_tweets(auth);
 
-            printf("->[%s]\n", tweets[0].tweet_text);
-
-            if(count != 0)
+            if(ts.count != 0)
             {
-                tweetSet ts;
-                ts.count  = count;
-                ts.tweets = tweets;
-
                 if(xQueueSend(tQ->queue, (void *)&ts, tQ->blockTime) == pdPASS)
                 {
                     (*tQ->checkVariable)++;

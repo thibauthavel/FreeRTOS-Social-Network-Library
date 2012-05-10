@@ -300,7 +300,7 @@ int xml_parser_count (const char * xml_content, const char * element_key)
     element_begin = xstrcat(element_begin, ">");
     element_begin_size = strlen(element_begin);
     
-    buffer = strdup(xml_content);
+    buffer = xstrdup(xml_content);
     buffer_position = isubstr(buffer, element_begin);
     count  = 0;
     
@@ -338,14 +338,14 @@ void xml_parser_getall (const char * xml_content, const char * element_key, char
     element_end = xstrcat(element_end, ">");
     element_end_size = strlen(element_end);
     
-    buffer = strdup(xml_content);
+    buffer = xstrdup(xml_content);
     buffer_position = isubstr(buffer, element_end);
     
     // Parse each found occurence
     int i = 0;
     while(buffer_position != -1)
     {
-        element_value[i] = xml_parser_get(buffer, element_key);
+        element_value[i] = xstrdup(xml_parser_get(buffer, element_key));
         i++;
         
         xsubstr(buffer, (buffer_position + element_end_size), strlen(buffer)-1, &buffer);
@@ -417,7 +417,6 @@ tweetSet twitter_receive_tweets(const twitterAuthEntity auth)
     char * tweet_id[count_tweets];
     char * tweet_date[count_tweets];
     char * tweet_text[count_tweets];
-
     xml_parser_getall(timeline_user, "id", tweet_id);
     xml_parser_getall(timeline_user, "created_at", tweet_date);
     xml_parser_getall(timeline_user, "text", tweet_text);
@@ -430,7 +429,6 @@ tweetSet twitter_receive_tweets(const twitterAuthEntity auth)
     for(i = 0 ; i < count_tweets ; i++)
     {
         (result+i)->tweet_id         = xstrdup(tweet_id[i]);
-        printf("tweet_id[%d]=%s\n", i, tweet_id[i]);
         (result+i)->tweet_date       = xstrdup(tweet_date[i]);
         (result+i)->user_screen_name = xstrdup(auth.user_screen_name);
         (result+i)->tweet_text       = xstrdup(tweet_text[i]);
@@ -440,8 +438,10 @@ tweetSet twitter_receive_tweets(const twitterAuthEntity auth)
     ts.count  = count_tweets;
     ts.tweets = result;
     
+    /*
     for(i = 0 ; i < ts.count ; i++)
         printf("->['%s', '%s', '%s', '%s']\n", ts.tweets[i].tweet_id, ts.tweets[i].tweet_date, ts.tweets[i].user_screen_name, ts.tweets[i].tweet_text);
+    */
 
     return ts;
 }
@@ -463,10 +463,10 @@ tweetEntity twitter_send_tweet (const twitterAuthEntity auth, const char * tweet
     twitter_tweet(tweet_url, tweet_param, &tweet_result);
 
     // Store the details of the returned XML value into a tweet entity
-    result.tweet_id = xml_parser_get(tweet_result, "id");
-    result.tweet_date = xml_parser_get(tweet_result, "created_at");
-    result.user_screen_name = auth.user_screen_name;
-    result.tweet_text = xml_parser_get(tweet_result, "text");
+    result.tweet_id         = xstrdup(xml_parser_get(tweet_result, "id"));
+    result.tweet_date       = xstrdup(xml_parser_get(tweet_result, "created_at"));
+    result.user_screen_name = xstrdup(auth.user_screen_name);
+    result.tweet_text       = xstrdup(xml_parser_get(tweet_result, "text"));
 
     return result;
 }

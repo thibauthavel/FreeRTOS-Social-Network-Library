@@ -40,6 +40,17 @@ typedef struct te
 } tweetEntity;
 
 
+/* \struct tweetSet
+ * Collection of tweets
+ */
+typedef struct ts
+{
+    int count;
+    tweetEntity * tweets;
+} tweetSet;
+
+
+
 /**
  * Main authentication function gathering the whole authentication process to Twitter.
  *
@@ -56,10 +67,9 @@ twitterAuthEntity twitter_authentication(const char *consumer_key, const char *c
  * Main receiving function getting all tweets from a user timeline.
  *
  * @param auth The authentication entity.
- * @param tweets To store the received tweets.
- * @return The number of received tweets.
+ * @return A set of received tweets.
  */
-int twitter_receive_tweets(const twitterAuthEntity auth, tweetEntity **tweets);
+tweetSet twitter_receive_tweets(const twitterAuthEntity auth);
 
 
 /**
