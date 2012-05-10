@@ -231,6 +231,7 @@ int isubstr (const char * cs, const char * ct)
             index = ptr_pos - cs;
         }
     }
+    
     return index;
 }
 
@@ -422,15 +423,19 @@ int twitter_receive_tweets(const twitterAuthEntity auth, tweetEntity ** tweets)
 
     // Store these informations into an array of tweet entities
     tweetEntity * result;
-    result = malloc(sizeof(tweetEntity) * count_tweets);
+
+    result = (tweetEntity *) pvPortMalloc(count_tweets * sizeof(tweetEntity));
+
     int i;
     for(i = 0 ; i < count_tweets ; i++)
     {
-        (result+i)->tweet_id = xstrdup(tweet_id[i]);
-        (result+i)->tweet_date = xstrdup(tweet_date[i]);
+        (result+i)->tweet_id         = xstrdup(tweet_id[i]);
+        (result+i)->tweet_date       = xstrdup(tweet_date[i]);
         (result+i)->user_screen_name = xstrdup(auth.user_screen_name);
-        (result+i)->tweet_text = xstrdup(tweet_text[i]);
-    }
+        (result+i)->tweet_text       = xstrdup(tweet_text[i]);
+
+        printf("->{%s}\n", (result+i)->tweet_text);
+    }  
  
     *tweets = result;
     return count_tweets;

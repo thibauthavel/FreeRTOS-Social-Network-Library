@@ -94,6 +94,8 @@ static void producerTask (void *pvParameters)
         {
             count = twitter_receive_tweets(auth, &tweets);
 
+            printf("->[%s]\n", tweets[0].tweet_text);
+
             if(count != 0)
             {
                 tweetSet ts;
@@ -117,12 +119,12 @@ static void producerTask (void *pvParameters)
 
             if(strlen(auth.access_key) != 0  &&  strlen(auth.access_secret) != 0)
             {
-                printf("[TWITTER] Authentication succeed.\n");
+                vDisplayMessage("[TWITTER] Authentication succeed.\n");
                 isAuthenticated = 1;
             }
             else
             {
-                printf("[TWITTER] Authentication failed.\n");
+                vDisplayMessage("[TWITTER] Authentication failed.\n");
             }
         }
 
@@ -140,6 +142,7 @@ static void consumerTask  (void *pvParameters)
     tweetSet ts;
     char * readId[100];
     int iRead = 0;
+    char * msg;
     int i;
 
     const char * const taskStartMsg = "[TWITTER] Consumer task started.\r\n";
@@ -157,7 +160,11 @@ static void consumerTask  (void *pvParameters)
                     readId[iRead] = ts.tweets[i].tweet_id;
                     iRead++;
 
-                    printf("[TWITTER] Tweet received: %s\n", ts.tweets[i].tweet_text);
+                    msg = xstrdup("[TWITTER] Tweet received: ");
+                    msg = xstrcat(msg, ts.tweets[i].tweet_text);
+                    msg = xstrcat(msg, "\n");
+
+                    vDisplayMessage(msg);
                 }
             }
 
