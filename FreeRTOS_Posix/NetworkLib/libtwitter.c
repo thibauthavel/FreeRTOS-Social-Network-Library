@@ -33,13 +33,40 @@
  *-----------------------------------------------------------*/
 
 
-#define TWITTER_REQUEST_TOKEN_URL  "https://api.twitter.com/oauth/request_token"    ///< URL to get the 'Request token'.
-#define TWITTER_DIRECT_TOKEN_URL   "https://api.twitter.com/oauth/authorize"        ///< URL to get the 'Verifier'.
-#define TWITTER_ACCESS_TOKEN_URL   "https://api.twitter.com/oauth/access_token"     ///< URL to get the 'Access token'.
-#define TWITTER_SEND_TWEET_URL     "http://twitter.com/statuses/update.xml"         ///< URL to post a tweet.
-#define TWITTER_TIMELINE_USER_URL  "http://twitter.com/statuses/user_timeline.xml"  ///< URL to get the tweets.
+#define TWITTER_REQUEST_TOKEN_URL   "https://api.twitter.com/oauth/request_token"    ///< URL to get the 'Request token'.
+#define TWITTER_DIRECT_TOKEN_URL    "https://api.twitter.com/oauth/authorize"        ///< URL to get the 'Verifier'.
+#define TWITTER_ACCESS_TOKEN_URL    "https://api.twitter.com/oauth/access_token"     ///< URL to get the 'Access token'.
+#define TWITTER_SEND_TWEET_URL      "http://twitter.com/statuses/update.xml"         ///< URL to post a tweet.
+#define TWITTER_TIMELINE_USER_URL   "http://twitter.com/statuses/user_timeline.xml"  ///< URL to get the tweets.
+#define TWITTER_TWEET_SIZE          140                                              ///< The tweet maximum size.
 
-#define TWITTER_TWEET_SIZE         140                                              ///< The tweet maximum size.
+#define XML_USER_BEGIN              "<user>"
+#define XML_USER_END                "</user>"
+#define XML_STATUS_BEGIN            "<status>"
+#define XML_STATUS_END              "</status>"
+#define XML_ID_BEGIN                "<id>"
+#define XML_ID_END                  "</id>"
+#define XML_CREATED_BEGIN           "<created_at>"
+#define XML_CREATED_END             "</created_at>"
+#define XML_TEXT_BEGIN              "<text>"
+#define XML_TEXT_END                "</text>"
+#define XML_NAME_BEGIN              "<name>"
+#define XML_NAME_END                "</name>"
+
+
+
+
+/*
+ * STRUCTURES
+ *-----------------------------------------------------------*/
+
+
+typedef struct xe
+{
+    int    begin;
+    int    end;
+    char * content;
+} xmlEntity;
 
 
 
@@ -354,6 +381,77 @@ void xml_parser_getall (const char * xml_content, const char * element_key, char
 }
 
 
+char * xml_parser_username (const char * user)
+{
+    char * name;
+
+    int name_begin = isubstr(user, XML_NAME_BEGIN);
+    int name_end   = isubstr(user, XML_NAME_END);
+
+    xsubstr(user, name_begin+strlen(XML_NAME_BEGIN), name_end, &name);
+    
+    return name;
+}
+
+
+tweetEntity xml_parser_tweet (xmlEntity xe)
+{
+    tweetEntity te;
+    char * date;
+    char * id;
+    char * text;
+    char * user;
+
+    int created_begin = isubstr(xe.content, XML_CREATED_BEGIN);
+    int created_end   = isubstr(xe.content, XML_CREATED_END);
+    int id_begin      = isubstr(xe.content, XML_ID_BEGIN);
+    int id_end        = isubstr(xe.content, XML_ID_END);
+    int text_begin    = isubstr(xe.content, XML_TEXT_BEGIN);
+    int text_end      = isubstr(xe.content, XML_TEXT_END);
+    int user_begin    = isubstr(xe.content, XML_USER_BEGIN);
+    int user_end      = isubstr(xe.content, XML_USER_END);
+
+    xsubstr( xe.content , created_begin+strlen(XML_CREATED_BEGIN) , created_end , &(te.tweet_date) );
+    xsubstr( xe.content , id_begin     +strlen(XML_ID_BEGIN)      , id_end      , &(te.tweet_id)   );
+    xsubstr( xe.content , text_begin   +strlen(XML_TEXT_BEGIN)    , text_end    , &(te.tweet_text) );
+    xsubstr( xe.content , user_begin   +strlen(XML_USER_BEGIN)    , user_end    , &user            );
+
+    te.user_screen_name = xml_parser_username(user);
+
+    return te;
+}
+
+
+void xml_parser_tweets (const char * xml_content, tweetEntity tweets[])
+{
+    char * buffer;
+    int buffer_position;
+    xmlEntity * status;
+
+    buffer = xstrdup(xml_content);
+    buffer_position = isubstr(buffer, XML_STATUS_BEGIN);
+
+    int i = 0;
+    while(buffer_position != -1)
+    {
+        xmlEntity xe;
+        char * status;
+
+        xe.begin        = buffer_position;
+        buffer_position = isubstr(buffer, XML_STATUS_END);
+        xe.end          = buffer_position + strlen(XML_STATUS_END) - 1;
+        xsubstr(buffer, xe.begin, xe.end+1, &status);
+        xe.content      = xstrdup(status);
+
+        tweets[i] = xml_parser_tweet(xe);
+
+        xsubstr(buffer, xe.end+1, strlen(buffer)-1, &buffer);
+        buffer_position = isubstr(buffer, XML_STATUS_BEGIN);
+        i++;
+    }
+}
+
+
 
 
 /*
@@ -414,34 +512,20 @@ tweetSet twitter_receive_tweets(const twitterAuthEntity auth)
     int count_tweets = xml_parser_count(timeline_user, "text");
 
     // Get the informations of each tweet
-    char * tweet_id[count_tweets];
-    char * tweet_date[count_tweets];
-    char * tweet_text[count_tweets];
+    tweetEntity * tweets;
+    tweets = (tweetEntity *) malloc(sizeof(tweetEntity) * count_tweets);
+    xml_parser_tweets(timeline_user, tweets);
 
-    xml_parser_getall(timeline_user, "id", tweet_id);
-    xml_parser_getall(timeline_user, "created_at", tweet_date);
-    xml_parser_getall(timeline_user, "text", tweet_text);
-
-    // Store these informations into an array of tweet entities
-    tweetEntity * result;
-    result = (tweetEntity *) malloc(count_tweets * sizeof(tweetEntity));
-
-    int i;
-    for(i = 0 ; i < count_tweets ; i++)
-    {
-        (result+i)->tweet_id         = xstrdup(tweet_id[i]);
-        printf("tweet_id[%d]=%s\n", i, tweet_id[i]);
-        (result+i)->tweet_date       = xstrdup(tweet_date[i]);
-        (result+i)->user_screen_name = xstrdup(auth.user_screen_name);
-        (result+i)->tweet_text       = xstrdup(tweet_text[i]);
-    }
-
+    // Store these informations into set of tweets
     tweetSet ts;
     ts.count  = count_tweets;
-    ts.tweets = result;
-    
+    ts.tweets = tweets;
+
+    /*
+    int i;
     for(i = 0 ; i < ts.count ; i++)
         printf("->['%s', '%s', '%s', '%s']\n", ts.tweets[i].tweet_id, ts.tweets[i].tweet_date, ts.tweets[i].user_screen_name, ts.tweets[i].tweet_text);
+    */
 
     return ts;
 }

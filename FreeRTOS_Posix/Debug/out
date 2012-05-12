@@ -1,37 +1,306 @@
-Running as PID: 5794
+Running as PID: 2923
 Timer Resolution for Run TimeStats is 100 ticks per second.
-Twitter task started.
+[TWITTER] Producer task started.
+[TWITTER] Consumer task started.
+[TWITTER] Authentication succeed.
+********************************************
+<?xml version="1.0" encoding="UTF-8"?>
+<statuses type="array">
+<status>
+  <created_at>Thu May 10 13:42:25 +0000 2012</created_at>
+  <id>200581559772913666</id>
+  <text>I'm joyeux ! Wooohooohooo ;)</text>
+  <source>&lt;a href=&quot;http://twitter.com/#!/download/iphone&quot; rel=&quot;nofollow&quot;&gt;Twitter for iPhone&lt;/a&gt;</source>
+  <truncated>false</truncated>
+  <favorited>false</favorited>
+  <in_reply_to_status_id></in_reply_to_status_id>
+  <in_reply_to_user_id></in_reply_to_user_id>
+  <in_reply_to_screen_name></in_reply_to_screen_name>
+  <retweet_count>0</retweet_count>
+  <retweeted>false</retweeted>
+  <user>
+    <id>568477149</id>
+    <name>Dev SocialNetworkLib</name>
+    <screen_name>dev_socnetlib</screen_name>
+    <location></location>
+    <description></description>
+    <profile_image_url>http://a0.twimg.com/sticky/default_profile_images/default_profile_2_normal.png</profile_image_url>
+    <profile_image_url_https>https://si0.twimg.com/sticky/default_profile_images/default_profile_2_normal.png</profile_image_url_https>
+    <url></url>
+    <protected>false</protected>
+    <followers_count>1</followers_count>
+    <profile_background_color>C0DEED</profile_background_color>
+    <profile_text_color>333333</profile_text_color>
+    <profile_link_color>0084B4</profile_link_color>
+    <profile_sidebar_fill_color>DDEEF6</profile_sidebar_fill_color>
+    <profile_sidebar_border_color>C0DEED</profile_sidebar_border_color>
+    <friends_count>5</friends_count>
+    <created_at>Tue May 01 17:44:12 +0000 2012</created_at>
+    <favourites_count>0</favourites_count>
+    <utc_offset></utc_offset>
+    <time_zone></time_zone>
+    <profile_background_image_url>http://a0.twimg.com/images/themes/theme1/bg.png</profile_background_image_url>
+    <profile_background_image_url_https>https://si0.twimg.com/images/themes/theme1/bg.png</profile_background_image_url_https>
+    <profile_background_tile>false</profile_background_tile>
+    <profile_use_background_image>true</profile_use_background_image>
+    <notifications>false</notifications>
+    <geo_enabled>false</geo_enabled>
+    <verified>false</verified>
+    <following>false</following>
+    <statuses_count>5</statuses_count>
+    <lang>fr</lang>
+    <contributors_enabled>false</contributors_enabled>
+    <follow_request_sent>false</follow_request_sent>
+    <listed_count>0</listed_count>
+    <show_all_inline_media>false</show_all_inline_media>
+    <default_profile>true</default_profile>
+    <default_profile_image>true</default_profile_image>
+    <is_translator>false</is_translator>
+  </user>
+  <geo/>
+  <coordinates/>
+  <place/>
+  <contributors/>
+</status>
+<status>
+  <created_at>Tue May 08 14:43:41 +0000 2012</created_at>
+  <id>199872203490209792</id>
+  <text>Blabla.</text>
+  <source>&lt;a href=&quot;http://twitter.com/#!/download/iphone&quot; rel=&quot;nofollow&quot;&gt;Twitter for iPhone&lt;/a&gt;</source>
+  <truncated>false</truncated>
+  <favorited>false</favorited>
+  <in_reply_to_status_id></in_reply_to_status_id>
+  <in_reply_to_user_id></in_reply_to_user_id>
+  <in_reply_to_screen_name></in_reply_to_screen_name>
+  <retweet_count>0</retweet_count>
+  <retweeted>false</retweeted>
+  <user>
+    <id>568477149</id>
+    <name>Dev SocialNetworkLib</name>
+    <screen_name>dev_socnetlib</screen_name>
+    <location></location>
+    <description></description>
+    <profile_image_url>http://a0.twimg.com/sticky/default_profile_images/default_profile_2_normal.png</profile_image_url>
+    <profile_image_url_https>https://si0.twimg.com/sticky/default_profile_images/default_profile_2_normal.png</profile_image_url_https>
+    <url></url>
+    <protected>false</protected>
+    <followers_count>1</followers_count>
+    <profile_background_color>C0DEED</profile_background_color>
+    <profile_text_color>333333</profile_text_color>
+    <profile_link_color>0084B4</profile_link_color>
+    <profile_sidebar_fill_color>DDEEF6</profile_sidebar_fill_color>
+    <profile_sidebar_border_color>C0DEED</profile_sidebar_border_color>
+    <friends_count>5</friends_count>
+    <created_at>Tue May 01 17:44:12 +0000 2012</created_at>
+    <favourites_count>0</favourites_count>
+    <utc_offset></utc_offset>
+    <time_zone></time_zone>
+    <profile_background_image_url>http://a0.twimg.com/images/themes/theme1/bg.png</profile_background_image_url>
+    <profile_background_image_url_https>https://si0.twimg.com/images/themes/theme1/bg.png</profile_background_image_url_https>
+    <profile_background_tile>false</profile_background_tile>
+    <profile_use_background_image>true</profile_use_background_image>
+    <notifications>false</notifications>
+    <geo_enabled>false</geo_enabled>
+    <verified>false</verified>
+    <following>false</following>
+    <statuses_count>5</statuses_count>
+    <lang>fr</lang>
+    <contributors_enabled>false</contributors_enabled>
+    <follow_request_sent>false</follow_request_sent>
+    <listed_count>0</listed_count>
+    <show_all_inline_media>false</show_all_inline_media>
+    <default_profile>true</default_profile>
+    <default_profile_image>true</default_profile_image>
+    <is_translator>false</is_translator>
+  </user>
+  <geo/>
+  <coordinates/>
+  <place/>
+  <contributors/>
+</status>
+<status>
+  <created_at>Tue May 08 11:06:30 +0000 2012</created_at>
+  <id>199817546311008256</id>
+  <text>At the library.</text>
+  <source>&lt;a href=&quot;http://twitter.com/#!/download/iphone&quot; rel=&quot;nofollow&quot;&gt;Twitter for iPhone&lt;/a&gt;</source>
+  <truncated>false</truncated>
+  <favorited>false</favorited>
+  <in_reply_to_status_id></in_reply_to_status_id>
+  <in_reply_to_user_id></in_reply_to_user_id>
+  <in_reply_to_screen_name></in_reply_to_screen_name>
+  <retweet_count>0</retweet_count>
+  <retweeted>false</retweeted>
+  <user>
+    <id>568477149</id>
+    <name>Dev SocialNetworkLib</name>
+    <screen_name>dev_socnetlib</screen_name>
+    <location></location>
+    <description></description>
+    <profile_image_url>http://a0.twimg.com/sticky/default_profile_images/default_profile_2_normal.png</profile_image_url>
+    <profile_image_url_https>https://si0.twimg.com/sticky/default_profile_images/default_profile_2_normal.png</profile_image_url_https>
+    <url></url>
+    <protected>false</protected>
+    <followers_count>1</followers_count>
+    <profile_background_color>C0DEED</profile_background_color>
+    <profile_text_color>333333</profile_text_color>
+    <profile_link_color>0084B4</profile_link_color>
+    <profile_sidebar_fill_color>DDEEF6</profile_sidebar_fill_color>
+    <profile_sidebar_border_color>C0DEED</profile_sidebar_border_color>
+    <friends_count>5</friends_count>
+    <created_at>Tue May 01 17:44:12 +0000 2012</created_at>
+    <favourites_count>0</favourites_count>
+    <utc_offset></utc_offset>
+    <time_zone></time_zone>
+    <profile_background_image_url>http://a0.twimg.com/images/themes/theme1/bg.png</profile_background_image_url>
+    <profile_background_image_url_https>https://si0.twimg.com/images/themes/theme1/bg.png</profile_background_image_url_https>
+    <profile_background_tile>false</profile_background_tile>
+    <profile_use_background_image>true</profile_use_background_image>
+    <notifications>false</notifications>
+    <geo_enabled>false</geo_enabled>
+    <verified>false</verified>
+    <following>false</following>
+    <statuses_count>5</statuses_count>
+    <lang>fr</lang>
+    <contributors_enabled>false</contributors_enabled>
+    <follow_request_sent>false</follow_request_sent>
+    <listed_count>0</listed_count>
+    <show_all_inline_media>false</show_all_inline_media>
+    <default_profile>true</default_profile>
+    <default_profile_image>true</default_profile_image>
+    <is_translator>false</is_translator>
+  </user>
+  <geo/>
+  <coordinates/>
+  <place/>
+  <contributors/>
+</status>
+<status>
+  <created_at>Wed May 02 09:22:48 +0000 2012</created_at>
+  <id>197617125609844736</id>
+  <text>Hello world !</text>
+  <source>&lt;a href=&quot;https://twitter.com/#!/thibaut_havel&quot; rel=&quot;nofollow&quot;&gt;FreeRTOS Social Network Service&lt;/a&gt;</source>
+  <truncated>false</truncated>
+  <favorited>false</favorited>
+  <in_reply_to_status_id></in_reply_to_status_id>
+  <in_reply_to_user_id></in_reply_to_user_id>
+  <in_reply_to_screen_name></in_reply_to_screen_name>
+  <retweet_count>0</retweet_count>
+  <retweeted>false</retweeted>
+  <user>
+    <id>568477149</id>
+    <name>Dev SocialNetworkLib</name>
+    <screen_name>dev_socnetlib</screen_name>
+    <location></location>
+    <description></description>
+    <profile_image_url>http://a0.twimg.com/sticky/default_profile_images/default_profile_2_normal.png</profile_image_url>
+    <profile_image_url_https>https://si0.twimg.com/sticky/default_profile_images/default_profile_2_normal.png</profile_image_url_https>
+    <url></url>
+    <protected>false</protected>
+    <followers_count>1</followers_count>
+    <profile_background_color>C0DEED</profile_background_color>
+    <profile_text_color>333333</profile_text_color>
+    <profile_link_color>0084B4</profile_link_color>
+    <profile_sidebar_fill_color>DDEEF6</profile_sidebar_fill_color>
+    <profile_sidebar_border_color>C0DEED</profile_sidebar_border_color>
+    <friends_count>5</friends_count>
+    <created_at>Tue May 01 17:44:12 +0000 2012</created_at>
+    <favourites_count>0</favourites_count>
+    <utc_offset></utc_offset>
+    <time_zone></time_zone>
+    <profile_background_image_url>http://a0.twimg.com/images/themes/theme1/bg.png</profile_background_image_url>
+    <profile_background_image_url_https>https://si0.twimg.com/images/themes/theme1/bg.png</profile_background_image_url_https>
+    <profile_background_tile>false</profile_background_tile>
+    <profile_use_background_image>true</profile_use_background_image>
+    <notifications>false</notifications>
+    <geo_enabled>false</geo_enabled>
+    <verified>false</verified>
+    <following>false</following>
+    <statuses_count>5</statuses_count>
+    <lang>fr</lang>
+    <contributors_enabled>false</contributors_enabled>
+    <follow_request_sent>false</follow_request_sent>
+    <listed_count>0</listed_count>
+    <show_all_inline_media>false</show_all_inline_media>
+    <default_profile>true</default_profile>
+    <default_profile_image>true</default_profile_image>
+    <is_translator>false</is_translator>
+  </user>
+  <geo/>
+  <coordinates/>
+  <place/>
+  <contributors/>
+</status>
+<status>
+  <created_at>Wed May 02 09:14:57 +0000 2012</created_at>
+  <id>197615148255547392</id>
+  <text>And again !</text>
+  <source>&lt;a href=&quot;http://twitter.com/#!/download/iphone&quot; rel=&quot;nofollow&quot;&gt;Twitter for iPhone&lt;/a&gt;</source>
+  <truncated>false</truncated>
+  <favorited>false</favorited>
+  <in_reply_to_status_id></in_reply_to_status_id>
+  <in_reply_to_user_id></in_reply_to_user_id>
+  <in_reply_to_screen_name></in_reply_to_screen_name>
+  <retweet_count>0</retweet_count>
+  <retweeted>false</retweeted>
+  <user>
+    <id>568477149</id>
+    <name>Dev SocialNetworkLib</name>
+    <screen_name>dev_socnetlib</screen_name>
+    <location></location>
+    <description></description>
+    <profile_image_url>http://a0.twimg.com/sticky/default_profile_images/default_profile_2_normal.png</profile_image_url>
+    <profile_image_url_https>https://si0.twimg.com/sticky/default_profile_images/default_profile_2_normal.png</profile_image_url_https>
+    <url></url>
+    <protected>false</protected>
+    <followers_count>1</followers_count>
+    <profile_background_color>C0DEED</profile_background_color>
+    <profile_text_color>333333</profile_text_color>
+    <profile_link_color>0084B4</profile_link_color>
+    <profile_sidebar_fill_color>DDEEF6</profile_sidebar_fill_color>
+    <profile_sidebar_border_color>C0DEED</profile_sidebar_border_color>
+    <friends_count>5</friends_count>
+    <created_at>Tue May 01 17:44:12 +0000 2012</created_at>
+    <favourites_count>0</favourites_count>
+    <utc_offset></utc_offset>
+    <time_zone></time_zone>
+    <profile_background_image_url>http://a0.twimg.com/images/themes/theme1/bg.png</profile_background_image_url>
+    <profile_background_image_url_https>https://si0.twimg.com/images/themes/theme1/bg.png</profile_background_image_url_https>
+    <profile_background_tile>false</profile_background_tile>
+    <profile_use_background_image>true</profile_use_background_image>
+    <notifications>false</notifications>
+    <geo_enabled>false</geo_enabled>
+    <verified>false</verified>
+    <following>false</following>
+    <statuses_count>5</statuses_count>
+    <lang>fr</lang>
+    <contributors_enabled>false</contributors_enabled>
+    <follow_request_sent>false</follow_request_sent>
+    <listed_count>0</listed_count>
+    <show_all_inline_media>false</show_all_inline_media>
+    <default_profile>true</default_profile>
+    <default_profile_image>true</default_profile_image>
+    <is_translator>false</is_translator>
+  </user>
+  <geo/>
+  <coordinates/>
+  <place/>
+  <contributors/>
+</status>
+</statuses>
 
-[TWITTER] Authentication...
-user_id=568477149
-user_screen_name=dev_socnetlib
-consumer_key=VB5FifD1HLhmLmsj8tZA
-consumer_secret=OdE18zFiva5TsC3rPQmq9BlYXhfBPFWJq2bY6Ib40
-access_key=568477149-BRdSeLN1KM0m2HVxyTNdxHNCa3M3CBpizKBpzIwx
-access_secret=akmkiI3CBIjKUSH1tykBuZTKklHDM6zHm5dI3FGqHE
-[TWITTER] Receive tweets...
-count=3
-Tweet (0) : Hello world !
-Tweet (1) : And again !
-Tweet (2) : This is another test.
-[TWITTER] Send a tweet...
-tweet_id=197618596216705024
-tweet_date=Wed May 02 09:28:39 +0000 2012
-user_screen_name=dev_socnetlib
-tweet_text=Ultimate test.
-
-Blocking queues count unchanged!
-Maths task count unchanged!
-Polling queue count unchanged!
-Semaphore take count unchanged!
-Error in multi events tasks!
-Error in block time test tasks!
-Error in queue peek test task!
-Blocking queues count unchanged!
-Maths task count unchanged!
-Polling queue count unchanged!
-Semaphore take count unchanged!
-Error in multi events tasks!
-Error in block time test tasks!
-Error in queue peek test task!
-Error in queue send hook call count!
+***********************************************
+tweet_id[0]=Wed May 02 09:14:57 +0000 2012
+tweet_id[1]=Tue May 01 17:44:12 +0000 2012
+tweet_id[2]=199872203490209792
+tweet_id[3]=568477149
+tweet_id[4]=199817546311008256
+->['Wed May 02 09:14:57 +0000 2012', 'Thu May 10 13:42:25 +0000 2012', 'dev_socnetlib', 'I'm joyeux ! Wooohooohooo ;)']
+->['Tue May 01 17:44:12 +0000 2012', 'Tue May 01 17:44:12 +0000 2012', 'dev_socnetlib', 'Blabla.']
+->['199872203490209792', 'Tue May 08 14:43:41 +0000 2012', 'dev_socnetlib', 'At the library.']
+->['568477149', 'Tue May 01 17:44:12 +0000 2012', 'dev_socnetlib', 'Hello world !']
+->['199817546311008256', 'Tue May 08 11:06:30 +0000 2012', 'dev_socnetlib', 'And again !']
+[TWITTER] Tweet received: I'm joyeux ! Wooohooohooo ;)
+[TWITTER] Tweet received: Blabla.
+[TWITTER] Tweet received: At the library.
+[TWITTER] Tweet received: Hello world !
+[TWITTER] Tweet received: And again !
