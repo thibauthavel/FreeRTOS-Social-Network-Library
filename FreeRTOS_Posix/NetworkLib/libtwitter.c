@@ -61,6 +61,9 @@
  *-----------------------------------------------------------*/
 
 
+/* \struct xmlEntity
+ * XML node used to parse tweets
+ */
 typedef struct xe
 {
     int    begin;
@@ -264,48 +267,6 @@ int isubstr (const char * cs, const char * ct)
 
 
 /**
- * Get the first occurence of a XML element.
- *
- * @param xml_content A XML content.
- * @param element_key The name of the element ('<element_key>value to return</element_key>').
- * @return The element value.
- */
-char * xml_parser_get (const char * xml_content, const char * element_key)
-{
-
-    char * element_begin;
-    int    element_begin_size;
-    char * element_end;
-    int    index_begin;
-    int    index_end;
-    char * value;
-
-    // Prepare the begining tag: <element_key>
-    element_begin = xstrdup("<");
-    element_begin = xstrcat(element_begin, element_key);
-    element_begin = xstrcat(element_begin, ">");
-    element_begin_size = strlen(element_begin);
-    
-    // Prepare the end tage: </element_key>
-    element_end = xstrdup("</");
-    element_end = xstrcat(element_end, element_key);
-    element_end = xstrcat(element_end, ">");
-    
-    // Search the position
-    index_begin = isubstr(xml_content, element_begin);
-    index_end = isubstr(xml_content, element_end);
-    
-    if(index_begin != -1)
-    {
-        xsubstr(xml_content, (index_begin + element_begin_size), index_end, &value);
-        return value;
-    }
-    
-    return NULL;
-}
-
-
-/**
  * Count the values of a XML element.
  *
  * @param xml_content A XML content.
@@ -344,43 +305,11 @@ int xml_parser_count (const char * xml_content, const char * element_key)
 
 
 /**
- * Get all values of a XML element.
+ * Parse username from XML <user></user>.
  *
- * @param xml_content A XML content.
- * @param element_key The name of the element ('<element_key>value to return</element_key>').
- * @return The element values.
+ * @param user XML content.
+ * @return Name of the user.
  */
-void xml_parser_getall (const char * xml_content, const char * element_key, char * element_value[])
-{
-    char * buffer;
-    char * element_end;
-    int    buffer_position;
-    size_t element_end_size;
-    
-    if(strlen(element_key)== 0)   return 0;
-
-    // Prepare the end tag
-    element_end = xstrdup("</");
-    element_end = xstrcat(element_end, element_key);
-    element_end = xstrcat(element_end, ">");
-    element_end_size = strlen(element_end);
-    
-    buffer = strdup(xml_content);
-    buffer_position = isubstr(buffer, element_end);
-    
-    // Parse each found occurence
-    int i = 0;
-    while(buffer_position != -1)
-    {
-        element_value[i] = xml_parser_get(buffer, element_key);
-        i++;
-        
-        xsubstr(buffer, (buffer_position + element_end_size), strlen(buffer)-1, &buffer);
-        buffer_position = isubstr(buffer, element_end);
-    }
-}
-
-
 char * xml_parser_username (const char * user)
 {
     char * name;
@@ -394,6 +323,12 @@ char * xml_parser_username (const char * user)
 }
 
 
+/**
+ * Parse a tweet from XML <status></status>.
+ *
+ * @param xe XML entity.
+ * @return Tweet entity.
+ */
 tweetEntity xml_parser_tweet (xmlEntity xe)
 {
     tweetEntity te;
@@ -422,7 +357,13 @@ tweetEntity xml_parser_tweet (xmlEntity xe)
 }
 
 
-void xml_parser_tweets (const char * xml_content, tweetEntity tweets[])
+/**
+ * Parse all tweets.
+ *
+ * @param xml_content Content to parse.
+ * @param tweets Array of returned parsed tweets.
+ */
+void xml_parser_tweets (const char * xml_content, const int count, tweetEntity tweets[])
 {
     char * buffer;
     int buffer_position;
@@ -431,7 +372,7 @@ void xml_parser_tweets (const char * xml_content, tweetEntity tweets[])
     buffer = xstrdup(xml_content);
     buffer_position = isubstr(buffer, XML_STATUS_BEGIN);
 
-    int i = 0;
+    int i = count - 1;
     while(buffer_position != -1)
     {
         xmlEntity xe;
@@ -447,7 +388,7 @@ void xml_parser_tweets (const char * xml_content, tweetEntity tweets[])
 
         xsubstr(buffer, xe.end+1, strlen(buffer)-1, &buffer);
         buffer_position = isubstr(buffer, XML_STATUS_BEGIN);
-        i++;
+        i--;
     }
 }
 
@@ -514,7 +455,7 @@ tweetSet twitter_receive_tweets(const twitterAuthEntity auth)
     // Get the informations of each tweet
     tweetEntity * tweets;
     tweets = (tweetEntity *) malloc(sizeof(tweetEntity) * count_tweets);
-    xml_parser_tweets(timeline_user, tweets);
+    xml_parser_tweets(timeline_user, count_tweets, tweets);
 
     // Store these informations into set of tweets
     tweetSet ts;
@@ -538,6 +479,7 @@ tweetEntity twitter_send_tweet (const twitterAuthEntity auth, const char * tweet
     char * tweet_param;
     char * tweet_result;
 
+    xmlEntity xe;
     tweetEntity result;
 
     // Get the URL to send the tweet
@@ -547,10 +489,10 @@ tweetEntity twitter_send_tweet (const twitterAuthEntity auth, const char * tweet
     twitter_tweet(tweet_url, tweet_param, &tweet_result);
 
     // Store the details of the returned XML value into a tweet entity
-    result.tweet_id = xml_parser_get(tweet_result, "id");
-    result.tweet_date = xml_parser_get(tweet_result, "created_at");
-    result.user_screen_name = auth.user_screen_name;
-    result.tweet_text = xml_parser_get(tweet_result, "text");
+    xe.begin   = 0;
+    xe.end     = strlen(tweet_result) - 1;
+    xe.content = tweet_result;
+    result = xml_parser_tweet(xe);
 
     return result;
 }

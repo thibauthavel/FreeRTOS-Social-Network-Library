@@ -106,6 +106,9 @@ static void producerTask (void *pvParameters)
             {
                 vDisplayMessage("[TWITTER] Authentication succeed.\n");
                 isAuthenticated = 1;
+
+                //tweetEntity t = twitter_send_tweet(auth, "Send via the library.");
+                //printf("[%s][%s][%s][%s]\n", t.tweet_id, t.tweet_date, t.user_screen_name, t.tweet_text);
             }
             else
             {

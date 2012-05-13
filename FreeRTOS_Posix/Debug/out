@@ -1,306 +1,105 @@
-Running as PID: 2923
-Timer Resolution for Run TimeStats is 100 ticks per second.
-[TWITTER] Producer task started.
-[TWITTER] Consumer task started.
-[TWITTER] Authentication succeed.
-********************************************
-<?xml version="1.0" encoding="UTF-8"?>
-<statuses type="array">
-<status>
-  <created_at>Thu May 10 13:42:25 +0000 2012</created_at>
-  <id>200581559772913666</id>
-  <text>I'm joyeux ! Wooohooohooo ;)</text>
-  <source>&lt;a href=&quot;http://twitter.com/#!/download/iphone&quot; rel=&quot;nofollow&quot;&gt;Twitter for iPhone&lt;/a&gt;</source>
-  <truncated>false</truncated>
-  <favorited>false</favorited>
-  <in_reply_to_status_id></in_reply_to_status_id>
-  <in_reply_to_user_id></in_reply_to_user_id>
-  <in_reply_to_screen_name></in_reply_to_screen_name>
-  <retweet_count>0</retweet_count>
-  <retweeted>false</retweeted>
-  <user>
-    <id>568477149</id>
-    <name>Dev SocialNetworkLib</name>
-    <screen_name>dev_socnetlib</screen_name>
-    <location></location>
-    <description></description>
-    <profile_image_url>http://a0.twimg.com/sticky/default_profile_images/default_profile_2_normal.png</profile_image_url>
-    <profile_image_url_https>https://si0.twimg.com/sticky/default_profile_images/default_profile_2_normal.png</profile_image_url_https>
-    <url></url>
-    <protected>false</protected>
-    <followers_count>1</followers_count>
-    <profile_background_color>C0DEED</profile_background_color>
-    <profile_text_color>333333</profile_text_color>
-    <profile_link_color>0084B4</profile_link_color>
-    <profile_sidebar_fill_color>DDEEF6</profile_sidebar_fill_color>
-    <profile_sidebar_border_color>C0DEED</profile_sidebar_border_color>
-    <friends_count>5</friends_count>
-    <created_at>Tue May 01 17:44:12 +0000 2012</created_at>
-    <favourites_count>0</favourites_count>
-    <utc_offset></utc_offset>
-    <time_zone></time_zone>
-    <profile_background_image_url>http://a0.twimg.com/images/themes/theme1/bg.png</profile_background_image_url>
-    <profile_background_image_url_https>https://si0.twimg.com/images/themes/theme1/bg.png</profile_background_image_url_https>
-    <profile_background_tile>false</profile_background_tile>
-    <profile_use_background_image>true</profile_use_background_image>
-    <notifications>false</notifications>
-    <geo_enabled>false</geo_enabled>
-    <verified>false</verified>
-    <following>false</following>
-    <statuses_count>5</statuses_count>
-    <lang>fr</lang>
-    <contributors_enabled>false</contributors_enabled>
-    <follow_request_sent>false</follow_request_sent>
-    <listed_count>0</listed_count>
-    <show_all_inline_media>false</show_all_inline_media>
-    <default_profile>true</default_profile>
-    <default_profile_image>true</default_profile_image>
-    <is_translator>false</is_translator>
-  </user>
-  <geo/>
-  <coordinates/>
-  <place/>
-  <contributors/>
-</status>
-<status>
-  <created_at>Tue May 08 14:43:41 +0000 2012</created_at>
-  <id>199872203490209792</id>
-  <text>Blabla.</text>
-  <source>&lt;a href=&quot;http://twitter.com/#!/download/iphone&quot; rel=&quot;nofollow&quot;&gt;Twitter for iPhone&lt;/a&gt;</source>
-  <truncated>false</truncated>
-  <favorited>false</favorited>
-  <in_reply_to_status_id></in_reply_to_status_id>
-  <in_reply_to_user_id></in_reply_to_user_id>
-  <in_reply_to_screen_name></in_reply_to_screen_name>
-  <retweet_count>0</retweet_count>
-  <retweeted>false</retweeted>
-  <user>
-    <id>568477149</id>
-    <name>Dev SocialNetworkLib</name>
-    <screen_name>dev_socnetlib</screen_name>
-    <location></location>
-    <description></description>
-    <profile_image_url>http://a0.twimg.com/sticky/default_profile_images/default_profile_2_normal.png</profile_image_url>
-    <profile_image_url_https>https://si0.twimg.com/sticky/default_profile_images/default_profile_2_normal.png</profile_image_url_https>
-    <url></url>
-    <protected>false</protected>
-    <followers_count>1</followers_count>
-    <profile_background_color>C0DEED</profile_background_color>
-    <profile_text_color>333333</profile_text_color>
-    <profile_link_color>0084B4</profile_link_color>
-    <profile_sidebar_fill_color>DDEEF6</profile_sidebar_fill_color>
-    <profile_sidebar_border_color>C0DEED</profile_sidebar_border_color>
-    <friends_count>5</friends_count>
-    <created_at>Tue May 01 17:44:12 +0000 2012</created_at>
-    <favourites_count>0</favourites_count>
-    <utc_offset></utc_offset>
-    <time_zone></time_zone>
-    <profile_background_image_url>http://a0.twimg.com/images/themes/theme1/bg.png</profile_background_image_url>
-    <profile_background_image_url_https>https://si0.twimg.com/images/themes/theme1/bg.png</profile_background_image_url_https>
-    <profile_background_tile>false</profile_background_tile>
-    <profile_use_background_image>true</profile_use_background_image>
-    <notifications>false</notifications>
-    <geo_enabled>false</geo_enabled>
-    <verified>false</verified>
-    <following>false</following>
-    <statuses_count>5</statuses_count>
-    <lang>fr</lang>
-    <contributors_enabled>false</contributors_enabled>
-    <follow_request_sent>false</follow_request_sent>
-    <listed_count>0</listed_count>
-    <show_all_inline_media>false</show_all_inline_media>
-    <default_profile>true</default_profile>
-    <default_profile_image>true</default_profile_image>
-    <is_translator>false</is_translator>
-  </user>
-  <geo/>
-  <coordinates/>
-  <place/>
-  <contributors/>
-</status>
-<status>
-  <created_at>Tue May 08 11:06:30 +0000 2012</created_at>
-  <id>199817546311008256</id>
-  <text>At the library.</text>
-  <source>&lt;a href=&quot;http://twitter.com/#!/download/iphone&quot; rel=&quot;nofollow&quot;&gt;Twitter for iPhone&lt;/a&gt;</source>
-  <truncated>false</truncated>
-  <favorited>false</favorited>
-  <in_reply_to_status_id></in_reply_to_status_id>
-  <in_reply_to_user_id></in_reply_to_user_id>
-  <in_reply_to_screen_name></in_reply_to_screen_name>
-  <retweet_count>0</retweet_count>
-  <retweeted>false</retweeted>
-  <user>
-    <id>568477149</id>
-    <name>Dev SocialNetworkLib</name>
-    <screen_name>dev_socnetlib</screen_name>
-    <location></location>
-    <description></description>
-    <profile_image_url>http://a0.twimg.com/sticky/default_profile_images/default_profile_2_normal.png</profile_image_url>
-    <profile_image_url_https>https://si0.twimg.com/sticky/default_profile_images/default_profile_2_normal.png</profile_image_url_https>
-    <url></url>
-    <protected>false</protected>
-    <followers_count>1</followers_count>
-    <profile_background_color>C0DEED</profile_background_color>
-    <profile_text_color>333333</profile_text_color>
-    <profile_link_color>0084B4</profile_link_color>
-    <profile_sidebar_fill_color>DDEEF6</profile_sidebar_fill_color>
-    <profile_sidebar_border_color>C0DEED</profile_sidebar_border_color>
-    <friends_count>5</friends_count>
-    <created_at>Tue May 01 17:44:12 +0000 2012</created_at>
-    <favourites_count>0</favourites_count>
-    <utc_offset></utc_offset>
-    <time_zone></time_zone>
-    <profile_background_image_url>http://a0.twimg.com/images/themes/theme1/bg.png</profile_background_image_url>
-    <profile_background_image_url_https>https://si0.twimg.com/images/themes/theme1/bg.png</profile_background_image_url_https>
-    <profile_background_tile>false</profile_background_tile>
-    <profile_use_background_image>true</profile_use_background_image>
-    <notifications>false</notifications>
-    <geo_enabled>false</geo_enabled>
-    <verified>false</verified>
-    <following>false</following>
-    <statuses_count>5</statuses_count>
-    <lang>fr</lang>
-    <contributors_enabled>false</contributors_enabled>
-    <follow_request_sent>false</follow_request_sent>
-    <listed_count>0</listed_count>
-    <show_all_inline_media>false</show_all_inline_media>
-    <default_profile>true</default_profile>
-    <default_profile_image>true</default_profile_image>
-    <is_translator>false</is_translator>
-  </user>
-  <geo/>
-  <coordinates/>
-  <place/>
-  <contributors/>
-</status>
-<status>
-  <created_at>Wed May 02 09:22:48 +0000 2012</created_at>
-  <id>197617125609844736</id>
-  <text>Hello world !</text>
-  <source>&lt;a href=&quot;https://twitter.com/#!/thibaut_havel&quot; rel=&quot;nofollow&quot;&gt;FreeRTOS Social Network Service&lt;/a&gt;</source>
-  <truncated>false</truncated>
-  <favorited>false</favorited>
-  <in_reply_to_status_id></in_reply_to_status_id>
-  <in_reply_to_user_id></in_reply_to_user_id>
-  <in_reply_to_screen_name></in_reply_to_screen_name>
-  <retweet_count>0</retweet_count>
-  <retweeted>false</retweeted>
-  <user>
-    <id>568477149</id>
-    <name>Dev SocialNetworkLib</name>
-    <screen_name>dev_socnetlib</screen_name>
-    <location></location>
-    <description></description>
-    <profile_image_url>http://a0.twimg.com/sticky/default_profile_images/default_profile_2_normal.png</profile_image_url>
-    <profile_image_url_https>https://si0.twimg.com/sticky/default_profile_images/default_profile_2_normal.png</profile_image_url_https>
-    <url></url>
-    <protected>false</protected>
-    <followers_count>1</followers_count>
-    <profile_background_color>C0DEED</profile_background_color>
-    <profile_text_color>333333</profile_text_color>
-    <profile_link_color>0084B4</profile_link_color>
-    <profile_sidebar_fill_color>DDEEF6</profile_sidebar_fill_color>
-    <profile_sidebar_border_color>C0DEED</profile_sidebar_border_color>
-    <friends_count>5</friends_count>
-    <created_at>Tue May 01 17:44:12 +0000 2012</created_at>
-    <favourites_count>0</favourites_count>
-    <utc_offset></utc_offset>
-    <time_zone></time_zone>
-    <profile_background_image_url>http://a0.twimg.com/images/themes/theme1/bg.png</profile_background_image_url>
-    <profile_background_image_url_https>https://si0.twimg.com/images/themes/theme1/bg.png</profile_background_image_url_https>
-    <profile_background_tile>false</profile_background_tile>
-    <profile_use_background_image>true</profile_use_background_image>
-    <notifications>false</notifications>
-    <geo_enabled>false</geo_enabled>
-    <verified>false</verified>
-    <following>false</following>
-    <statuses_count>5</statuses_count>
-    <lang>fr</lang>
-    <contributors_enabled>false</contributors_enabled>
-    <follow_request_sent>false</follow_request_sent>
-    <listed_count>0</listed_count>
-    <show_all_inline_media>false</show_all_inline_media>
-    <default_profile>true</default_profile>
-    <default_profile_image>true</default_profile_image>
-    <is_translator>false</is_translator>
-  </user>
-  <geo/>
-  <coordinates/>
-  <place/>
-  <contributors/>
-</status>
-<status>
-  <created_at>Wed May 02 09:14:57 +0000 2012</created_at>
-  <id>197615148255547392</id>
-  <text>And again !</text>
-  <source>&lt;a href=&quot;http://twitter.com/#!/download/iphone&quot; rel=&quot;nofollow&quot;&gt;Twitter for iPhone&lt;/a&gt;</source>
-  <truncated>false</truncated>
-  <favorited>false</favorited>
-  <in_reply_to_status_id></in_reply_to_status_id>
-  <in_reply_to_user_id></in_reply_to_user_id>
-  <in_reply_to_screen_name></in_reply_to_screen_name>
-  <retweet_count>0</retweet_count>
-  <retweeted>false</retweeted>
-  <user>
-    <id>568477149</id>
-    <name>Dev SocialNetworkLib</name>
-    <screen_name>dev_socnetlib</screen_name>
-    <location></location>
-    <description></description>
-    <profile_image_url>http://a0.twimg.com/sticky/default_profile_images/default_profile_2_normal.png</profile_image_url>
-    <profile_image_url_https>https://si0.twimg.com/sticky/default_profile_images/default_profile_2_normal.png</profile_image_url_https>
-    <url></url>
-    <protected>false</protected>
-    <followers_count>1</followers_count>
-    <profile_background_color>C0DEED</profile_background_color>
-    <profile_text_color>333333</profile_text_color>
-    <profile_link_color>0084B4</profile_link_color>
-    <profile_sidebar_fill_color>DDEEF6</profile_sidebar_fill_color>
-    <profile_sidebar_border_color>C0DEED</profile_sidebar_border_color>
-    <friends_count>5</friends_count>
-    <created_at>Tue May 01 17:44:12 +0000 2012</created_at>
-    <favourites_count>0</favourites_count>
-    <utc_offset></utc_offset>
-    <time_zone></time_zone>
-    <profile_background_image_url>http://a0.twimg.com/images/themes/theme1/bg.png</profile_background_image_url>
-    <profile_background_image_url_https>https://si0.twimg.com/images/themes/theme1/bg.png</profile_background_image_url_https>
-    <profile_background_tile>false</profile_background_tile>
-    <profile_use_background_image>true</profile_use_background_image>
-    <notifications>false</notifications>
-    <geo_enabled>false</geo_enabled>
-    <verified>false</verified>
-    <following>false</following>
-    <statuses_count>5</statuses_count>
-    <lang>fr</lang>
-    <contributors_enabled>false</contributors_enabled>
-    <follow_request_sent>false</follow_request_sent>
-    <listed_count>0</listed_count>
-    <show_all_inline_media>false</show_all_inline_media>
-    <default_profile>true</default_profile>
-    <default_profile_image>true</default_profile_image>
-    <is_translator>false</is_translator>
-  </user>
-  <geo/>
-  <coordinates/>
-  <place/>
-  <contributors/>
-</status>
-</statuses>
-
-***********************************************
-tweet_id[0]=Wed May 02 09:14:57 +0000 2012
-tweet_id[1]=Tue May 01 17:44:12 +0000 2012
-tweet_id[2]=199872203490209792
-tweet_id[3]=568477149
-tweet_id[4]=199817546311008256
-->['Wed May 02 09:14:57 +0000 2012', 'Thu May 10 13:42:25 +0000 2012', 'dev_socnetlib', 'I'm joyeux ! Wooohooohooo ;)']
-->['Tue May 01 17:44:12 +0000 2012', 'Tue May 01 17:44:12 +0000 2012', 'dev_socnetlib', 'Blabla.']
-->['199872203490209792', 'Tue May 08 14:43:41 +0000 2012', 'dev_socnetlib', 'At the library.']
-->['568477149', 'Tue May 01 17:44:12 +0000 2012', 'dev_socnetlib', 'Hello world !']
-->['199817546311008256', 'Tue May 08 11:06:30 +0000 2012', 'dev_socnetlib', 'And again !']
-[TWITTER] Tweet received: I'm joyeux ! Wooohooohooo ;)
-[TWITTER] Tweet received: Blabla.
-[TWITTER] Tweet received: At the library.
-[TWITTER] Tweet received: Hello world !
-[TWITTER] Tweet received: And again !
+../NetworkLib/libtwitter.c: In function ‘xstrcat’:
+../NetworkLib/libtwitter.c:93:5: attention : implicit declaration of function ‘xstrdup’ [-Wimplicit-function-declaration]
+../NetworkLib/libtwitter.c:93:17: attention : initialization makes pointer from integer without a cast [enabled by default]
+../NetworkLib/libtwitter.c:97:5: attention : implicit declaration of function ‘xrealloc’ [-Wimplicit-function-declaration]
+../NetworkLib/libtwitter.c:97:9: attention : assignment makes pointer from integer without a cast [enabled by default]
+../NetworkLib/libtwitter.c: In function ‘xstrchr2’:
+../NetworkLib/libtwitter.c:125:15: attention : assignment makes pointer from integer without a cast [enabled by default]
+../NetworkLib/libtwitter.c:147:9: attention : implicit declaration of function ‘xsubstr’ [-Wimplicit-function-declaration]
+../NetworkLib/libtwitter.c: In function ‘xsubstr’:
+../NetworkLib/libtwitter.c:193:16: attention : assignment makes pointer from integer without a cast [enabled by default]
+../NetworkLib/libtwitter.c: In function ‘xstrtrim’:
+../NetworkLib/libtwitter.c:215:17: attention : initialization makes pointer from integer without a cast [enabled by default]
+../NetworkLib/libtwitter.c:219:10: attention : assignment makes pointer from integer without a cast [enabled by default]
+../NetworkLib/libtwitter.c: In function ‘xml_parser_count’:
+../NetworkLib/libtwitter.c:286:19: attention : assignment makes pointer from integer without a cast [enabled by default]
+../NetworkLib/libtwitter.c: In function ‘xml_parser_tweet’:
+../NetworkLib/libtwitter.c:337:12: attention : unused variable ‘text’ [-Wunused-variable]
+../NetworkLib/libtwitter.c:336:12: attention : unused variable ‘id’ [-Wunused-variable]
+../NetworkLib/libtwitter.c:335:12: attention : unused variable ‘date’ [-Wunused-variable]
+../NetworkLib/libtwitter.c: In function ‘xml_parser_tweets’:
+../NetworkLib/libtwitter.c:372:12: attention : assignment makes pointer from integer without a cast [enabled by default]
+../NetworkLib/libtwitter.c:385:25: attention : assignment makes pointer from integer without a cast [enabled by default]
+../NetworkLib/libtwitter.c:370:17: attention : unused variable ‘status’ [-Wunused-variable]
+../NetworkLib/libtwitter.c: In function ‘twitter_authentication’:
+../NetworkLib/libtwitter.c:421:5: attention : implicit declaration of function ‘twitter_request_token_url’ [-Wimplicit-function-declaration]
+../NetworkLib/libtwitter.c:422:5: attention : implicit declaration of function ‘twitter_request_token’ [-Wimplicit-function-declaration]
+../NetworkLib/libtwitter.c:425:5: attention : implicit declaration of function ‘twitter_direct_token_url’ [-Wimplicit-function-declaration]
+../NetworkLib/libtwitter.c:426:5: attention : implicit declaration of function ‘twitter_verifier’ [-Wimplicit-function-declaration]
+../NetworkLib/libtwitter.c:429:5: attention : implicit declaration of function ‘twitter_access_token_url’ [-Wimplicit-function-declaration]
+../NetworkLib/libtwitter.c:430:5: attention : implicit declaration of function ‘twitter_access_token’ [-Wimplicit-function-declaration]
+../NetworkLib/libtwitter.c:433:18: attention : assignment makes pointer from integer without a cast [enabled by default]
+../NetworkLib/libtwitter.c:434:27: attention : assignment makes pointer from integer without a cast [enabled by default]
+../NetworkLib/libtwitter.c:435:23: attention : assignment makes pointer from integer without a cast [enabled by default]
+../NetworkLib/libtwitter.c:436:26: attention : assignment makes pointer from integer without a cast [enabled by default]
+../NetworkLib/libtwitter.c:437:21: attention : assignment makes pointer from integer without a cast [enabled by default]
+../NetworkLib/libtwitter.c:438:24: attention : assignment makes pointer from integer without a cast [enabled by default]
+../NetworkLib/libtwitter.c: In function ‘twitter_receive_tweets’:
+../NetworkLib/libtwitter.c:450:5: attention : implicit declaration of function ‘twitter_timeline_user’ [-Wimplicit-function-declaration]
+../NetworkLib/libtwitter.c:457:5: attention : implicit declaration of function ‘malloc’ [-Wimplicit-function-declaration]
+../NetworkLib/libtwitter.c:457:30: attention : incompatible implicit declaration of built-in function ‘malloc’ [enabled by default]
+../NetworkLib/libtwitter.c:458:38: erreur: ‘tweet_count’ undeclared (first use in this function)
+../NetworkLib/libtwitter.c:458:38: note: each undeclared identifier is reported only once for each function it appears in
+../NetworkLib/libtwitter.c: In function ‘twitter_send_tweet’:
+../NetworkLib/libtwitter.c:486:5: attention : implicit declaration of function ‘twitter_tweet_url’ [-Wimplicit-function-declaration]
+../NetworkLib/libtwitter.c:489:5: attention : implicit declaration of function ‘twitter_tweet’ [-Wimplicit-function-declaration]
+../NetworkLib/libtwitter.c: Hors de toute fonction :
+../NetworkLib/libtwitter.c:515:6: attention : conflicting types for ‘twitter_request_token_url’ [enabled by default]
+../NetworkLib/libtwitter.c:421:5: note: previous implicit declaration of ‘twitter_request_token_url’ was here
+../NetworkLib/libtwitter.c:530:6: attention : conflicting types for ‘twitter_request_token’ [enabled by default]
+../NetworkLib/libtwitter.c:422:5: note: previous implicit declaration of ‘twitter_request_token’ was here
+../NetworkLib/libtwitter.c:558:6: attention : conflicting types for ‘twitter_direct_token_url’ [enabled by default]
+../NetworkLib/libtwitter.c:425:5: note: previous implicit declaration of ‘twitter_direct_token_url’ was here
+../NetworkLib/libtwitter.c: In function ‘twitter_direct_token_url’:
+../NetworkLib/libtwitter.c:562:13: attention : assignment makes pointer from integer without a cast [enabled by default]
+../NetworkLib/libtwitter.c: In function ‘twitter_direct_token_url2’:
+../NetworkLib/libtwitter.c:585:37: attention : initialization makes pointer from integer without a cast [enabled by default]
+../NetworkLib/libtwitter.c:586:37: attention : initialization makes pointer from integer without a cast [enabled by default]
+../NetworkLib/libtwitter.c:587:37: attention : initialization makes pointer from integer without a cast [enabled by default]
+../NetworkLib/libtwitter.c:588:37: attention : initialization makes pointer from integer without a cast [enabled by default]
+../NetworkLib/libtwitter.c:589:37: attention : initialization makes pointer from integer without a cast [enabled by default]
+../NetworkLib/libtwitter.c:590:37: attention : initialization makes pointer from integer without a cast [enabled by default]
+../NetworkLib/libtwitter.c:591:37: attention : initialization makes pointer from integer without a cast [enabled by default]
+../NetworkLib/libtwitter.c:598:27: attention : assignment makes pointer from integer without a cast [enabled by default]
+../NetworkLib/libtwitter.c:600:27: attention : assignment makes pointer from integer without a cast [enabled by default]
+../NetworkLib/libtwitter.c: Hors de toute fonction :
+../NetworkLib/libtwitter.c:643:6: attention : conflicting types for ‘twitter_verifier’ [enabled by default]
+../NetworkLib/libtwitter.c:426:5: note: previous implicit declaration of ‘twitter_verifier’ was here
+../NetworkLib/libtwitter.c: In function ‘twitter_verifier’:
+../NetworkLib/libtwitter.c:660:5: attention : implicit declaration of function ‘twitter_direct_token_authenticity’ [-Wimplicit-function-declaration]
+../NetworkLib/libtwitter.c:673:5: attention : implicit declaration of function ‘twitter_direct_token_pin’ [-Wimplicit-function-declaration]
+../NetworkLib/libtwitter.c: Hors de toute fonction :
+../NetworkLib/libtwitter.c:689:6: attention : conflicting types for ‘twitter_direct_token_authenticity’ [enabled by default]
+../NetworkLib/libtwitter.c:660:5: note: previous implicit declaration of ‘twitter_direct_token_authenticity’ was here
+../NetworkLib/libtwitter.c: In function ‘twitter_direct_token_authenticity’:
+../NetworkLib/libtwitter.c:698:20: attention : assignment makes pointer from integer without a cast [enabled by default]
+../NetworkLib/libtwitter.c: Hors de toute fonction :
+../NetworkLib/libtwitter.c:718:6: attention : conflicting types for ‘twitter_direct_token_pin’ [enabled by default]
+../NetworkLib/libtwitter.c:673:5: note: previous implicit declaration of ‘twitter_direct_token_pin’ was here
+../NetworkLib/libtwitter.c: In function ‘twitter_direct_token_pin’:
+../NetworkLib/libtwitter.c:727:20: attention : assignment makes pointer from integer without a cast [enabled by default]
+../NetworkLib/libtwitter.c: Hors de toute fonction :
+../NetworkLib/libtwitter.c:747:6: attention : conflicting types for ‘twitter_access_token_url’ [enabled by default]
+../NetworkLib/libtwitter.c:429:5: note: previous implicit declaration of ‘twitter_access_token_url’ was here
+../NetworkLib/libtwitter.c:768:6: attention : conflicting types for ‘twitter_access_token’ [enabled by default]
+../NetworkLib/libtwitter.c:430:5: note: previous implicit declaration of ‘twitter_access_token’ was here
+../NetworkLib/libtwitter.c: In function ‘twitter_timeline_user_url’:
+../NetworkLib/libtwitter.c:818:23: attention : comparaison entre un pointeur et un entier [enabled by default]
+../NetworkLib/libtwitter.c:820:27: attention : assignment makes pointer from integer without a cast [enabled by default]
+../NetworkLib/libtwitter.c:826:27: attention : assignment makes pointer from integer without a cast [enabled by default]
+../NetworkLib/libtwitter.c: Hors de toute fonction :
+../NetworkLib/libtwitter.c:845:6: attention : conflicting types for ‘twitter_timeline_user’ [enabled by default]
+../NetworkLib/libtwitter.c:450:5: note: previous implicit declaration of ‘twitter_timeline_user’ was here
+../NetworkLib/libtwitter.c: In function ‘twitter_timeline_user’:
+../NetworkLib/libtwitter.c:852:28: attention : assignment makes pointer from integer without a cast [enabled by default]
+../NetworkLib/libtwitter.c:855:5: attention : passing argument 2 of ‘twitter_timeline_user_url’ makes pointer from integer without a cast [enabled by default]
+../NetworkLib/libtwitter.c:814:6: note: expected ‘const char *’ but argument is of type ‘int’
+../NetworkLib/libtwitter.c: Hors de toute fonction :
+../NetworkLib/libtwitter.c:873:6: attention : conflicting types for ‘twitter_tweet_url’ [enabled by default]
+../NetworkLib/libtwitter.c:486:5: note: previous implicit declaration of ‘twitter_tweet_url’ was here
+../NetworkLib/libtwitter.c: In function ‘twitter_tweet_url’:
+../NetworkLib/libtwitter.c:878:13: attention : assignment makes pointer from integer without a cast [enabled by default]
+../NetworkLib/libtwitter.c: Hors de toute fonction :
+../NetworkLib/libtwitter.c:897:6: attention : conflicting types for ‘twitter_tweet’ [enabled by default]
+../NetworkLib/libtwitter.c:489:5: note: previous implicit declaration of ‘twitter_tweet’ was here
+make: *** [NetworkLib/libtwitter.o] Erreur 1
