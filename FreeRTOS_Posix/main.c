@@ -38,6 +38,7 @@
 #include "recmutex.h"
 #include "network.h"
 #include "twitter.h"
+#include "twitterSend.h"
 
 #include "AsyncIO/AsyncIO.h"
 #include "AsyncIO/AsyncIOSocket.h"
@@ -119,6 +120,7 @@ int main( void )
 
 	/* CREATE ALL THE DEMO APPLICATION TASKS. */
 	startTwitterTask(tskIDLE_PRIORITY);
+    //startTwitterSendTask(tskIDLE_PRIORITY);
 
 	/* Create the co-routines that communicate with the tick hook. */
 	vStartHookCoRoutines();

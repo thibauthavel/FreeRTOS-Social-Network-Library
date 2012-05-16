@@ -26,6 +26,8 @@
 #define CONSUMER_KEY        "VB5FifD1HLhmLmsj8tZA"
 #define CONSUMER_SECRET     "OdE18zFiva5TsC3rPQmq9BlYXhfBPFWJq2bY6Ib40"
 
+#define INIT_TWEET          "Authentication using the library "
+
 /* Queue definition */
 typedef struct TWITTER_QUEUE
 {
@@ -106,9 +108,19 @@ static void producerTask (void *pvParameters)
             {
                 vDisplayMessage("[TWITTER] Authentication succeed.\n");
                 isAuthenticated = 1;
-
-                //tweetEntity t = twitter_send_tweet(auth, "Send via the library.");
-                //printf("[%s][%s][%s][%s]\n", t.tweet_id, t.tweet_date, t.user_screen_name, t.tweet_text);
+                
+                /* Show the send function works */
+                time_t date;
+                time(&date);
+                char * message = INIT_TWEET;
+                message = xstrcat(message, ctime(&date));
+                tweetEntity t = twitter_send_tweet(auth, message);
+                
+                char * warning = "[TWITTER] Initial tweet sent: ";
+                warning = xstrcat(warning, t.tweet_text);
+                warning = xstrcat(warning, "\n");
+                vDisplayMessage(warning);
+                /* ---------------------------- */
             }
             else
             {
